@@ -166,9 +166,9 @@ function draw() {
     ctx.fillText('☕', 0, 3);
     ctx.restore();
 }
-/* Audio: draaimuziek = begin van de Rad van Fortuin-tune (mp3, ingesloten); synth-tune als terugval */
+/* Audio: draaimuziek = spin-tune.m4a (CC0); synth-tune als terugval */
 var AC = null, mute = false, tuneTimer = null, RADSND = null, radFade = null;
-var RADSRC = ''; /* ingesloten mp3 verwijderd voor de publieke versie; synth-tune wordt gebruikt */
+var RADSRC = 'spin-tune.m4a'; /* 'Party and Gameover loop' (happy theme) door gilzoide, CC0 - opengameart.org/content/party-and-gameover-loop */
 function audio() { try { if (!AC) AC = new (window.AudioContext || window.webkitAudioContext)(); if (AC.state === 'suspended') AC.resume(); } catch (e) { } return AC; }
 function blip(f, d, type, v, t0) { var a = audio(); if (!a) return; var t = a.currentTime + (t0 || 0), o = a.createOscillator(), g = a.createGain(); o.type = type; o.frequency.setValueAtTime(f, t); g.gain.setValueAtTime(v, t); g.gain.exponentialRampToValueAtTime(.0001, t + d); o.connect(g); g.connect(a.destination); o.start(t); o.stop(t + d + .02); }
 function synthStart() {
