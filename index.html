@@ -84,11 +84,48 @@ li[draggable]{cursor:grab}li.hint{color:#8a6e5c;font-size:.85rem;padding:10px;ju
  #time{font-size:5rem}.wheelwrap{max-width:560px}
 }
 @media(min-width:1500px){html{font-size:18px}}
+@supports not (display:grid){.seats{display:flex;flex-wrap:wrap}.seats>.seat{width:48%;margin:0 2% 10px 0}}
+/* Groot (touch)scherm in liggende stand: alles op één scherm, kolommen scrollen zelf */
+@media(min-width:1100px) and (min-aspect-ratio:4/3){
+ html,body{height:100%}
+ body{padding:1.2vh 1.2vw;overflow:hidden}
+ main{height:100%;display:flex;flex-direction:column;max-width:none}
+ .hdr{flex:none}.hdr>.card{margin-bottom:1.2vh;padding:1.2vh 1.2vw}
+ h1{display:none}
+ .wide{flex:1 1 auto;min-height:0;align-items:stretch}
+ .col{overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;scrollbar-width:thin;padding-right:2px}
+ .col>.card{margin-bottom:1.2vh}
+ #time{font-size:11vh}#date{font-size:2.2vh}
+ .vscene{height:24vh;width:42vh}
+ .wheelwrap{max-width:52vh}
+ .cA{flex:1 1 0%}.cB{flex:1.35 1 0%}.cC{flex:1.25 1 0%}
+ .clk .kk{margin-top:1vh}
+}
+@media(min-width:1100px) and (min-aspect-ratio:4/3) and (min-height:700px){html{font-size:17px}}
+@media(min-width:1100px) and (min-aspect-ratio:4/3) and (min-height:950px){html{font-size:20px}}
+@media(min-width:1100px) and (min-aspect-ratio:4/3) and (min-height:1300px){html{font-size:26px}}
+/* Touchschermen: grotere tikvlakken */
+@media(pointer:coarse){
+ button{min-height:44px;padding:10px 14px}
+ li button{min-width:44px;min-height:44px;padding:6px 10px}
+ .wd button{min-height:34px;min-width:38px;padding:4px 8px;font-size:.85rem}
+ li .ed{min-width:40px}
+ .moods button{min-width:40px;min-height:40px;font-size:1.35rem}
+ .chip{padding:10px 16px}
+ .vtog{min-height:36px}
+ input,select{min-height:44px;font-size:16px}
+ li[draggable]{cursor:default}
+ #list li,#listout li{flex-wrap:wrap;justify-content:flex-end}
+ #list li .n,#listout li .n{flex:1 1 100%;margin:0 0 6px;display:flex;flex-wrap:wrap;align-items:center}
+ #list li .n .wd,#listout li .n .wd{margin:0 0 0 10px;flex-wrap:nowrap}
+ #list li .dot,#listout li .dot{display:none}
+}
+.fsb{position:absolute;right:8px;bottom:8px;padding:2px 8px;font-size:.75rem;color:#8a6e5c;opacity:.7;min-height:0!important}.clk{position:relative}
 </style>
 </head>
 <body>
 <main>
-<div class="hdr"><div class="card clk"><div id="time">--:--:--</div><div id="date"></div><div class="kk"><div class="kkh" id="kkh" title="Koekoeksklok"><svg viewBox="0 0 60 64" width="48" height="52" aria-hidden="true"><path d="M30 2 2 24h6v38h44V24h6z" fill="#6b4423"/><path d="M30 2 2 24h56z" fill="#8b5a2b"/><rect x="21" y="26" width="18" height="18" rx="2" fill="#2b1a10"/><circle cx="30" cy="54" r="5" fill="#e6b980"/><path d="M30 54v-3.5M30 54l2.5 1.5" stroke="#3b2417" stroke-width="1.2" stroke-linecap="round"/></svg><div class="kkb" id="kkb"><svg viewBox="0 0 24 18" width="24" height="18"><ellipse cx="12" cy="10" rx="9" ry="6.5" fill="#d9a066"/><circle cx="17" cy="7" r="4.5" fill="#c8773a"/><circle cx="18.3" cy="6" r="1" fill="#2b1a10"/><path d="M21 7.2 24 8l-3 1z" fill="#f1c40f"/><path d="M3 9 0 6l1 6z" fill="#8b5a2b"/></svg></div></div><button id="kkt" type="button" class="reset"></button></div></div>
+<div class="hdr"><div class="card clk"><button id="fsb" class="fsb" type="button" title="Volledig scherm">⛶ Volledig scherm</button><div id="time">--:--:--</div><div id="date"></div><div class="kk"><div class="kkh" id="kkh" title="Koekoeksklok"><svg viewBox="0 0 60 64" width="48" height="52" aria-hidden="true"><path d="M30 2 2 24h6v38h44V24h6z" fill="#6b4423"/><path d="M30 2 2 24h56z" fill="#8b5a2b"/><rect x="21" y="26" width="18" height="18" rx="2" fill="#2b1a10"/><circle cx="30" cy="54" r="5" fill="#e6b980"/><path d="M30 54v-3.5M30 54l2.5 1.5" stroke="#3b2417" stroke-width="1.2" stroke-linecap="round"/></svg><div class="kkb" id="kkb"><svg viewBox="0 0 24 18" width="24" height="18"><ellipse cx="12" cy="10" rx="9" ry="6.5" fill="#d9a066"/><circle cx="17" cy="7" r="4.5" fill="#c8773a"/><circle cx="18.3" cy="6" r="1" fill="#2b1a10"/><path d="M21 7.2 24 8l-3 1z" fill="#f1c40f"/><path d="M3 9 0 6l1 6z" fill="#8b5a2b"/></svg></div></div><button id="kkt" type="button" class="reset"></button></div></div>
 <div class="card wx"><div class="vscene" id="vscene"><div class="vworld" id="vworld"></div><div id="vmap" class="vmap"></div><div class="sky" id="sky"></div><button id="vtog" class="vtog" type="button"></button><a class="vtog" style="left:auto;right:8px;text-decoration:none;background:#fff;color:#1a73e8;border-radius:8px;font-weight:600" href="https://www.google.com/maps/search/?api=1&query=52.2333%2C6.1" target="_blank" rel="noopener">📍 Google Maps</a></div>
 <div class="wt"><div class="deg" id="deg">–</div><div id="wtxt"></div><small id="wnote" style="color:#8a6e5c"></small><div class="fc" id="fc"></div><div id="short" style="display:flex;align-items:center;margin-top:10px"></div></div></div></div>
 <h1>🏢 Kamer 0.26 Dashboard</h1>
@@ -119,6 +156,43 @@ li[draggable]{cursor:grab}li.hint{color:#8a6e5c;font-size:.85rem;padding:10px;ju
 </div>
 </main>
 <canvas id="conf" style="position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:50"></canvas>
+<script>
+/* Compatibiliteit voor oudere browsers op (touch)schermen + zichtbare foutmelding */
+(function () {
+    window.onerror = function (msg, src, line) {
+        try {
+            var b = document.getElementById('jserr');
+            if (!b) { b = document.createElement('div'); b.id = 'jserr'; b.style.cssText = 'position:fixed;left:8px;bottom:8px;z-index:99;max-width:60%;background:#c0392b;color:#fff;font:12px/1.3 sans-serif;padding:6px 10px;border-radius:8px'; b.onclick = function () { b.parentNode.removeChild(b); }; (document.body || document.documentElement).appendChild(b); }
+            b.textContent = 'Scriptfout: ' + msg + ' (regel ' + line + ') – tik om te sluiten';
+        } catch (e) { }
+    };
+    if (!String.prototype.padStart) String.prototype.padStart = function (n, c) { var s = String(this); c = c === undefined ? ' ' : String(c); while (s.length < n) s = c + s; return s.length > n && c.length > 1 ? s.slice(s.length - n) : s; };
+    if (!Object.assign) Object.assign = function (t) { for (var i = 1; i < arguments.length; i++) { var s = arguments[i]; if (s) for (var k in s) if (Object.prototype.hasOwnProperty.call(s, k)) t[k] = s[k]; } return t; };
+    if (!Object.entries) Object.entries = function (o) { return Object.keys(o).map(function (k) { return [k, o[k]]; }); };
+    if (!Object.values) Object.values = function (o) { return Object.keys(o).map(function (k) { return o[k]; }); };
+    if (!Array.prototype.find) Object.defineProperty(Array.prototype, 'find', { value: function (f, t) { for (var i = 0; i < this.length; i++) if (f.call(t, this[i], i, this)) return this[i]; }, writable: true, configurable: true });
+    if (!Array.prototype.findIndex) Object.defineProperty(Array.prototype, 'findIndex', { value: function (f, t) { for (var i = 0; i < this.length; i++) if (f.call(t, this[i], i, this)) return i; return -1; }, writable: true, configurable: true });
+    var EP = window.Element && Element.prototype;
+    if (EP && !EP.matches) EP.matches = EP.webkitMatchesSelector || EP.msMatchesSelector;
+    if (EP && !EP.closest) EP.closest = function (s) { var e = this; while (e && e.nodeType === 1) { if (e.matches(s)) return e; e = e.parentNode; } return null; };
+    if (window.NodeList && !NodeList.prototype.forEach) NodeList.prototype.forEach = Array.prototype.forEach;
+    if (!window.requestAnimationFrame) window.requestAnimationFrame = window.webkitRequestAnimationFrame || function (f) { return setTimeout(function () { f(Date.now()); }, 16); };
+    if (!window.performance || !performance.now) { window.performance = window.performance || {}; var t0 = Date.now(); performance.now = function () { return Date.now() - t0; }; }
+    if (!window.crypto && window.msCrypto) window.crypto = window.msCrypto;
+    if (!window.crypto || !crypto.getRandomValues) { window.crypto = window.crypto || {}; crypto.getRandomValues = function (a) { for (var i = 0; i < a.length; i++) a[i] = Math.floor(Math.random() * 4294967296); return a; }; }
+    /* Oude Android-browsers kennen soms geen tijdzones: dan zonder timeZone opnieuw proberen */
+    ['toLocaleTimeString', 'toLocaleDateString', 'toLocaleString'].forEach(function (m) {
+        var orig = Date.prototype[m];
+        Date.prototype[m] = function (l, o) { try { return orig.call(this, l, o); } catch (e) { if (o && o.timeZone) { var c = Object.assign({}, o); delete c.timeZone; try { return orig.call(this, l, c); } catch (e2) { } } return orig.call(this); } };
+    });
+    if (window.Intl && Intl.DateTimeFormat) {
+        var DTF = Intl.DateTimeFormat;
+        var W = function (l, o) { try { return new DTF(l, o); } catch (e) { if (o && o.timeZone) { var c = Object.assign({}, o); delete c.timeZone; return new DTF(l, c); } throw e; } };
+        W.prototype = DTF.prototype; W.supportedLocalesOf = DTF.supportedLocalesOf;
+        try { Intl.DateTimeFormat = W; } catch (e) { }
+    }
+})();
+</script>
 <script>
 "use strict";
 var COLORS = ['#8b4a2b', '#d9a066', '#5c3a21', '#c8773a', '#a0522d', '#e6b980', '#6f4e37', '#b5651d'];
@@ -764,6 +838,27 @@ document.getElementById('rsave').onclick = function () {
 };
 render();
 trk(); trLabel();
+/* Wandscherm: volledig scherm, scherm wakker houden, 's nachts verversen */
+(function () {
+    var b = document.getElementById('fsb'), d = document, el = d.documentElement;
+    var isFs = function () { return !!(d.fullscreenElement || d.webkitFullscreenElement); };
+    var upd = function () { b.textContent = isFs() ? '✕ Venster' : '⛶ Volledig scherm'; };
+    if (!(el.requestFullscreen || el.webkitRequestFullscreen)) b.style.display = 'none';
+    b.onclick = function () {
+        try {
+            if (isFs()) (d.exitFullscreen || d.webkitExitFullscreen).call(d);
+            else { var r = (el.requestFullscreen || el.webkitRequestFullscreen).call(el); if (r && r.catch) r.catch(function () { }); }
+        } catch (e) { }
+        wake();
+    };
+    d.addEventListener('fullscreenchange', upd); d.addEventListener('webkitfullscreenchange', upd); upd();
+    var lock = null;
+    function wake() { try { if (navigator.wakeLock && !lock) navigator.wakeLock.request('screen').then(function (l) { lock = l; l.addEventListener('release', function () { lock = null; }); }, function () { }); } catch (e) { } }
+    d.addEventListener('visibilitychange', function () { if (!d.hidden) wake(); });
+    d.addEventListener('click', wake, true); wake();
+    var boot = new Date();
+    setInterval(function () { var n = new Date(); if (n.getHours() === 5 && n.getMinutes() < 5 && n - boot > 3600000 && !spinning) location.reload(); }, 60000);
+})();
 clock();
 wx();
 setInterval(clock, 1000);
