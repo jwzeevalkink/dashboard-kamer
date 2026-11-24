@@ -20,6 +20,8 @@ a{font-size:28px}
 <div id="ua">-</div>
 <table id="t"></table>
 <p id="load">Dashboard laden testen…</p>
+<p id="wx">Weerdienst testen…</p>
+<p id="emo" style="font-size:34px">Emoji: 😞 🙁 😊 🙂 ☔ 🌦 🏠 🏘 🍞 🥖 🍨 🥤 🏆 🥇 ⏸ ⛶</p>
 <p><a href="./">Naar het dashboard</a></p>
 <script>
 var J = document.getElementById('js'); J.className = 'ok'; J.innerHTML = 'JavaScript draait';
@@ -61,6 +63,21 @@ try {
     };
     x.send();
 } catch (e) { L.className = 'no'; L.innerHTML = 'Laden mislukt: ' + e.message; }
+function probe(id, label, url) {
+    var E = document.getElementById(id), t1 = new Date().getTime();
+    try {
+        var y = new XMLHttpRequest();
+        y.open('GET', url, true); y.timeout = 15000;
+        y.onreadystatechange = function () {
+            if (y.readyState !== 4) return;
+            var ok = y.status === 200;
+            E.className = ok ? 'ok' : 'no';
+            E.innerHTML = label + (ok ? ' werkt (' + (new Date().getTime() - t1) + ' ms)' : ' werkt NIET (status ' + y.status + ', waarschijnlijk certificaat of netwerk)');
+        };
+        y.send();
+    } catch (e) { E.className = 'no'; E.innerHTML = label + ' fout: ' + e.message; }
+}
+probe('wx', 'Weerdienst open-meteo.com', 'https://api.open-meteo.com/v1/forecast?latitude=52.23&longitude=6.1&current=temperature_2m');
 </script>
 </body>
 </html>
