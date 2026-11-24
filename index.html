@@ -348,7 +348,7 @@ function draw() {
     ctx.fillText('☕', 0, 3);
     ctx.restore();
 }
-/* Audio: draaimuziek = spin-tune.m4a (CC0); synth-tune als terugval */
+/* Audio: draaimuziek = begin van 'Wheel of Deal' (Waderman) (mp3, ingesloten); synth-tune als terugval */
 var AC = null, mute = false, tuneTimer = null, RADSND = null, radFade = null;
 var RADSRC = 'spin-tune.m4a'; /* 'Party and Gameover loop' (happy theme) door gilzoide, CC0 - opengameart.org/content/party-and-gameover-loop */
 function audio() { try { if (!AC) AC = new (window.AudioContext || window.webkitAudioContext)(); if (AC.state === 'suspended') AC.resume(); } catch (e) { } return AC; }
@@ -801,13 +801,11 @@ function wx() {
         var c = wmo(LW.current.weather_code);
         cond = c[0]; txt = c[2]; night = LW.current.is_day === 0;
         deg = Math.round(LW.current.temperature_2m) + '°';
-        var T = LW.hourly.time, s = LW.current.time.slice(0, 13), i0 = 0, k = 0, out = [];
-        while (i0 < T.length && T[i0].slice(0, 13) < s) i0++;
-        for (var i = i0; i < T.length && k < 8; i++, k++) {
-            var w = wmo(LW.hourly.weather_code[i]), t = Math.round(LW.hourly.temperature_2m[i]), p = LW.hourly.precipitation_probability[i];
-            if (hi === null || t > hi) hi = t;
-            if (p > pr) pr = p;
-            out.push('<div><b>' + (k === 0 ? 'Nu' : T[i].slice(11, 16)) + '</b><br>' + w[1] + '<br>' + t + '°<br><span style="color:var(--mut)">' + (p === null || p === undefined ? '–' : p + '%') + '</span></div>');
+        var D = LW.daily, out = [];
+        for (var i = 0; i < D.time.length && out.length < 5; i++) {
+            var w = wmo(D.weather_code[i]), mx = Math.round(D.temperature_2m_max[i]), mn = Math.round(D.temperature_2m_min[i]), p = D.precipitation_probability_max ? D.precipitation_probability_max[i] : null;
+            if (i === 0) { hi = mx; pr = p || 0; lab = 'vandaag'; }
+            out.push('<div><b>' + new Date(D.time[i] + 'T12:00:00').toLocaleDateString('nl-NL', { weekday: 'short' }) + '</b><br>' + w[1] + '<br>' + mx + '° / ' + mn + '°<br><span style="color:var(--mut)">' + (p === null || p === undefined ? '–' : p + '%') + '</span></div>');
         }
         fc = out.join('');
         note = 'Live · bijgewerkt ' + LW.current.time.slice(11, 16);
@@ -832,14 +830,14 @@ function loadLive() {
     try {
         /* Eerst rechtstreeks open-meteo; lukt dat niet (oude browsers vertrouwen het certificaat niet),
            dan weather.json dat GitHub elk uur ophaalt */
-        var urls = ['https://api.open-meteo.com/v1/forecast?latitude=52.2333&longitude=6.1&current=temperature_2m,weather_code,is_day&hourly=temperature_2m,precipitation_probability,weather_code&forecast_days=2&timezone=Europe%2FAmsterdam', 'weather.json?t=' + new Date().getTime()];
+        var urls = ['https://api.open-meteo.com/v1/forecast?latitude=52.2333&longitude=6.1&current=temperature_2m,weather_code,is_day&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max&forecast_days=5&timezone=Europe%2FAmsterdam', 'weather.json?t=' + new Date().getTime()];
         var tryUrl = function (i) {
             if (i >= urls.length) return;
             var x = new XMLHttpRequest(), done = false;
             var fail = function () { if (!done) { done = true; tryUrl(i + 1); } };
             x.open('GET', urls[i]);
             x.timeout = 15000;
-            x.onload = function () { if (done) return; try { var d = JSON.parse(x.responseText); if (x.status === 200 && d && d.current && d.hourly) { done = true; LW = d; wx(); return; } } catch (e) { } fail(); };
+            x.onload = function () { if (done) return; try { var d = JSON.parse(x.responseText); if (x.status === 200 && d && d.current && d.daily) { done = true; LW = d; wx(); return; } } catch (e) { } fail(); };
             x.onerror = fail; x.ontimeout = fail;
             x.send();
         };
