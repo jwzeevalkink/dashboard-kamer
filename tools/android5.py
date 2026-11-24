@@ -63,3 +63,22 @@ POLY="""</style>
 </script>"""
 assert t.count('</style>')==1; t=t.replace('</style>',POLY,1)
 open(p,'w',encoding='utf-8').write(t)
+
+# --- Ronde 3: wandindeling ook op het wandscherm (viewport 980x515, onder het breekpunt van 1100px) ---
+t=open(p,encoding='utf-8').read()
+n=t.count('@media(min-width:1100px)'); assert n>=2,n
+t=t.replace('@media(min-width:1100px)','@media(min-width:960px)')
+small='@media(min-width:960px) and (min-aspect-ratio:4/3) and (max-height:649px){html{font-size:12px}}\n'
+a='@media(min-width:960px) and (min-aspect-ratio:4/3) and (min-height:650px)'
+assert t.count(a)==1; t=t.replace(a,small+a)
+open(p,'w',encoding='utf-8').write(t)
+
+# --- Ronde 4: plekken zonder CSS grid (Chrome 39) netjes 2 kolommen, plek 1-4 links en 5-8 rechts zoals in de grid-versie ---
+t=open(p,encoding='utf-8').read()
+old='@supports not (display:grid){.seats{display:flex;flex-wrap:wrap}.seats>.seat{width:48%;margin:0 2% 10px 0}}'
+assert t.count(old)==1,'seats-fallback'
+ordr=''.join('.seats>.seat:nth-child(%d){-webkit-order:%d;order:%d}'%(i,o,o) for i,o in zip(range(1,9),[1,3,5,7,2,4,6,8]))
+new=('@supports not (display:grid){.seats{display:flex;flex-wrap:wrap;justify-content:space-between}.seats>.seat{width:48.5%;margin:0 0 10px}'+ordr+'}\n'
+     '@media(min-width:960px) and (min-aspect-ratio:4/3){@supports not (display:grid){.k-room .seats{-webkit-align-content:space-between;align-content:space-between}.k-room .seats>.seat{height:calc(25% - .7vh);margin-bottom:0}}}')
+t=t.replace(old,new)
+open(p,'w',encoding='utf-8').write(t)
