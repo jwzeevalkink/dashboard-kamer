@@ -27,13 +27,17 @@ jobs:
     steps:
       - uses: actions/checkout@v7
       - name: Site klaarzetten en weer ophalen
+        timeout-minutes: 5
         run: |
           mkdir _site
           cp index.html test.html spin-tune.m4a README.md _site/
           URL=$(grep -o "https://api.open-meteo.com/v1/forecast?[^']*" index.html | head -1)
           echo "$URL"
-          curl -sSf --retry 3 -o _site/weather.json "$URL"
-          python3 -c "import json;d=json.load(open('_site/weather.json'));assert d['current'] and (d.get('daily') or d.get('hourly'));print('weer', d['current'])"
+          if curl -sSf --connect-timeout 15 --max-time 45 --retry 2 -o w.json "$URL" && python3 -c "import json;d=json.load(open('w.json'));assert d['current'] and (d.get('daily') or d.get('hourly'));print('weer', d['current'])"; then
+            mv w.json _site/weather.json
+          else
+            echo "::warning::Weer ophalen mislukt; site wordt zonder nieuw weather.json gepubliceerd"
+          fi
       - uses: actions/configure-pages@v6
       - uses: actions/upload-pages-artifact@v5
         with:
