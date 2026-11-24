@@ -5,59 +5,69 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Dashboard Kamer 0.26</title>
 <style>
+:root{--bg:#fbf5ec;--ink:#3b2417;--mut:#8a6e5c;--line:#e8d9c6;--pri:#b5541c;--sec:#c8773a;--off:#9a8878;--soft:#f4ede4;--door1:#8b5a2b;--door2:#6b4423;--gold:#c9971c;--bronze:#a5622f}
+html.th-adst{--bg:#f3f5f8;--ink:#14263d;--mut:#5d6b7c;--line:#d9dfe7;--pri:#1f4e79;--sec:#2f6ea5;--off:#8a96a5;--soft:#e9eef4;--door1:#25466b;--door2:#14263d;--gold:#f2a900;--bronze:#9aa9bb}
+html.th-adst body{background:var(--bg)}
+html.th-adst .card{border-radius:8px}
+html.th-adst .col>.card{border-top:4px solid var(--pri);border-radius:6px}
+html.th-adst button.main{border-radius:6px}
+html.th-adst .chip{border-radius:6px}
+.brand{display:none;font-weight:800;letter-spacing:.02em;color:var(--pri);font-size:.8rem}
+html.th-adst .brand{display:block}
+html.th-adst .k-clk .brand{position:absolute;left:1.1vw;bottom:.7vh}
 *{box-sizing:border-box}
 html,body{margin:0}
-body{background:#fbf5ec;color:#3b2417;font-family:"Segoe UI",Roboto,Arial,sans-serif;padding:16px}
+body{background:var(--bg);color:var(--ink);font-family:"Segoe UI",Roboto,Arial,sans-serif;padding:16px}
 main{max-width:980px;margin:0 auto}
 h1{font-size:1.8rem;margin:.2em 0 .1em;text-align:center}
-.sub{text-align:center;color:#8a6e5c;margin:0 0 18px}
-.card{background:#fff;border:1px solid #e8d9c6;border-radius:16px;padding:16px;margin-bottom:16px}
+.sub{text-align:center;color:var(--mut);margin:0 0 18px}
+.card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:16px;margin-bottom:16px}
 .hdr{display:flex;flex-wrap:wrap}.hdr>.card{flex:1 1 300px;margin-right:16px}.hdr>.card:last-child{flex:2 1 400px;margin-right:0}
 .wide{display:flex;flex-direction:column}.cB{order:1}.cA{order:2}.cC{order:3}
 .wheelwrap{position:relative;width:100%;max-width:440px;margin:0 auto}
 canvas{width:100%;height:auto;display:block}
-.pointer{position:absolute;top:-6px;left:50%;margin-left:-16px;width:0;height:0;border-left:16px solid transparent;border-right:16px solid transparent;border-top:32px solid #b5541c;z-index:2}
-button{font:inherit;cursor:pointer;border-radius:10px;border:1px solid #e8d9c6;background:#fff;color:#3b2417;padding:8px 12px}
-button.main{background:#b5541c;color:#fff;border:none;font-weight:700;font-size:1.1rem;padding:12px 28px;border-radius:999px;display:block;margin:14px auto 0}
+.pointer{position:absolute;top:-6px;left:50%;margin-left:-16px;width:0;height:0;border-left:16px solid transparent;border-right:16px solid transparent;border-top:32px solid var(--pri);z-index:2}
+button{font:inherit;cursor:pointer;border-radius:10px;border:1px solid var(--line);background:#fff;color:var(--ink);padding:8px 12px}
+button.main{background:var(--pri);color:#fff;border:none;font-weight:700;font-size:1.1rem;padding:12px 28px;border-radius:999px;display:block;margin:14px auto 0}
 button:disabled{opacity:.5;cursor:default}
 .result{min-height:2.6em;text-align:center;font-size:1.25rem;font-weight:700;margin-top:12px}
 h2{font-size:1.05rem;margin:0 0 10px}
 .add{display:flex;flex-wrap:wrap;margin-bottom:10px}.add>*{margin:0 8px 6px 0}
-.add input[type=text],.add input:not([type]){flex:1 1 150px;font:inherit;padding:8px 10px;border-radius:10px;border:1px solid #e8d9c6;background:#fbf5ec;color:#3b2417;min-width:0}
+.add input[type=text],.add input:not([type]){flex:1 1 150px;font:inherit;padding:8px 10px;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:var(--ink);min-width:0}
 ul{list-style:none;margin:0;padding:0}
-li{display:flex;align-items:center;padding:6px 0;border-bottom:1px solid #e8d9c6}li>*{margin-right:8px}li>*:last-child{margin-right:0}
-li .dot{width:12px;height:12px;border-radius:50%;flex:none}.wd{display:flex;flex-wrap:wrap;margin-top:3px}.wd button{padding:0 5px;margin:0 3px 0 0;font-size:.72rem;line-height:1.5;border-radius:6px;color:#9a8878;background:#f4ede4;border-color:transparent}.wd button.on{background:#c8773a;color:#fff}.wd button.td{box-shadow:0 0 0 2px #3b2417}.wd small{color:#8a6e5c;font-size:.75rem}li .ed{padding:0 5px;border:0;background:none;color:#8a6e5c;font-size:.85rem}li .n{flex:1}li .c{color:#8a6e5c}li button{padding:2px 8px;line-height:1.2}
+li{display:flex;align-items:center;padding:6px 0}li>*{margin-right:8px}li>*:last-child{margin-right:0}
+li .dot{width:12px;height:12px;border-radius:50%;flex:none}.wd{display:flex;flex-wrap:wrap;margin-top:3px}.wd button{padding:0 5px;margin:0 3px 0 0;font-size:.72rem;line-height:1.5;border-radius:6px;color:var(--off);background:var(--soft);border-color:transparent}.wd button.on{background:var(--sec);color:#fff}.wd button.td{box-shadow:0 0 0 2px var(--ink)}.wd small{color:var(--mut);font-size:.75rem}li .ed{padding:0 5px;border:0;background:none;color:var(--mut);font-size:.85rem}li .n{flex:1}li .c{color:var(--mut)}li button{padding:2px 8px;line-height:1.2}
 .podium{display:flex;align-items:flex-end;justify-content:center;margin-top:6px}.podium>*+*{margin-left:6px}
 .step{flex:1;max-width:130px;text-align:center}
 .names{font-size:.85rem;font-weight:600;min-height:2.4em;display:flex;flex-direction:column;justify-content:flex-end;padding-bottom:4px;word-wrap:break-word}
 .block{border-radius:8px 8px 0 0;color:#fff;font-weight:800;font-size:1.4rem;display:flex;align-items:center;justify-content:center;flex-direction:column}
 .block small{font-size:.7rem;font-weight:600;opacity:.9}
-.b1{height:110px;background:#c9971c}.b2{height:80px;background:#8d939a}.b3{height:56px;background:#a5622f}
-.side{flex:1;max-width:150px;text-align:center;background:#fbf5ec;border:1px dashed #e8d9c6;border-radius:12px;padding:8px;margin-left:8px;align-self:center}
-.side b{display:block;font-size:.75rem;color:#8a6e5c;margin-bottom:4px}.side span{display:block;font-weight:600;font-size:.85rem}
-.empty{color:#8a6e5c;text-align:center;padding:16px 0}
-.reset{margin-top:10px;font-size:.85rem;color:#8a6e5c}
-.zone{min-height:44px;border:2px dashed transparent;border-radius:10px;padding:2px}.zone.over{border-color:#b5541c;background:#fbf5ec}
-li[draggable]{cursor:grab}li.hint{color:#8a6e5c;font-size:.85rem;padding:10px;justify-content:center;border-bottom:none}
-.tgrid{display:flex}.tgrid>.top{flex:1;margin-right:10px}.top b{display:block;font-size:.8rem;color:#8a6e5c;margin-bottom:4px;text-transform:capitalize}
-.tr{display:flex;justify-content:space-between;font-size:.9rem;padding:2px 0}.hint2{color:#8a6e5c;font-size:.85rem}
+.b1{height:110px;background:var(--gold)}.b2{height:80px;background:#8d939a}.b3{height:56px;background:var(--bronze)}
+.side{flex:1;max-width:150px;text-align:center;background:var(--bg);border:1px dashed var(--line);border-radius:12px;padding:8px;margin-left:8px;align-self:center}
+.side b{display:block;font-size:.75rem;color:var(--mut);margin-bottom:4px}.side span{display:block;font-weight:600;font-size:.85rem}
+.empty{color:var(--mut);text-align:center;padding:16px 0}
+.reset{margin-top:10px;font-size:.85rem;color:var(--mut)}
+.zone{min-height:44px;border:2px dashed transparent;border-radius:10px;padding:2px}.zone.over{border-color:var(--pri);background:var(--bg)}
+li[draggable]{cursor:grab}li.hint{color:var(--mut);font-size:.85rem;padding:10px;justify-content:center;border-bottom:none}
+.tgrid{display:flex}.tgrid>.top{flex:1;margin-right:10px}.top b{display:block;font-size:.8rem;color:var(--mut);margin-bottom:4px;text-transform:capitalize}
+.tr{display:flex;justify-content:space-between;font-size:.9rem;padding:2px 0}.hint2{color:var(--mut);font-size:.85rem}
 .clk{display:flex;flex-direction:column;justify-content:center;text-align:center}.kk{display:flex;align-items:center;justify-content:center;margin-top:10px}.kk>button{margin-left:10px;padding:4px 10px;font-size:.85rem}.kkh{position:relative;width:48px;height:52px;flex:none}.kkh>svg{position:relative;z-index:2}.kkb{position:absolute;left:12px;top:20px;z-index:1;transition:transform .18s ease-out}.kkh.out .kkb{z-index:3;transform:translateX(16px)}
-#time{font-size:3rem;font-weight:800;line-height:1}#date{color:#8a6e5c;margin-top:6px}#date::first-letter{text-transform:uppercase}
+#time{font-size:3rem;font-weight:800;line-height:1}#date{color:var(--mut);margin-top:6px}#date::first-letter{text-transform:uppercase}
 .wx{display:flex;align-items:center;flex-wrap:wrap}.wx>.vscene{margin-right:14px}.wt{flex:1;min-width:200px}
 .orb{position:absolute;left:78px;top:6px;width:54px;height:54px;border-radius:50%;background:#f5b82e;background:radial-gradient(circle at 35% 30%,#fff7c2,#f5b82e 60%,#d98a10)}
 .orb.moon{background:#d8dde8;background:radial-gradient(circle at 35% 30%,#fff,#d8dde8 60%,#9aa3b5);box-shadow:0 0 30px rgba(220,230,255,.5)}
 .cl{position:absolute;height:34px;border-radius:30px;background:#dfe6ee;background:linear-gradient(#f4f7fb,#c5cfdd);box-shadow:0 8px 14px rgba(0,0,0,.25)}
 .cl::before,.cl::after{content:"";position:absolute;background:inherit;border-radius:50%}.cl::before{width:38px;height:38px;left:14px;top:-18px}.cl::after{width:30px;height:30px;right:16px;top:-12px}
 .fc{display:flex;margin-top:8px}.fc div{text-align:center;font-size:.8rem;flex:1;margin-right:8px}.deg{font-size:2.6rem;font-weight:800;line-height:1}
-.chip{display:inline-block;padding:6px 12px;border-radius:999px;background:#b5541c;color:#fff;font-weight:600;cursor:grab;margin:3px;-webkit-user-select:none;user-select:none}.chip.sel{outline:3px solid #3b2417}
-.mrow{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap}.mbig{font-size:2.6rem;line-height:1;margin-right:12px}.mppl{display:flex;flex-wrap:wrap;margin-top:8px}.mppl span{background:#fbf5ec;border:1px solid #e8d9c6;border-radius:999px;padding:2px 9px;margin:0 6px 6px 0;font-size:.85rem;white-space:nowrap}.mwk{display:flex;align-items:flex-end;height:135px;margin-top:6px;border-bottom:2px solid #e8d9c6}.mwk>div{flex:1;margin:0 4px;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;height:100%;font-size:.8rem}.mwk .bar{width:100%;max-width:46px;border-radius:6px 6px 0 0;background:#c8773a;min-height:3px}.mwk .td .bar{background:#b5541c}.mlab{display:flex;font-size:.8rem;text-align:center;margin-top:4px;color:#8a6e5c}.mlab>div{flex:1;margin:0 4px}
+.chip{display:inline-block;padding:6px 12px;border-radius:999px;background:var(--pri);color:#fff;font-weight:600;cursor:grab;margin:3px;-webkit-user-select:none;user-select:none}.chip.sel{outline:3px solid var(--ink)}
+.mrow{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap}.mbig{font-size:2.6rem;line-height:1;margin-right:12px}.mppl{display:flex;flex-wrap:wrap;margin-top:8px}.mppl span{background:var(--bg);border:1px solid var(--line);border-radius:999px;padding:2px 9px;margin:0 6px 6px 0;font-size:.85rem;white-space:nowrap}.mwk{display:flex;align-items:flex-end;height:135px;margin-top:6px;border-bottom:2px solid var(--line)}.mwk>div{flex:1;margin:0 4px;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;height:100%;font-size:.8rem}.mwk .bar{width:100%;max-width:46px;border-radius:6px 6px 0 0;background:var(--sec);min-height:3px}.mwk .td .bar{background:var(--pri)}.mlab{display:flex;font-size:.8rem;text-align:center;margin-top:4px;color:var(--mut)}.mlab>div{flex:1;margin:0 4px}
 .seats{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:repeat(4,auto);grid-auto-flow:column;gap:10px}
-.seat{min-width:0;overflow:hidden;border:2px dashed #e8d9c6;border-radius:14px;min-height:100px;padding:8px;text-align:center;background:#fbf5ec}
-.seat.occ{border-style:solid}.seat.over,.tray.over{border-color:#b5541c}.seat.away{opacity:.45;background:#cfcac4;-webkit-filter:grayscale(1);filter:grayscale(1)}
-.sl{font-size:.75rem;color:#8a6e5c}.free{color:#8a6e5c;margin-top:22px}.moods{display:flex;flex-wrap:wrap;justify-content:center;margin-top:6px}.moods button{margin:1px}
-.moods button{padding:1px 3px;font-size:1.1rem;line-height:1.25;border-radius:8px;opacity:.55;border:2px solid transparent}.moods button.on{opacity:1;border-color:#b5541c;background:#fff}
-.tray{min-height:46px;border:2px dashed #e8d9c6;border-radius:12px;padding:4px;margin-bottom:10px}
-.door{height:44px;margin-bottom:10px;border-radius:10px;background:#7b4e29;background:linear-gradient(#8b5a2b,#6b4423);color:#fff;display:flex;flex-direction:row;align-items:center;justify-content:center;font-size:.85rem;font-weight:600;position:relative}.door:after{content:"";position:absolute;right:14px;top:50%;margin-top:-4px;width:8px;height:8px;border-radius:50%;background:#f1c40f}
+.seat{min-width:0;overflow:hidden;border:2px dashed var(--line);border-radius:14px;min-height:100px;padding:8px;text-align:center;background:var(--bg)}
+.seat.occ{border-style:solid}.seat.over,.tray.over{border-color:var(--pri)}.seat.away{opacity:.45;background:#cfcac4;-webkit-filter:grayscale(1);filter:grayscale(1)}
+.sl{font-size:.75rem;color:var(--mut)}.free{color:var(--mut);margin-top:22px}.moods{display:flex;flex-wrap:wrap;justify-content:center;margin-top:6px}.moods button{margin:1px}
+.moods button{padding:1px 3px;font-size:1.1rem;line-height:1.25;border-radius:8px;opacity:.55;border:2px solid transparent}.moods button.on{opacity:1;border-color:var(--pri);background:#fff}
+.tray{min-height:46px;border:2px dashed var(--line);border-radius:12px;padding:4px;margin-bottom:10px}
+.door{height:44px;margin-bottom:10px;border-radius:10px;background:var(--door2);background:linear-gradient(var(--door1),var(--door2));color:#fff;display:flex;flex-direction:row;align-items:center;justify-content:center;font-size:.85rem;font-weight:600;position:relative}.door:after{content:"";position:absolute;right:14px;top:50%;margin-top:-4px;width:8px;height:8px;border-radius:50%;background:#f1c40f}
 .vscene{position:relative;width:420px;max-width:100%;height:250px;flex:none;margin-right:14px;perspective:650px;-webkit-perspective:650px;overflow:hidden;border-radius:12px;background:#bfe0f7;background:linear-gradient(#8ec5f0,#e4f1fb)}
 .vscene.night{background:#25345a;background:linear-gradient(#141c38,#34456f)}
 .vworld{position:absolute;left:210px;top:158px;width:0;height:0;transform-style:preserve-3d;-webkit-transform-style:preserve-3d;transform:rotateX(62deg) rotateZ(-9deg) scale(1.3)}
@@ -75,35 +85,93 @@ li[draggable]{cursor:grab}li.hint{color:#8a6e5c;font-size:.85rem;padding:10px;ju
 .vmap{position:absolute;left:0;top:0;width:100%;height:100%;overflow:hidden;opacity:0;z-index:2;pointer-events:none}.vscene.mapon .vmap{opacity:1}
 .vworld{z-index:1}.sky{z-index:3}
 .vtog{position:absolute;left:8px;bottom:8px;z-index:5;padding:2px 8px;font-size:.8rem;opacity:.92}
+/* Indeling: kolom 1 rad + podium, kolom 2 stemming + kamer, kolom 3 klok + weer + aanwezig */
+.wall{display:flex;flex-direction:column}
+.c3{order:-1}
+#moreb,.morehd{display:none}
+#themeb{display:block;margin:10px auto;font-size:.85rem}
+.rbtn{display:inline-block;text-decoration:none;font-size:.9rem;padding:8px 12px;border-radius:10px;border:1px solid var(--line);background:#fff;color:var(--ink);white-space:nowrap}.rfav li button{padding:2px 8px}
+.addp{margin-top:10px}
+.lay{display:flex;flex-wrap:wrap;justify-content:center;margin-top:8px}.lay button{margin:3px;font-size:.8rem;padding:4px 10px;color:#5c3a21}
+.k-wx .vscene,.k-wx #short,.k-wx #wnote{display:none!important}
 @media(min-width:1100px){
  main{max-width:2400px}
- .wide{flex-direction:row;align-items:flex-start}
- .col{min-width:0;margin-right:16px}.col:last-child{margin-right:0}
- .cA{flex:1 1 0%;order:0}.cB{flex:1.5 1 0%;order:0}.cC{flex:1 1 0%;order:0}
  h1{font-size:1.4rem;margin:0 0 12px}.sub{display:none}
- #time{font-size:5rem}.wheelwrap{max-width:560px}
+ .wall{flex-direction:row;align-items:flex-start}
+ .c3{order:0}
+ .col{flex:1 1 0%;min-width:0;margin-right:16px}.col:last-child{margin-right:0}
+ #more{display:flex;flex-wrap:wrap}#more>.card{flex:1 1 400px;margin-right:16px}
 }
-@media(min-width:1500px){html{font-size:18px}}
 @supports not (display:grid){.seats{display:flex;flex-wrap:wrap}.seats>.seat{width:48%;margin:0 2% 10px 0}}
-/* Groot (touch)scherm in liggende stand: alles op één scherm, kolommen scrollen zelf */
+/* Wandscherm (liggend, 16:9): alles precies op één scherm volgens de ontwerpindeling */
 @media(min-width:1100px) and (min-aspect-ratio:4/3){
  html,body{height:100%}
- body{padding:1.2vh 1.2vw;overflow:hidden}
+ body{padding:1.6vh 1.2vw 3.6vh;overflow:hidden}
  main{height:100%;display:flex;flex-direction:column;max-width:none}
- .hdr{flex:none}.hdr>.card{margin-bottom:1.2vh;padding:1.2vh 1.2vw}
  h1{display:none}
- .wide{flex:1 1 auto;min-height:0;align-items:stretch}
- .col{overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;scrollbar-width:thin;padding-right:2px}
- .col>.card{margin-bottom:1.2vh}
- #time{font-size:11vh}#date{font-size:2.2vh}
- .vscene{height:24vh;width:42vh}
- .wheelwrap{max-width:52vh}
- .cA{flex:1 1 0%}.cB{flex:1.35 1 0%}.cC{flex:1.25 1 0%}
- .clk .kk{margin-top:1vh}
+ .wall{flex:1 1 auto;min-height:0;align-items:stretch}
+ .col{display:flex;flex-direction:column;min-height:0;margin-right:1.6vw}
+ .col>.card{margin:0 0 2.2vh;min-height:0;display:flex;flex-direction:column;overflow:hidden;padding:1.4vh 1.1vw;border-radius:1.6vh}
+ .col>.card:last-child{margin-bottom:0}
+ h2{margin-bottom:.8vh}
+ /* kolom 1 */
+ .col>.k-rad{flex:66 1 0%;align-items:center}.k-pod{flex:27 1 0%}
+ .k-rad .wheelwrap{flex:1 1 0%;min-height:0;width:100%;max-width:none;display:flex;justify-content:center}
+ .k-rad canvas{width:auto;height:100%;max-width:100%}
+ .k-rad button.main{margin:1.2vh auto 0;padding:1vh 2.4vw}
+ .k-rad #mute{margin:.6vh auto 0!important;padding:.3vh 1vw;min-height:0}
+ .k-rad .result{min-height:1.4em;margin-top:.6vh;font-size:1.1rem}
+ .k-pod .k-tops,.k-pod #tops{display:none}
+ .k-pod #podium{flex:1 1 0%;min-height:0;display:flex;flex-direction:column;justify-content:flex-end}
+ .b1{height:8vh}.b2{height:5.8vh}.b3{height:4vh}.names{min-height:0}
+ /* kolom 2 */
+ .col>.k-mood{flex:27 1 0%;flex-direction:row;flex-wrap:wrap;align-content:flex-start}
+ .k-mood h2{flex:1 1 100%}.k-mood h2 small{display:none}
+ .k-mood #mtoday{flex:0 0 38%;min-width:0;overflow:hidden;padding-right:1vw}
+ .k-mood #mweek{flex:1 1 0%;min-width:0}
+ .k-mood #mweek>div:first-child{margin-top:0!important}
+ .k-mood #mweek>div:nth-child(2),.k-mood #mweek .mppl{display:none}
+ .k-mood .mwk{height:9vh}.k-mood .mwk .bar{max-height:6vh}
+ .k-mood .mbig{font-size:2.2rem}
+ .k-mood .mppl span{font-size:.75rem;padding:1px 7px}
+ .col>.k-room{flex:73 1 0%}
+ .k-room h2 small,.k-aan h2 small{display:none}
+ .k-room .add{margin-bottom:.8vh}.k-aan .addp{margin:1vh 0 .4vh}
+ .k-room .tray{min-height:0;margin-bottom:.8vh}
+ .k-room .door{height:3.6vh;margin-bottom:.8vh}
+ .k-room .seats{flex:1 1 0%;min-height:0;grid-template-rows:repeat(4,minmax(0,1fr));gap:.9vh}
+ .k-room .seat{min-height:0;padding:.5vh .4vw}
+ .k-room .free{margin-top:1vh}
+ .k-room .moods{margin-top:.3vh}.k-room .moods button{min-width:3.2vh;min-height:3.2vh;font-size:2.1vh;padding:0 .2vw;line-height:1}.k-room .seat .chip{padding:.5vh .9vw;margin:.3vh}.k-room .sl{font-size:1.4vh}.k-room .seat.occ .sl{display:none}.k-room .seat.occ{display:flex;flex-direction:column;justify-content:center;align-items:center}
+ .k-room #sfeer{margin-top:.6vh!important}.k-room .lay{margin-top:.4vh;flex-wrap:nowrap}.k-room .lay button{white-space:nowrap;min-height:0;padding:.3vh .7vw;font-size:.75rem;margin:0 .3vw}.k-room #lmsg{min-height:0;font-size:.75rem}
+ /* kolom 3 */
+ .col>.k-clk{flex:11.5 1 0%;flex-direction:row;align-items:center;justify-content:space-between;margin-bottom:.9vh!important;text-align:left;padding-right:1vw}
+ .k-clk #time{font-size:6.6vh;margin-right:1vw;white-space:nowrap}
+ .k-clk #date{margin:0 .6vw 0 0;font-size:1.6vh;flex:1 1 0%;min-width:0;overflow:hidden;line-height:1.25}
+ .k-clk .kk{margin:0;flex-direction:column}
+ .k-clk .kk>button{margin:.4vh 0 0;padding:.2vh .6vw;font-size:.75rem;min-height:0}
+ .k-clk .kkh{transform:scale(.75);margin:-6px 0}
+ .k-clk .fsb{position:fixed;top:auto;bottom:.4vh;right:auto;left:50%;margin-left:.4vw;z-index:40;padding:.2vh 1vw;font-size:.75rem;background:var(--bg)}
+ .col>.k-wx{flex:14 1 0%;flex-direction:row;align-items:center}
+ .k-wx .vscene,.k-wx #wnote,.k-wx #short{display:none!important}
+ .k-wx .wt{display:flex;align-items:center;min-width:0}
+ .k-wx .deg{font-size:5vh;margin-right:.8vw}
+ .k-wx #wtxt{max-width:9vw;font-size:.8rem;line-height:1.2;margin-right:.8vw}
+ .k-wx .wt{flex:1 1 0%}.k-wx .fc{flex:1 1 0%;margin:0}.k-wx .fc div{font-size:.8rem;margin-right:.4vw;white-space:nowrap}
+ .col>.k-aan{flex:73 1 0%;overflow-y:auto!important;-webkit-overflow-scrolling:touch}
+ .k-aan .zone{flex:none}
+ /* meer: traktatie en radio als paneel */
+ #more{display:none}
+ #themeb{position:fixed;bottom:.4vh;right:1.2vw;left:auto;margin:0;z-index:40;padding:.2vh 1vw;font-size:.75rem;min-height:0;opacity:.75;background:var(--bg)}
+ #moreb{display:block;position:fixed;left:50%;bottom:.4vh;transform:translateX(-100%);margin-left:-.4vw;z-index:40;padding:.2vh 1vw;font-size:.75rem;min-height:0;opacity:.75;background:var(--bg)}
+ body.moreon #more{display:block;position:fixed;left:18vw;right:18vw;top:6vh;bottom:6vh;z-index:60;overflow-y:auto;background:var(--bg);border:1px solid var(--line);border-radius:2vh;padding:2vh 2vw;box-shadow:0 20px 60px rgba(0,0,0,.25)}
+ body.moreon .morehd{display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5vh}
 }
-@media(min-width:1100px) and (min-aspect-ratio:4/3) and (min-height:700px){html{font-size:17px}}
-@media(min-width:1100px) and (min-aspect-ratio:4/3) and (min-height:950px){html{font-size:20px}}
-@media(min-width:1100px) and (min-aspect-ratio:4/3) and (min-height:1300px){html{font-size:26px}}
+@media(min-width:1100px) and (min-aspect-ratio:4/3) and (min-height:650px){html{font-size:14px}}
+@media(min-width:1100px) and (min-aspect-ratio:4/3) and (min-height:850px){html{font-size:17px}}
+@media(min-width:1100px) and (min-aspect-ratio:4/3) and (min-height:1050px){html{font-size:20px}}
+@media(min-width:1100px) and (min-aspect-ratio:4/3) and (min-height:1400px){html{font-size:27px}}
+@media(min-width:1100px) and (min-aspect-ratio:4/3) and (min-height:2000px){html{font-size:38px}}
 /* Touchschermen: grotere tikvlakken */
 @media(pointer:coarse){
  button{min-height:44px;padding:10px 14px}
@@ -120,40 +188,71 @@ li[draggable]{cursor:grab}li.hint{color:#8a6e5c;font-size:.85rem;padding:10px;ju
  #list li .n .wd,#listout li .n .wd{margin:0 0 0 10px;flex-wrap:nowrap}
  #list li .dot,#listout li .dot{display:none}
 }
-.fsb{position:absolute;right:8px;bottom:8px;padding:2px 8px;font-size:.75rem;color:#8a6e5c;opacity:.7;min-height:0!important}.clk{position:relative}
+.fsb{position:absolute;right:8px;bottom:8px;padding:2px 8px;font-size:.75rem;color:var(--mut);opacity:.7;min-height:0!important}.clk{position:relative}
 </style>
+<script>
+/* Terugval voor browsers zonder CSS-variabelen (o.a. het wandscherm, Chrome 39):
+   vervang var(--x) door de kleur van het actieve thema, in de stylesheet en in style-attributen */
+(function () {
+    try { if (window.CSS && CSS.supports && CSS.supports('--a', '0')) return; } catch (e) { }
+    if (!window.MutationObserver) return;
+    var st = document.getElementsByTagName('style')[0]; if (!st) return;
+    var src = st.textContent, D = document.documentElement;
+    var grab = function (sel) { var m = src.match(new RegExp(sel + '\\{([^}]*)\\}')), o = {}; if (m) m[1].replace(/--([\w-]+):([^;]+)/g, function (a, k, v) { o[k] = v; }); return o; };
+    var base = grab(':root'), adst = grab('html\\.th-adst'), V = base;
+    var sub = function (s) { return s.replace(/var\(--([\w-]+)\)/g, function (a, k) { return V[k] || a; }); };
+    var fixEl = function (el) { if (el.nodeType !== 1) return; var s = el.getAttribute('data-vs') || el.getAttribute('style'); if (s && s.indexOf('var(--') >= 0) { el.setAttribute('data-vs', s); el.setAttribute('style', sub(s)); } };
+    var fixTree = function (n) { if (n.nodeType !== 1) return; fixEl(n); var a = n.querySelectorAll('[style*="var(--"],[data-vs]'); for (var i = 0; i < a.length; i++) fixEl(a[i]); };
+    var apply = function () {
+        var k = {}, x; for (x in base) k[x] = base[x];
+        if (/(^|\s)th-adst(\s|$)/.test(D.className)) for (x in adst) k[x] = adst[x];
+        V = k; st.textContent = sub(src); if (document.body) fixTree(document.body);
+    };
+    apply();
+    new MutationObserver(apply).observe(D, { attributes: true, attributeFilter: ['class'] });
+    new MutationObserver(function (ms) {
+        for (var i = 0; i < ms.length; i++) { var m = ms[i]; if (m.type === 'attributes') { var s = m.target.getAttribute('style'); if (s && s.indexOf('var(--') >= 0) fixEl(m.target); } else for (var j = 0; j < m.addedNodes.length; j++) fixTree(m.addedNodes[j]); }
+    }).observe(D, { childList: true, subtree: true, attributes: true, attributeFilter: ['style'] });
+    document.addEventListener('DOMContentLoaded', function () { fixTree(document.body); });
+})();
+</script>
 </head>
 <body>
 <main>
-<div class="hdr"><div class="card clk"><button id="fsb" class="fsb" type="button" title="Volledig scherm">⛶ Volledig scherm</button><div id="time">--:--:--</div><div id="date"></div><div class="kk"><div class="kkh" id="kkh" title="Koekoeksklok"><svg viewBox="0 0 60 64" width="48" height="52" aria-hidden="true"><path d="M30 2 2 24h6v38h44V24h6z" fill="#6b4423"/><path d="M30 2 2 24h56z" fill="#8b5a2b"/><rect x="21" y="26" width="18" height="18" rx="2" fill="#2b1a10"/><circle cx="30" cy="54" r="5" fill="#e6b980"/><path d="M30 54v-3.5M30 54l2.5 1.5" stroke="#3b2417" stroke-width="1.2" stroke-linecap="round"/></svg><div class="kkb" id="kkb"><svg viewBox="0 0 24 18" width="24" height="18"><ellipse cx="12" cy="10" rx="9" ry="6.5" fill="#d9a066"/><circle cx="17" cy="7" r="4.5" fill="#c8773a"/><circle cx="18.3" cy="6" r="1" fill="#2b1a10"/><path d="M21 7.2 24 8l-3 1z" fill="#f1c40f"/><path d="M3 9 0 6l1 6z" fill="#8b5a2b"/></svg></div></div><button id="kkt" type="button" class="reset"></button></div></div>
-<div class="card wx"><div class="vscene" id="vscene"><div class="vworld" id="vworld"></div><div id="vmap" class="vmap"></div><div class="sky" id="sky"></div><button id="vtog" class="vtog" type="button"></button><a class="vtog" style="left:auto;right:8px;text-decoration:none;background:#fff;color:#1a73e8;border-radius:8px;font-weight:600" href="https://www.google.com/maps/search/?api=1&query=52.2333%2C6.1" target="_blank" rel="noopener">📍 Google Maps</a></div>
-<div class="wt"><div class="deg" id="deg">–</div><div id="wtxt"></div><small id="wnote" style="color:#8a6e5c"></small><div class="fc" id="fc"></div><div id="short" style="display:flex;align-items:center;margin-top:10px"></div></div></div></div>
 <h1>🏢 Kamer 0.26 Dashboard</h1>
-<p class="sub">Wie haalt er koffie? Het rad beslist. Volledig willekeurig.</p>
-<div class="wide">
-<div class="col cA"><div class="card">
+<div class="wall">
+<div class="col c1">
+<div class="card k-rad">
     <div class="wheelwrap"><div class="pointer"></div><canvas id="wheel" width="800" height="800"></canvas></div>
     <button class="main" id="spin">Draai het rad!</button>
     <button id="mute" class="reset" style="display:block;margin:8px auto 0">🔊 Geluid aan</button>
     <div class="result" id="result"></div>
   </div>
-  </div>
-<div class="col cB"><div class="card" id="roomcard"><h2>🏢 Kamer 0.26 <small style="font-weight:400;color:#8a6e5c">· sleep jezelf naar een plek om in te checken en kies je humeur (of tik je naam en daarna een plek). Tik op een bezette plek als je even niet achter je bureau zit (de plek wordt grijs). Wie is ingecheckt, staat op het koffierad.</small></h2><div class="add"><input id="name" placeholder="Nieuwe collega aan de kamer toevoegen…" maxlength="24"><button id="addbtn">Toevoegen</button></div><div class="tray" id="tray"></div><div class="door"><span style="font-size:1.4rem;margin-right:8px">🚪</span>Deur</div><div class="seats" id="seats"></div><div id="sfeer" class="hint2" style="margin-top:8px;text-align:center"></div></div>
-
-<div class="card" id="moodcard"><h2>😊 Stemming <small style="font-weight:400;color:#8a6e5c">· op basis van de smileys in de kamer</small></h2><div id="mtoday"></div><div id="mweek"></div></div>
-<div class="card"><h2>🍰 Traktatie-inzicht</h2><div class="add" style="flex-wrap:wrap;align-items:center"><input type="date" id="trd" style="flex:none"><label><input type="checkbox" id="trtr"> traktatie</label><select id="trty" style="font:inherit;padding:6px;border-radius:10px;border:1px solid #e8d9c6;background:#fbf5ec;color:#3b2417"><option value="kroket">🍞 Broodje kroket</option><option value="taart">🍰 Taart</option><option value="milkshake">🍨 Milkshake</option></select><button id="trsave">Opslaan</button></div><div id="trk"></div></div>
-    <div class="card"><h2>📻 Radio <small style="font-weight:400;color:#8a6e5c">· zenders van wie in de kamer zit</small></h2><div id="rlist"></div><div class="add" style="margin-top:8px"><select id="rp" style="font:inherit;padding:6px;border-radius:10px;border:1px solid #e8d9c6;background:#fbf5ec;color:#3b2417"></select><input id="rn" placeholder="Zendernaam" maxlength="30"><input id="ru" placeholder="Stream-URL of website (https://…)"><button id="rsave">Opslaan</button></div><div id="rpanel" style="margin-top:10px"></div><div id="rnow" class="hint2"></div></div></div>
-<div class="col cC"><div class="card">
-      <h2>Aanwezig in kamer 0.26 <small style="font-weight:400;color:#8a6e5c">· staan op het rad voor de koffie (⇄ = in- of uitchecken)</small></h2>
-      <div class="zone" id="zin"><ul id="list"></ul></div><h2 style="margin-top:12px">Nog niet ingecheckt <small style="font-weight:400;color:#8a6e5c">· staan niet op het rad</small></h2><div class="zone" id="zout"><ul id="listout"></ul></div>
-      <button class="reset" id="reset">Tellers terugzetten</button> <button class="reset" id="full">Opnieuw beginnen</button>
-    </div>
-<div class="card">
+<div class="card k-pod">
       <h2>🏆 Koffiepodium</h2>
-      <div id="podium"></div><h2 style="margin-top:16px">📅 Toppers</h2><div id="tops"></div>
-    </div>
+      <div id="podium"></div><h2 class="k-tops" style="margin-top:16px">📅 Toppers</h2><div id="tops"></div>
     </div>
 </div>
+<div class="col c2">
+<div class="card k-mood" id="moodcard"><h2>😊 Stemming <small style="font-weight:400;color:var(--mut)">· op basis van de smileys in de kamer</small></h2><div id="mtoday"></div><div id="mweek"></div></div>
+<div class="card k-room" id="roomcard"><h2>🏢 Kamer 0.26 <small style="font-weight:400;color:var(--mut)">· sleep jezelf naar een plek om in te checken en kies je humeur (of tik je naam en daarna een plek). Tik op een bezette plek als je even niet achter je bureau zit (de plek wordt grijs). Wie is ingecheckt, staat op het koffierad.</small></h2><div class="tray" id="tray"></div><div class="door"><span style="font-size:1.4rem;margin-right:8px">🚪</span>Deur</div><div class="seats" id="seats"></div><div id="sfeer" class="hint2" style="margin-top:8px;text-align:center"></div><div class="lay"><button type="button" id="lsave" title="Huidige kamerindeling opslaan">💾 Indeling opslaan</button><button type="button" id="lload" title="Opgeslagen indeling terugzetten">↩ Terugzetten</button><button type="button" id="lreset" title="Iedereen uitchecken">💨 Leegmaken</button></div><div id="lmsg" class="hint2" style="text-align:center;min-height:1.2em"></div></div>
+</div>
+<div class="col c3">
+<div class="card clk k-clk"><div class="brand">Aan de Stegge Twello</div><button id="fsb" class="fsb" type="button" title="Volledig scherm">⛶ Volledig scherm</button><div id="time">--:--:--</div><div id="date"></div><div class="kk"><div class="kkh" id="kkh" title="Koekoeksklok"><svg viewBox="0 0 60 64" width="48" height="52" aria-hidden="true"><path d="M30 2 2 24h6v38h44V24h6z" fill="#6b4423"/><path d="M30 2 2 24h56z" fill="#8b5a2b"/><rect x="21" y="26" width="18" height="18" rx="2" fill="#2b1a10"/><circle cx="30" cy="54" r="5" fill="#e6b980"/><path d="M30 54v-3.5M30 54l2.5 1.5" stroke="#3b2417" stroke-width="1.2" stroke-linecap="round"/></svg><div class="kkb" id="kkb"><svg viewBox="0 0 24 18" width="24" height="18"><ellipse cx="12" cy="10" rx="9" ry="6.5" fill="#d9a066"/><circle cx="17" cy="7" r="4.5" fill="#c8773a"/><circle cx="18.3" cy="6" r="1" fill="#2b1a10"/><path d="M21 7.2 24 8l-3 1z" fill="#f1c40f"/><path d="M3 9 0 6l1 6z" fill="#8b5a2b"/></svg></div></div><button id="kkt" type="button" class="reset"></button></div></div>
+<div class="card wx k-wx"><div class="vscene" id="vscene"><div class="vworld" id="vworld"></div><div id="vmap" class="vmap"></div><div class="sky" id="sky"></div><button id="vtog" class="vtog" type="button"></button><a class="vtog" style="left:auto;right:8px;text-decoration:none;background:#fff;color:#1a73e8;border-radius:8px;font-weight:600" href="https://www.google.com/maps/search/?api=1&query=52.2333%2C6.1" target="_blank" rel="noopener">📍 Google Maps</a></div>
+<div class="wt"><div class="deg" id="deg">–</div><div id="wtxt"></div><small id="wnote" style="color:var(--mut)"></small><div class="fc" id="fc"></div><div id="short" style="display:flex;align-items:center;margin-top:10px"></div></div></div>
+<div class="card k-aan">
+      <h2>Aanwezig in kamer 0.26 <small style="font-weight:400;color:var(--mut)">· staan op het rad voor de koffie (⇄ = in- of uitchecken)</small></h2>
+      <div class="zone" id="zin"><ul id="list"></ul></div><h2 style="margin-top:12px">Nog niet ingecheckt <small style="font-weight:400;color:var(--mut)">· staan niet op het rad</small></h2><div class="zone" id="zout"><ul id="listout"></ul></div><div class="add addp"><input id="name" placeholder="Nieuwe collega aan de kamer toevoegen…" maxlength="24"><button id="addbtn">Toevoegen</button></div>
+      <button class="reset" id="reset">Tellers terugzetten</button> <button class="reset" id="full">Opnieuw beginnen</button>
+    </div>
+</div>
+</div>
+<div id="more"><div class="morehd"><b>Meer</b><button id="morex" type="button">✕ Sluiten</button></div>
+<div class="card"><h2>🍰 Traktatie-inzicht</h2><div class="add" style="flex-wrap:wrap;align-items:center"><input type="date" id="trd" style="flex:none"><label><input type="checkbox" id="trtr"> traktatie</label><select id="trty" style="font:inherit;padding:6px;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:var(--ink)"><option value="kroket">🍞 Broodje kroket</option><option value="taart">🍰 Taart</option><option value="milkshake">🍨 Milkshake</option></select><button id="trsave">Opslaan</button></div><div id="trk"></div></div>
+<div class="card"><h2>📻 Radio <small style="font-weight:400;color:var(--mut)">· zenders van wie in de kamer zit</small></h2><div id="rlist"></div><div class="add rsrch" style="margin-top:10px;align-items:center"><input id="rq" placeholder="Zoek een zender op Internetradio.nl…" maxlength="60"><a id="rgo" class="rbtn" href="https://www.internetradio.nl/" target="_blank" rel="noopener">🔎 Zoeken</a><a class="rbtn" href="https://www.internetradio.nl/" target="_blank" rel="noopener">Internetradio.nl ↗</a></div><div class="hint2" style="margin:-4px 0 6px">Gevonden? Kopieer de link van de zenderpagina en sla hem hieronder op bij jouw naam.</div><div class="add" style="margin-top:8px"><select id="rp" style="font:inherit;padding:6px;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:var(--ink)"></select><input id="rn" placeholder="Zendernaam" maxlength="30"><input id="ru" placeholder="Link van Internetradio.nl of stream (https://…)"><button id="rsave">⭐ Opslaan als voorkeur</button></div><div id="rpanel" style="margin-top:10px"></div><div id="rnow" class="hint2"></div></div>
+</div>
+<button id="themeb" type="button"></button><button id="moreb" type="button">⋯ Traktatie &amp; radio</button>
 </main>
 <canvas id="conf" style="position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:50"></canvas>
 <script>
@@ -195,14 +294,21 @@ li[draggable]{cursor:grab}li.hint{color:#8a6e5c;font-size:.85rem;padding:10px;ju
 </script>
 <script>
 "use strict";
-var COLORS = ['#8b4a2b', '#d9a066', '#5c3a21', '#c8773a', '#a0522d', '#e6b980', '#6f4e37', '#b5651d'];
+var COLORS_K = ['#8b4a2b', '#d9a066', '#5c3a21', '#c8773a', '#a0522d', '#e6b980', '#6f4e37', '#b5651d'];
+var COLORS_A = ['#1f4e79', '#7fa7cf', '#163a5c', '#2f6ea5', '#3d7fbf', '#a9c6e3', '#25466b', '#5a92c7'];
+var THEME = 'adst';
+try { THEME = localStorage.getItem('koffierad_theme') || 'adst'; } catch (e) { }
+var COLORS = THEME === 'adst' ? COLORS_A : COLORS_K;
+var TINK = function () { return THEME === 'adst' ? '#14263d' : '#3b2417'; };
+var TBG = function () { return THEME === 'adst' ? '#f3f5f8' : '#fbf5ec'; };
+if (THEME === 'adst') document.documentElement.className += ' th-adst';
 var people = [{ n: 'Stephan', c: 0 }, { n: 'Jan Willem', c: 0 }, { n: 'Amel', c: 0 }, { n: 'Richard', c: 0 }, { n: 'Kevin', c: 0 }];
 try { var s = JSON.parse(localStorage.getItem('koffierad') || 'null'); if (Array.isArray(s) && s.length) people = s; } catch (e) { }
 var MAXP = 8, WD = ['ma', 'di', 'wo', 'do', 'vr'], editI = null;
 people = people.filter(function (p) { return !p.opt && p.d === undefined; });
 people.forEach(function (p) { if (!Array.isArray(p.days)) p.days = [1, 2, 3, 4, 5]; });
 var jeName = function () { var j = people.find(function (p) { return p.opt; }); return j ? j.n : 'Jan Erik'; };
-people.forEach(function (p) { if (/^kevin$/i.test(p.n) && !p.radio) p.radio = { n: 'RADIONL', u: 'https://radionl.fm/' }; });
+people.forEach(function (p) { if (/^kevin$/i.test(p.n) && !p.radio) p.radio = { n: 'RADIONL', u: 'https://radionl.fm/' }; if (p.radio && !Array.isArray(p.radios)) p.radios = [p.radio]; });
 var log = [];
 try { var l = JSON.parse(localStorage.getItem('koffierad_log') || '[]'); if (Array.isArray(l)) log = l; } catch (e) { }
 var save = function () { try { localStorage.setItem('koffierad', JSON.stringify(people)); localStorage.setItem('koffierad_log', JSON.stringify(log)); } catch (e) { } };
@@ -217,13 +323,13 @@ function draw() {
     ctx.clearRect(0, 0, W, W);
     ctx.save();
     ctx.translate(W / 2, W / 2);
-    ctx.beginPath(); ctx.arc(0, 0, R + 10, 0, 7); ctx.fillStyle = '#3b2417'; ctx.fill();
+    ctx.beginPath(); ctx.arc(0, 0, R + 10, 0, 7); ctx.fillStyle = TINK(); ctx.fill();
     ctx.rotate(rot);
     var seg = 2 * Math.PI / Math.max(n, 1);
     for (var i = 0; i < n; i++) {
         var a0 = -Math.PI / 2 + i * seg, a1 = a0 + seg, c = col(i);
         ctx.beginPath(); ctx.moveTo(0, 0); ctx.arc(0, 0, R, a0, a1); ctx.closePath();
-        ctx.fillStyle = c; ctx.fill(); ctx.strokeStyle = '#fbf5ec'; ctx.lineWidth = 3; ctx.stroke();
+        ctx.fillStyle = c; ctx.fill(); ctx.strokeStyle = TBG(); ctx.lineWidth = 3; ctx.stroke();
         ctx.save();
         ctx.rotate(a0 + seg / 2);
         ctx.textAlign = 'right'; ctx.textBaseline = 'middle';
@@ -235,7 +341,7 @@ function draw() {
         ctx.fillText(t, R - 24, 0);
         ctx.restore();
     }
-    ctx.beginPath(); ctx.arc(0, 0, 46, 0, 7); ctx.fillStyle = '#3b2417'; ctx.fill();
+    ctx.beginPath(); ctx.arc(0, 0, 46, 0, 7); ctx.fillStyle = TINK(); ctx.fill();
     ctx.font = '42px serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
     ctx.fillText('☕', 0, 3);
     ctx.restore();
@@ -299,7 +405,7 @@ function spin() {
             tuneStop();
             fanfare();
             confetti();
-            document.getElementById('result').innerHTML = '☕ <span style="color:#b5541c">' + esc(P[win].n) + '</span> haalt de koffie! (+1)';
+            document.getElementById('result').innerHTML = '☕ <span style="color:var(--pri)">' + esc(P[win].n) + '</span> haalt de koffie! (+1)';
             render();
         }
     })(t0);
@@ -383,7 +489,9 @@ function renameDo() {
 }
 document.addEventListener('keydown', function (e) { if (e.target && e.target.id === 'ren') { if (e.key === 'Enter') renameDo(); else if (e.key === 'Escape') { editI = null; render(); } } });
 function trLabel() { var l = document.getElementById('trjel'); if (l) l.textContent = ' ' + jeName() + ' er (alleen di)'; }
+function sortPeople() { if (editI !== null) return; people.sort(function (a, b) { var x = a.n.toLowerCase(), y = b.n.toLowerCase(); try { return x.localeCompare(y, 'nl', { sensitivity: 'base' }); } catch (e) { return x < y ? -1 : x > y ? 1 : 0; } }); }
 function render() {
+    sortPeople();
     draw();
     var ni = document.getElementById('name'), full = people.length >= MAXP;
     ni.disabled = full; document.getElementById('addbtn').disabled = full;
@@ -397,8 +505,8 @@ function render() {
     }
     var td = new Date().getDay();
     var daysH = function (p, i) { return '<div class="wd">' + WD.map(function (w, k) { var d = k + 1, on = p.days.indexOf(d) >= 0; return '<button data-a="day" data-d="' + d + '" data-i="' + i + '" class="' + (on ? 'on' : '') + (d === td ? ' td' : '') + '" aria-pressed="' + on + '" title="' + (on ? 'Aanwezig' : 'Afwezig') + ' op ' + w + '">' + w + '</button>'; }).join('') + '</div>'; };
-    var nameH = function (p, i) { return editI === i ? '<span class="n"><input id="ren" value="' + esc(p.n) + '" maxlength="24" style="width:100%;padding:3px 6px;font:inherit;border:1px solid #e8d9c6;border-radius:8px"></span><button data-a="ok" data-i="' + i + '" aria-label="Naam opslaan">✓</button><button data-a="cancel" data-i="' + i + '" aria-label="Annuleren">↩</button>' : '<span class="n">' + esc(p.n) + ' <button data-a="edit" data-i="' + i + '" class="ed" title="Naam bewerken" aria-label="Bewerk naam ' + esc(p.n) + '">✎</button>' + daysH(p, i) + '</span>'; };
-    var row = function (p, i, on) { if (editI === i) return '<li data-i="' + i + '"><span class="dot" style="background:#9a8878"></span>' + nameH(p, i) + '</li>'; return '<li draggable="true" data-i="' + i + '"><span class="dot" style="background:' + (on ? col(A.indexOf(p)) : '#9a8878') + '"></span>' + nameH(p, i) + '<button data-a="min" data-i="' + i + '" aria-label="Min één">−</button><span class="c" style="min-width:2.6em;text-align:center">' + p.c + '×</span><button data-a="plus" data-i="' + i + '" aria-label="Plus één">+</button><button data-a="tog" data-i="' + i + '" title="Op het rad / afwezig" aria-label="Verplaats ' + esc(p.n) + '">⇄</button>' + (p.opt ? '' : '<button data-a="del" data-i="' + i + '" title="Verwijderen" aria-label="Verwijder ' + esc(p.n) + '">✕</button>') + '</li>'; };
+    var nameH = function (p, i) { return editI === i ? '<span class="n"><input id="ren" value="' + esc(p.n) + '" maxlength="24" style="width:100%;padding:3px 6px;font:inherit;border:1px solid var(--line);border-radius:8px"></span><button data-a="ok" data-i="' + i + '" aria-label="Naam opslaan">✓</button><button data-a="cancel" data-i="' + i + '" aria-label="Annuleren">↩</button>' : '<span class="n">' + esc(p.n) + ' <button data-a="edit" data-i="' + i + '" class="ed" title="Naam bewerken" aria-label="Bewerk naam ' + esc(p.n) + '">✎</button>' + daysH(p, i) + '</span>'; };
+    var row = function (p, i, on) { if (editI === i) return '<li data-i="' + i + '"><span class="dot" style="background:var(--off)"></span>' + nameH(p, i) + '</li>'; return '<li draggable="true" data-i="' + i + '"><span class="dot" style="background:' + (on ? col(A.indexOf(p)) : '#9a8878') + '"></span>' + nameH(p, i) + '<button data-a="min" data-i="' + i + '" aria-label="Min één">−</button><span class="c" style="min-width:2.6em;text-align:center">' + p.c + '×</span><button data-a="plus" data-i="' + i + '" aria-label="Plus één">+</button><button data-a="tog" data-i="' + i + '" title="Op het rad / afwezig" aria-label="Verplaats ' + esc(p.n) + '">⇄</button>' + (p.opt ? '' : '<button data-a="del" data-i="' + i + '" title="Verwijderen" aria-label="Verwijder ' + esc(p.n) + '">✕</button>') + '</li>'; };
     var lin = people.map(function (p, i) { return isIn(p) && seatOf(p.n) !== undefined ? row(p, i, A.indexOf(p) >= 0) : ''; }).join('');
     var lout = people.map(function (p, i) { return !(isIn(p) && seatOf(p.n) !== undefined) ? row(p, i, false) : ''; }).join('');
     document.getElementById('list').innerHTML = lin || '<li class="hint">Sleep iemand hierheen</li>';
@@ -417,7 +525,7 @@ function confetti() {
     if (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     var c = document.getElementById('conf'), x = c.getContext('2d');
     c.width = innerWidth; c.height = innerHeight;
-    var cols = ['#c8773a', '#e6b980', '#b5541c', '#f5c542', '#6f4e37', '#ffffff', '#e85d75', '#4fb3a5'], ps = [];
+    var cols = THEME === 'adst' ? ['#1f4e79', '#7fa7cf', '#f2a900', '#2f6ea5', '#ffffff', '#a9c6e3', '#14263d', '#f2a900'] : ['#c8773a', '#e6b980', '#b5541c', '#f5c542', '#6f4e37', '#ffffff', '#e85d75', '#4fb3a5'], ps = [];
     var bursts = [[c.width / 2, c.height * .45, 0], [0, c.height * .7, 1], [c.width, c.height * .7, -1]];
     for (var i = 0; i < 420; i++) {
         var B = bursts[i % 3], side = B[2];
@@ -462,7 +570,7 @@ function trk() {
     var ent = Object.entries(days).sort(function (a, b) { return a[0] < b[0] ? 1 : -1; });
     var st = function (f) { var r = ent.filter(function (e) { return f(e[1]); }); return { n: r.length, t: r.filter(function (e) { return e[1].tr; }).length }; };
     var w = st(function (d) { return d.je; }), z = st(function (d) { return !d.je; });
-    var bar = function (lab, s, c) { var p = s.n ? Math.round(s.t / s.n * 100) : 0; return '<div style="margin:8px 0"><div style="display:flex;justify-content:space-between;font-size:.85rem"><span>' + lab + '</span><span>' + (s.n ? s.t + ' van ' + s.n + ' dagen · ' + p + '%' : 'nog geen data') + '</span></div><div style="height:16px;background:#fbf5ec;border:1px solid #e8d9c6;border-radius:8px;overflow:hidden"><div style="height:100%;width:' + p + '%;background:' + c + '"></div></div></div>'; };
+    var bar = function (lab, s, c) { var p = s.n ? Math.round(s.t / s.n * 100) : 0; return '<div style="margin:8px 0"><div style="display:flex;justify-content:space-between;font-size:.85rem"><span>' + lab + '</span><span>' + (s.n ? s.t + ' van ' + s.n + ' dagen · ' + p + '%' : 'nog geen data') + '</span></div><div style="height:16px;background:var(--bg);border:1px solid var(--line);border-radius:8px;overflow:hidden"><div style="height:100%;width:' + p + '%;background:' + c + '"></div></div></div>'; };
     var pw = w.n ? w.t / w.n : 0, pz = z.n ? z.t / z.n : 0;
     var note = '';
     if (w.n && z.n) note = '<div class="hint2">' + (pw > pz ? 'Met ' + esc(jeName()) + ' is er vaker traktatie.' : pw < pz ? 'Zonder ' + esc(jeName()) + ' is er vaker traktatie.' : 'Even vaak traktatie met en zonder ' + esc(jeName()) + '.') + '</div>';
@@ -470,7 +578,7 @@ function trk() {
     var tc = { kroket: 0, taart: 0, milkshake: 0 };
     ent.forEach(function (e) { if (e[1].tr && tc[e[1].ty] !== undefined) tc[e[1].ty]++; });
     var mx = Math.max.apply(null, [1].concat(Object.keys(tc).map(function (k) { return tc[k]; })));
-    var ch = '<div style="margin-top:12px"><b style="font-size:.8rem;color:#8a6e5c">Wat was de traktatie?</b><div style="display:flex;align-items:flex-end;height:130px;margin-top:6px;border-bottom:2px solid #e8d9c6">' + Object.keys(tc).map(function (k) { return '<div style="margin:0 5px;flex:1;text-align:center;display:flex;flex-direction:column;justify-content:flex-end;height:100%"><div style="font-weight:700">' + tc[k] + '</div><div style="height:' + Math.round(tc[k] / mx * 90) + 'px;min-height:3px;background:#b5541c;border-radius:6px 6px 0 0"></div></div>'; }).join('') + '</div><div style="display:flex;font-size:.8rem;text-align:center;margin-top:4px">' + Object.keys(tc).map(function (k) { return '<div style="flex:1;margin:0 5px">' + TY[k] + '<br>' + NM[k] + '</div>'; }).join('') + '</div></div>';
+    var ch = '<div style="margin-top:12px"><b style="font-size:.8rem;color:var(--mut)">Wat was de traktatie?</b><div style="display:flex;align-items:flex-end;height:130px;margin-top:6px;border-bottom:2px solid var(--line)">' + Object.keys(tc).map(function (k) { return '<div style="margin:0 5px;flex:1;text-align:center;display:flex;flex-direction:column;justify-content:flex-end;height:100%"><div style="font-weight:700">' + tc[k] + '</div><div style="height:' + Math.round(tc[k] / mx * 90) + 'px;min-height:3px;background:var(--pri);border-radius:6px 6px 0 0"></div></div>'; }).join('') + '</div><div style="display:flex;font-size:.8rem;text-align:center;margin-top:4px">' + Object.keys(tc).map(function (k) { return '<div style="flex:1;margin:0 5px">' + TY[k] + '<br>' + NM[k] + '</div>'; }).join('') + '</div></div>';
     document.getElementById('trk').innerHTML = ch + (rec ? '<ul style="margin-top:8px">' + rec + '</ul>' : '<div class="hint2">Registreer per dag of er traktatie was.</div>');
 }
 document.getElementById('trd').value = iso(new Date());
@@ -527,7 +635,7 @@ function moodRender() {
     var sc = function (v) { return (v + 1).toFixed(1).replace('.', ',') + '/5'; };
     var t = ML[tk] || {}, ta = avg(vals(t));
     var ppl = Object.keys(t).sort().map(function (n) { return '<span>' + esc(n) + ' ' + MOODS[t[n]][0] + '</span>'; }).join('');
-    document.getElementById('mtoday').innerHTML = '<div class="mrow"><div style="display:flex;align-items:center"><span class="mbig">' + face(ta) + '</span><div><b>Daggemiddelde vandaag</b><br><small style="color:#8a6e5c">' + (ta === null ? 'Nog niemand heeft een smiley gekozen' : MOODS[Math.round(ta)][1] + ' · ' + sc(ta) + ' · ' + vals(t).length + ' ' + (vals(t).length === 1 ? 'persoon' : 'personen')) + '</small></div></div></div>' + (ppl ? '<div class="mppl">' + ppl + '</div>' : '');
+    document.getElementById('mtoday').innerHTML = '<div class="mrow"><div style="display:flex;align-items:center"><span class="mbig">' + face(ta) + '</span><div><b>Daggemiddelde vandaag</b><br><small style="color:var(--mut)">' + (ta === null ? 'Nog niemand heeft een smiley gekozen' : MOODS[Math.round(ta)][1] + ' · ' + sc(ta) + ' · ' + vals(t).length + ' ' + (vals(t).length === 1 ? 'persoon' : 'personen')) + '</small></div></div></div>' + (ppl ? '<div class="mppl">' + ppl + '</div>' : '');
     var dow = now.getDay(), mon = new Date(now); mon.setDate(now.getDate() - ((dow + 6) % 7));
     var all = [], per = {}, cols = ['ma', 'di', 'wo', 'do', 'vr'].map(function (w, k) {
         var d = new Date(mon); d.setDate(mon.getDate() + k); var dk = iso(d), v = vals(ML[dk]), a = avg(v);
@@ -536,9 +644,9 @@ function moodRender() {
     });
     var wa = avg(all);
     var bars = cols.map(function (c) { return '<div class="' + (c.td ? 'td' : '') + '"><div>' + (c.a === null ? '' : face(c.a)) + '</div><div style="font-weight:700;font-size:.75rem">' + (c.a === null ? '' : (c.a + 1).toFixed(1).replace('.', ',')) + '</div><div class="bar" style="height:' + (c.a === null ? 0 : Math.round((c.a + 1) / 5 * 80)) + 'px" title="' + (c.a === null ? 'geen data' : sc(c.a) + ' (' + c.n + ')') + '"></div></div>'; }).join('');
-    var lab = cols.map(function (c) { return '<div' + (c.td ? ' style="font-weight:700;color:#3b2417"' : '') + '>' + c.w + '</div>'; }).join('');
+    var lab = cols.map(function (c) { return '<div' + (c.td ? ' style="font-weight:700;color:var(--ink)"' : '') + '>' + c.w + '</div>'; }).join('');
     var pw = Object.keys(per).sort().map(function (n) { return '<span>' + esc(n) + ' ' + face(avg(per[n])) + '</span>'; }).join('');
-    document.getElementById('mweek').innerHTML = '<div style="margin-top:14px;display:flex;align-items:center"><span class="mbig" style="font-size:2rem">' + face(wa) + '</span><div><b>Weekgemiddelde</b><br><small style="color:#8a6e5c">' + (wa === null ? 'Nog geen smileys deze week' : MOODS[Math.round(wa)][1] + ' · ' + sc(wa) + ' · ' + all.length + ' keer gekozen') + '</small></div></div><div style="font-size:.8rem;color:#8a6e5c;margin-top:10px">Daggemiddelde per dag (1 = 😡, 5 = 😄)</div><div class="mwk">' + bars + '</div><div class="mlab">' + lab + '</div>' + (pw ? '<div class="mppl" style="margin-top:10px">' + pw + '</div>' : '');
+    document.getElementById('mweek').innerHTML = '<div style="margin-top:14px;display:flex;align-items:center"><span class="mbig" style="font-size:2rem">' + face(wa) + '</span><div><b>Weekgemiddelde</b><br><small style="color:var(--mut)">' + (wa === null ? 'Nog geen smileys deze week' : MOODS[Math.round(wa)][1] + ' · ' + sc(wa) + ' · ' + all.length + ' keer gekozen') + '</small></div></div><div style="font-size:.8rem;color:var(--mut);margin-top:10px">Daggemiddelde per dag (1 = 😡, 5 = 😄)</div><div class="mwk">' + bars + '</div><div class="mlab">' + lab + '</div>' + (pw ? '<div class="mppl" style="margin-top:10px">' + pw + '</div>' : '');
 }
 document.getElementById('roomcard').onclick = function (e) {
     var m = e.target.closest('button[data-m]');
@@ -682,7 +790,7 @@ function advice(hi, pr, lab) {
     if (hi === null) { sh.innerHTML = ''; return; }
     var lvl = hi >= 20 && pr < 40 ? 2 : hi >= 16 ? 1 : 0;
     var icon = lvl ? '<svg style="margin-right:10px" width="34" height="48" viewBox="0 0 34 48" aria-hidden="true"><path d="M6 8h22l3 18h-10l-4-9-4 9H3z" fill="#e0a030"/></svg>' : '<svg style="margin-right:10px" width="34" height="48" viewBox="0 0 34 48" aria-hidden="true"><path d="M6 2h22l3 44h-9l-5-30-5 30H3z" fill="#4a6fa5"/></svg>';
-    sh.innerHTML = icon + '<div><b>Korte broek? ' + ['Nee, lange broek', 'Misschien, twijfelgeval', 'Ja!'][lvl] + '</b><br><small style="color:#8a6e5c">Max ' + hi + '° en ' + pr + '% neerslag (' + lab + ') · eigen inschatting</small></div>';
+    sh.innerHTML = icon + '<div><b>Korte broek? ' + ['Nee, lange broek', 'Misschien, twijfelgeval', 'Ja!'][lvl] + '</b><br><small style="color:var(--mut)">Max ' + hi + '° en ' + pr + '% neerslag (' + lab + ') · eigen inschatting</small></div>';
 }
 function wx() {
     var n = new Date(), td = iso(n), hh = (+new Intl.DateTimeFormat('nl-NL', { hour: 'numeric', hour12: false, timeZone: 'Europe/Amsterdam' }).format(n)) % 24;
@@ -697,7 +805,7 @@ function wx() {
             var w = wmo(LW.hourly.weather_code[i]), t = Math.round(LW.hourly.temperature_2m[i]), p = LW.hourly.precipitation_probability[i];
             if (hi === null || t > hi) hi = t;
             if (p > pr) pr = p;
-            out.push('<div><b>' + (k === 0 ? 'Nu' : T[i].slice(11, 16)) + '</b><br>' + w[1] + '<br>' + t + '°<br><span style="color:#8a6e5c">' + (p === null || p === undefined ? '–' : p + '%') + '</span></div>');
+            out.push('<div><b>' + (k === 0 ? 'Nu' : T[i].slice(11, 16)) + '</b><br>' + w[1] + '<br>' + t + '°<br><span style="color:var(--mut)">' + (p === null || p === undefined ? '–' : p + '%') + '</span></div>');
         }
         fc = out.join('');
         note = 'Live · bijgewerkt ' + LW.current.time.slice(11, 16);
@@ -707,7 +815,7 @@ function wx() {
         if (fresh) deg = WX.t + '°';
         note = 'Momentopname van ' + new Date(WX.at + 'T12:00:00').toLocaleDateString('nl-NL', { weekday: 'short', day: 'numeric', month: 'short' }) + (fresh ? '' : ' (verouderd)');
         var f = WX.days.filter(function (d) { return d[0] >= td; }).slice(0, 5);
-        fc = f.map(function (d) { return '<div><b>' + new Date(d[0] + 'T12:00:00').toLocaleDateString('nl-NL', { weekday: 'short' }) + '</b><br>' + d[4] + '<br>' + d[1] + '° / ' + d[2] + '°<br><span style="color:#8a6e5c">' + d[3] + '%</span></div>'; }).join('') || '<div style="flex:1;text-align:left;font-size:.85rem;color:#8a6e5c">Voorspelling verouderd</div>';
+        fc = f.map(function (d) { return '<div><b>' + new Date(d[0] + 'T12:00:00').toLocaleDateString('nl-NL', { weekday: 'short' }) + '</b><br>' + d[4] + '<br>' + d[1] + '° / ' + d[2] + '°<br><span style="color:var(--mut)">' + d[3] + '%</span></div>'; }).join('') || '<div style="flex:1;text-align:left;font-size:.85rem;color:var(--mut)">Voorspelling verouderd</div>';
         var d0 = WX.days.filter(function (d) { return d[0] === td; })[0];
         if (d0) { hi = d0[1]; pr = d0[3]; lab = 'vandaag'; }
     }
@@ -792,7 +900,7 @@ var rvol = 80, RA = null, rnow = '';
 function radioRender() {
     var st = people.filter(function (p) { return isIn(p) && seatOf(p.n) !== undefined && p.radio && p.radio.u; });
     if (rnow && !st.some(function (p) { return p.radio.u === rnow; })) { rnow = ''; try { RA.pause(); } catch (e) { } }
-    document.getElementById('rlist').innerHTML = st.length ? '<ul>' + st.map(function (p) { return '<li><span class="n"><b>' + esc(p.radio.n || 'Zender') + '</b> <small style="color:#8a6e5c">van ' + esc(p.n) + '</small></span><button data-r="' + people.indexOf(p) + '">' + (isWeb(p.radio.u) ? '↗ Open' : (rnow === p.radio.u ? '■ Stop' : '▶ Speel')) + '</button></li>'; }).join('') + '</ul><div style="margin-top:8px"><button data-r="rand">🎲 Verras me</button> <button data-r="stop">■ Stop radio</button></div>' : '<div class="hint2">Niemand in de kamer heeft een zender ingesteld. Voeg er hieronder een toe.</div>';
+    document.getElementById('rlist').innerHTML = st.length ? '<ul>' + st.map(function (p) { return '<li><span class="n"><b>' + esc(p.radio.n || 'Zender') + '</b> <small style="color:var(--mut)">van ' + esc(p.n) + '</small></span><button data-r="' + people.indexOf(p) + '">' + (isWeb(p.radio.u) ? '↗ Open' : (rnow === p.radio.u ? '■ Stop' : '▶ Speel')) + '</button></li>'; }).join('') + '</ul><div style="margin-top:8px"><button data-r="rand">🎲 Verras me</button> <button data-r="stop">■ Stop radio</button></div>' : '<div class="hint2">Niemand in de kamer heeft een zender ingesteld. Voeg er hieronder een toe.</div>';
     var sel = document.getElementById('rp'), cur = sel.value;
     sel.innerHTML = people.map(function (p, i) { return '<option value="' + i + '">' + esc(p.n) + '</option>'; }).join('');
     if (cur) sel.value = cur;
@@ -826,27 +934,92 @@ document.getElementById('rlist').onclick = function (e) {
     if (rnow === p.radio.u) radioStop(); else radioPlay(p.radio.u);
 };
 function radioPanel() {
+    radioPanel0();
+    var p = people[+document.getElementById('rp').value], el = document.getElementById('rpanel');
+    if (!p || !p.radios || !p.radios.length) return;
+    el.insertAdjacentHTML('beforeend', '<div style="margin-top:8px"><b style="font-size:.85rem;color:var(--mut)">Opgeslagen zenders van ' + esc(p.n) + '</b><ul class="rfav">' + p.radios.map(function (r, k) { var pref = p.radio && p.radio.u === r.u; return '<li><span class="n">' + (pref ? '⭐ ' : '') + esc(r.n) + (pref ? ' <small style="color:var(--mut)">(voorkeur)</small>' : '') + '</span>' + (isWeb(r.u) ? '<a class="rbtn" style="padding:2px 8px" href="' + esc(r.u) + '" target="_blank" rel="noopener">↗</a>' : '') + (pref ? '' : '<button data-fav="' + k + '" title="Maak voorkeur">⭐</button>') + '<button data-del="' + k + '" title="Verwijder">✕</button></li>'; }).join('') + '</ul></div>');
+}
+function radioPanel0() {
     var i = +document.getElementById('rp').value, p = people[i], el = document.getElementById('rpanel');
     if (!p) { el.innerHTML = ''; return; }
     if (!p.radio && /^kevin$/i.test(p.n)) { p.radio = { n: 'RADIONL', u: 'https://radionl.fm/' }; save(); }
     if (!p.radio || !p.radio.u) { el.innerHTML = '<div class="hint2">' + esc(p.n) + ' heeft nog geen zender. Vul hierboven een zender in.</div>'; return; }
     var web = isWeb(p.radio.u), on = rnow === p.radio.u, nm = esc(p.radio.n || 'zender');
-    el.innerHTML = '<div style="border:1px solid #e8d9c6;border-radius:12px;padding:10px"><b>📻 ' + nm + '</b> <small style="color:#8a6e5c">van ' + esc(p.n) + '</small><div style="display:flex;align-items:center;margin-top:8px"><button id="rplay" style="margin-right:12px">' + (web ? '↗ Open ' + nm : (on ? '■ Stop' : '▶ Play')) + '</button>' + (web ? '' : '<span style="margin-right:6px">🔈</span><input id="rvol" type="range" min="0" max="100" value="' + rvol + '" style="flex:1;min-width:80px"><span style="margin-left:6px">🔊</span>') + '</div>' + (web ? '<div class="hint2" style="margin-top:6px">Dit is een website en geen stream, dus het volume regel je op de zender zelf. Vul hierboven een stream-URL in voor een Play-knop en volumeschuif.</div>' : '') + '</div>';
+    el.innerHTML = '<div style="border:1px solid var(--line);border-radius:12px;padding:10px"><b>📻 ' + nm + '</b> <small style="color:var(--mut)">van ' + esc(p.n) + '</small><div style="display:flex;align-items:center;margin-top:8px"><button id="rplay" style="margin-right:12px">' + (web ? '↗ Open ' + nm : (on ? '■ Stop' : '▶ Play')) + '</button>' + (web ? '' : '<span style="margin-right:6px">🔈</span><input id="rvol" type="range" min="0" max="100" value="' + rvol + '" style="flex:1;min-width:80px"><span style="margin-left:6px">🔊</span>') + '</div>' + (web ? '<div class="hint2" style="margin-top:6px">Dit is een website en geen stream, dus het volume regel je op de zender zelf. Vul hierboven een stream-URL in voor een Play-knop en volumeschuif.</div>' : '') + '</div>';
 }
 document.getElementById('rp').onchange = radioPanel;
-document.getElementById('rpanel').onclick = function (e) { var b = e.target.closest('button'); if (!b || b.id !== 'rplay') return; var p = people[+document.getElementById('rp').value]; if (!p || !p.radio) return; if (isWeb(p.radio.u) || rnow !== p.radio.u) radioPlay(p.radio.u); else radioStop(); };
+document.getElementById('rpanel').onclick = function (e) { var b = e.target.closest('button'); if (!b) return;
+    if (b.dataset.fav !== undefined || b.dataset.del !== undefined) {
+        var q = people[+document.getElementById('rp').value]; if (!q || !q.radios) return;
+        if (b.dataset.fav !== undefined) q.radio = q.radios[+b.dataset.fav];
+        else { var gone = q.radios.splice(+b.dataset.del, 1)[0]; if (q.radio && gone && q.radio.u === gone.u) q.radio = q.radios[0]; if (!q.radios.length) delete q.radio; }
+        save(); radioRender(); return;
+    }
+    if (b.id !== 'rplay') return; var p = people[+document.getElementById('rp').value]; if (!p || !p.radio) return; if (isWeb(p.radio.u) || rnow !== p.radio.u) radioPlay(p.radio.u); else radioStop(); };
 document.getElementById('rpanel').oninput = function (e) { if (e.target.id === 'rvol') { rvol = +e.target.value; if (RA) RA.volume = rvol / 100; } };
 document.getElementById('rsave').onclick = function () {
     var i = +document.getElementById('rp').value, n = document.getElementById('rn').value.trim(), u = document.getElementById('ru').value.trim();
     if (!people[i] || !u) return;
     if (!/^https?:\/\//i.test(u)) { document.getElementById('rnow').textContent = 'Een stream-URL begint met https://'; return; }
-    people[i].radio = { n: n, u: u };
+    var p = people[i], st = { n: n || u.replace(/^https?:\/\/(www\.)?/i, '').split('/').filter(Boolean).pop() || 'Zender', u: u };
+    p.radios = (p.radios || []).filter(function (r) { return r.u !== u; }); p.radios.unshift(st); p.radio = st;
     save();
     document.getElementById('rn').value = ''; document.getElementById('ru').value = ''; document.getElementById('rnow').textContent = '';
     radioRender();
 };
+(function () {
+    var q = document.getElementById('rq'), a = document.getElementById('rgo');
+    var upd = function () { var v = q.value.trim(); a.href = v ? 'https://www.google.com/search?q=' + encodeURIComponent('site:internetradio.nl ' + v) : 'https://www.internetradio.nl/'; };
+    q.addEventListener('input', upd); q.addEventListener('keydown', function (e) { if (e.key === 'Enter') { upd(); a.click(); } }); upd();
+})();
+(function () {
+    var b = document.getElementById('themeb');
+    var lab = function () { b.textContent = THEME === 'adst' ? '🎨 Thema: ADST' : '🎨 Thema: Koffie'; };
+    b.onclick = function () {
+        THEME = THEME === 'adst' ? 'koffie' : 'adst';
+        try { localStorage.setItem('koffierad_theme', THEME); } catch (e) { }
+        var c = document.documentElement.className.replace(/\s*th-adst/g, '');
+        document.documentElement.className = THEME === 'adst' ? c + ' th-adst' : c;
+        COLORS = THEME === 'adst' ? COLORS_A : COLORS_K; lab(); render(); trk();
+    };
+    lab();
+})();
 render();
 trk(); trLabel();
+/* Kamerindeling opslaan, terugzetten en leegmaken */
+(function () {
+    var msg = function (t) { var m = document.getElementById('lmsg'); m.textContent = t; clearTimeout(msg.t); msg.t = setTimeout(function () { m.textContent = ''; }, 4000); };
+    var getL = function () { try { var l = JSON.parse(localStorage.getItem('koffierad_layout') || 'null'); return l && typeof l === 'object' ? l : null; } catch (e) { return null; } };
+    var stop = function (e) { e.stopPropagation(); };
+    ['lsave', 'lload', 'lreset'].forEach(function (id) { document.getElementById(id).addEventListener('click', stop); });
+    document.getElementById('lsave').onclick = function (e) {
+        stop(e); if (spinning) return;
+        var l = {}, n = 0; Object.keys(room.seats).forEach(function (k) { l[k] = room.seats[k]; n++; });
+        if (!n) { msg('Er zit nog niemand in de kamer om op te slaan.'); return; }
+        try { localStorage.setItem('koffierad_layout', JSON.stringify(l)); } catch (x) { }
+        msg('Indeling opgeslagen (' + n + ' ' + (n === 1 ? 'plek' : 'plekken') + ').');
+    };
+    document.getElementById('lload').onclick = function (e) {
+        stop(e); if (spinning) return;
+        var l = getL(); if (!l) { msg('Er is nog geen indeling opgeslagen.'); return; }
+        var ns = {}, skip = [];
+        Object.keys(l).forEach(function (k) { var nm = l[k], p = people.find(function (q) { return q.n === nm; }); if (p && isIn(p)) ns[k] = nm; else skip.push(nm); });
+        Object.keys(room.mood).forEach(function (nm) { if (!Object.keys(ns).some(function (k) { return ns[k] === nm; })) delete room.mood[nm]; });
+        room.seats = ns; room.away = {}; roomSave(); render();
+        msg('Opgeslagen indeling teruggezet.' + (skip.length ? ' Niet aanwezig vandaag: ' + skip.join(', ') + '.' : ''));
+    };
+    var armed = null, rb = document.getElementById('lreset');
+    rb.onclick = function (e) {
+        stop(e); if (spinning) return;
+        if (!armed) { rb.textContent = 'Zeker weten? Tik nogmaals'; armed = setTimeout(function () { armed = null; rb.textContent = '💨 Leegmaken'; }, 3000); return; }
+        clearTimeout(armed); armed = null; rb.textContent = '💨 Leegmaken';
+        room.seats = {}; room.mood = {}; room.away = {}; sel = null; roomSave(); render();
+        msg('Kamer leeggemaakt. Iedereen is uitgecheckt.');
+    };
+})();
+document.getElementById('moreb').onclick = function () { document.body.classList.add('moreon'); };
+document.getElementById('morex').onclick = function () { document.body.classList.remove('moreon'); };
+document.getElementById('more').addEventListener('click', function (e) { if (e.target === this) document.body.classList.remove('moreon'); });
 /* Wandscherm: volledig scherm, scherm wakker houden, 's nachts verversen */
 (function () {
     var b = document.getElementById('fsb'), d = document, el = d.documentElement;

@@ -30,3 +30,36 @@ new="""        /* Eerst rechtstreeks open-meteo; lukt dat niet (oude browsers ve
         tryUrl(0);"""
 assert t.count(old)==1; t=t.replace(old,new)
 open(p,'w',encoding='utf-8').write(t)
+
+# --- Ronde 2: CSS-variabelen (Chrome 39 kent ze niet, pas vanaf 49) en nieuwere emoji ---
+t=open(p,encoding='utf-8').read()
+assert t.count('🧹')>=1; t=t.replace('🧹','💨')
+POLY="""</style>
+<script>
+/* Terugval voor browsers zonder CSS-variabelen (o.a. het wandscherm, Chrome 39):
+   vervang var(--x) door de kleur van het actieve thema, in de stylesheet en in style-attributen */
+(function () {
+    try { if (window.CSS && CSS.supports && CSS.supports('--a', '0')) return; } catch (e) { }
+    if (!window.MutationObserver) return;
+    var st = document.getElementsByTagName('style')[0]; if (!st) return;
+    var src = st.textContent, D = document.documentElement;
+    var grab = function (sel) { var m = src.match(new RegExp(sel + '\\\\{([^}]*)\\\\}')), o = {}; if (m) m[1].replace(/--([\\w-]+):([^;]+)/g, function (a, k, v) { o[k] = v; }); return o; };
+    var base = grab(':root'), adst = grab('html\\\\.th-adst'), V = base;
+    var sub = function (s) { return s.replace(/var\\(--([\\w-]+)\\)/g, function (a, k) { return V[k] || a; }); };
+    var fixEl = function (el) { if (el.nodeType !== 1) return; var s = el.getAttribute('data-vs') || el.getAttribute('style'); if (s && s.indexOf('var(--') >= 0) { el.setAttribute('data-vs', s); el.setAttribute('style', sub(s)); } };
+    var fixTree = function (n) { if (n.nodeType !== 1) return; fixEl(n); var a = n.querySelectorAll('[style*="var(--"],[data-vs]'); for (var i = 0; i < a.length; i++) fixEl(a[i]); };
+    var apply = function () {
+        var k = {}, x; for (x in base) k[x] = base[x];
+        if (/(^|\\s)th-adst(\\s|$)/.test(D.className)) for (x in adst) k[x] = adst[x];
+        V = k; st.textContent = sub(src); if (document.body) fixTree(document.body);
+    };
+    apply();
+    new MutationObserver(apply).observe(D, { attributes: true, attributeFilter: ['class'] });
+    new MutationObserver(function (ms) {
+        for (var i = 0; i < ms.length; i++) { var m = ms[i]; if (m.type === 'attributes') { var s = m.target.getAttribute('style'); if (s && s.indexOf('var(--') >= 0) fixEl(m.target); } else for (var j = 0; j < m.addedNodes.length; j++) fixTree(m.addedNodes[j]); }
+    }).observe(D, { childList: true, subtree: true, attributes: true, attributeFilter: ['style'] });
+    document.addEventListener('DOMContentLoaded', function () { fixTree(document.body); });
+})();
+</script>"""
+assert t.count('</style>')==1; t=t.replace('</style>',POLY,1)
+open(p,'w',encoding='utf-8').write(t)
