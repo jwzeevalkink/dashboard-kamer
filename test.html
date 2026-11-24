@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Schermtest</title>
+<style>
+body{margin:0;padding:24px;background:#fff8e7;color:#222;font:22px/1.4 Arial,sans-serif}
+h1{font-size:40px;margin:0 0 12px}
+td{padding:4px 16px 4px 0;vertical-align:top;border-bottom:1px solid #ddd}
+.ok{color:#1a7f37;font-weight:bold}.no{color:#c0392b;font-weight:bold}
+#ua{font-family:monospace;font-size:20px;background:#eee;padding:8px;word-break:break-all}
+a{font-size:28px}
+</style>
+</head>
+<body>
+<h1>Schermtest dashboard</h1>
+<p id="js" class="no">JavaScript draait NIET</p>
+<p>Browser:</p>
+<div id="ua">-</div>
+<table id="t"></table>
+<p id="load">Dashboard laden testen…</p>
+<p><a href="./">Naar het dashboard</a></p>
+<script>
+var J = document.getElementById('js'); J.className = 'ok'; J.innerHTML = 'JavaScript draait';
+document.getElementById('ua').innerHTML = (navigator.userAgent || '?').replace(/</g, '&lt;');
+var T = document.getElementById('t');
+function row(name, ok, extra) {
+    var tr = document.createElement('tr');
+    tr.innerHTML = '<td>' + name + '</td><td class="' + (ok ? 'ok' : 'no') + '">' + (ok ? 'ja' : 'nee') + '</td><td>' + (extra || '') + '</td>';
+    T.appendChild(tr);
+}
+function syn(code) { try { new Function(code); return true; } catch (e) { return false; } }
+function css(p, v) { var d = document.createElement('div'); try { d.style[p] = v; } catch (e) { } return d.style[p] === v; }
+row('Scherm', true, screen.width + ' x ' + screen.height + ', venster ' + window.innerWidth + ' x ' + window.innerHeight + ', pixelratio ' + (window.devicePixelRatio || 1));
+row('CSS flex', css('display', 'flex'));
+row('CSS grid', css('display', 'grid'));
+row('let/const', syn('let a = 1; const b = 2;'));
+row('Pijlfuncties =>', syn('var f = (a) => a;'));
+row('Template-strings `', syn('var s = `x`;'));
+row('Promise', typeof Promise !== 'undefined');
+row('fetch', typeof fetch !== 'undefined');
+row('localStorage', (function () { try { localStorage.setItem('t', '1'); localStorage.removeItem('t'); return true; } catch (e) { return false; } })());
+row('Canvas', !!document.createElement('canvas').getContext);
+row('Web Audio', !!(window.AudioContext || window.webkitAudioContext));
+row('Audio m4a', (function () { try { var a = document.createElement('audio'); return !!(a.canPlayType && a.canPlayType('audio/mp4').replace(/no/, '')); } catch (e) { return false; } })());
+row('Volledig scherm', !!(document.documentElement.requestFullscreen || document.documentElement.webkitRequestFullscreen));
+
+var L = document.getElementById('load'), t0 = new Date().getTime();
+try {
+    var x = new XMLHttpRequest();
+    x.open('GET', './index.html?t=' + t0, true);
+    x.onreadystatechange = function () {
+        if (x.readyState !== 4) return;
+        var ms = new Date().getTime() - t0, txt = x.responseText || '';
+        var msg = 'Dashboard gedownload: status ' + x.status + ', ' + Math.round(txt.length / 1024) + ' KB in ' + ms + ' ms. ';
+        var re = /<script>([\s\S]*?)<\/script>/g, m, i = 0, errs = [];
+        while ((m = re.exec(txt))) { i++; try { new Function(m[1]); } catch (e) { errs.push('script ' + i + ': ' + e.message); } }
+        L.className = errs.length ? 'no' : 'ok';
+        L.innerHTML = msg + (errs.length ? 'SCRIPTFOUT: ' + errs.join(' | ') : 'Scripts zijn geldig voor deze browser (' + i + ').');
+    };
+    x.send();
+} catch (e) { L.className = 'no'; L.innerHTML = 'Laden mislukt: ' + e.message; }
+</script>
+</body>
+</html>
