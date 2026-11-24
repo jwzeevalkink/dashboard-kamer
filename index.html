@@ -141,7 +141,7 @@ li[draggable]{cursor:grab}li.hint{color:#8a6e5c;font-size:.85rem;padding:10px;ju
 <div class="col cB"><div class="card" id="roomcard"><h2>🏢 Kamer 0.26 <small style="font-weight:400;color:#8a6e5c">· sleep jezelf naar een plek om in te checken en kies je humeur (of tik je naam en daarna een plek). Tik op een bezette plek als je even niet achter je bureau zit (de plek wordt grijs). Wie is ingecheckt, staat op het koffierad.</small></h2><div class="add"><input id="name" placeholder="Nieuwe collega aan de kamer toevoegen…" maxlength="24"><button id="addbtn">Toevoegen</button></div><div class="tray" id="tray"></div><div class="door"><span style="font-size:1.4rem;margin-right:8px">🚪</span>Deur</div><div class="seats" id="seats"></div><div id="sfeer" class="hint2" style="margin-top:8px;text-align:center"></div></div>
 
 <div class="card" id="moodcard"><h2>😊 Stemming <small style="font-weight:400;color:#8a6e5c">· op basis van de smileys in de kamer</small></h2><div id="mtoday"></div><div id="mweek"></div></div>
-<div class="card"><h2>🍰 Traktatie-inzicht</h2><div class="add" style="flex-wrap:wrap;align-items:center"><input type="date" id="trd" style="flex:none"><label><input type="checkbox" id="trtr"> traktatie</label><select id="trty" style="font:inherit;padding:6px;border-radius:10px;border:1px solid #e8d9c6;background:#fbf5ec;color:#3b2417"><option value="kroket">🥖 Broodje kroket</option><option value="taart">🍰 Taart</option><option value="milkshake">🥤 Milkshake</option></select><button id="trsave">Opslaan</button></div><div id="trk"></div></div>
+<div class="card"><h2>🍰 Traktatie-inzicht</h2><div class="add" style="flex-wrap:wrap;align-items:center"><input type="date" id="trd" style="flex:none"><label><input type="checkbox" id="trtr"> traktatie</label><select id="trty" style="font:inherit;padding:6px;border-radius:10px;border:1px solid #e8d9c6;background:#fbf5ec;color:#3b2417"><option value="kroket">🍞 Broodje kroket</option><option value="taart">🍰 Taart</option><option value="milkshake">🍨 Milkshake</option></select><button id="trsave">Opslaan</button></div><div id="trk"></div></div>
     <div class="card"><h2>📻 Radio <small style="font-weight:400;color:#8a6e5c">· zenders van wie in de kamer zit</small></h2><div id="rlist"></div><div class="add" style="margin-top:8px"><select id="rp" style="font:inherit;padding:6px;border-radius:10px;border:1px solid #e8d9c6;background:#fbf5ec;color:#3b2417"></select><input id="rn" placeholder="Zendernaam" maxlength="30"><input id="ru" placeholder="Stream-URL of website (https://…)"><button id="rsave">Opslaan</button></div><div id="rpanel" style="margin-top:10px"></div><div id="rnow" class="hint2"></div></div></div>
 <div class="col cC"><div class="card">
       <h2>Aanwezig in kamer 0.26 <small style="font-weight:400;color:#8a6e5c">· staan op het rad voor de koffie (⇄ = in- of uitchecken)</small></h2>
@@ -410,7 +410,7 @@ function tops() {
     var calc = function (f) { var m = {}; log.forEach(function (l) { if (f(new Date(l.t))) m[l.n] = (m[l.n] || 0) + l.d; }); return Object.entries(m).filter(function (e) { return e[1] > 0; }).sort(function (a, b) { return b[1] - a[1]; }); };
     var day = calc(function (d) { return d.toDateString() === now.toDateString(); });
     var mon = calc(function (d) { return d.getMonth() === now.getMonth() && d.getFullYear() === now.getFullYear(); });
-    var blk = function (t, r) { return '<div class="top"><b>' + t + '</b>' + (r.length ? r.slice(0, 5).map(function (e, i) { return '<div class="tr"><span>' + ['🥇', '🥈', '🥉', '4.', '5.'][i] + ' ' + esc(e[0]) + '</span><span>' + e[1] + '×</span></div>'; }).join('') : '<div class="hint2">Nog niemand</div>') + '</div>'; };
+    var blk = function (t, r) { return '<div class="top"><b>' + t + '</b>' + (r.length ? r.slice(0, 5).map(function (e, i) { return '<div class="tr"><span>' + ['🏆', '2.', '3.', '4.', '5.'][i] + ' ' + esc(e[0]) + '</span><span>' + e[1] + '×</span></div>'; }).join('') : '<div class="hint2">Nog niemand</div>') + '</div>'; };
     el.innerHTML = '<div class="tgrid">' + blk('Dag · ' + now.toLocaleDateString('nl-NL', { day: 'numeric', month: 'short' }), day) + blk('Maand · ' + now.toLocaleDateString('nl-NL', { month: 'long' }), mon) + '</div>';
 }
 function confetti() {
@@ -478,11 +478,11 @@ loadDay();
 document.getElementById('trd').onchange = loadDay;
 document.getElementById('trsave').onclick = function () { var v = document.getElementById('trd').value; if (!v) return; days[v] = { tr: document.getElementById('trtr').checked, ty: document.getElementById('trty').value }; saveD(); trk(); };
 document.getElementById('trk').onclick = function (e) { var b = e.target.closest('button'); if (!b) return; delete days[b.dataset.d]; saveD(); trk(); };
-var TY = { kroket: '🥖', taart: '🍰', milkshake: '🥤' }, NM = { kroket: 'Broodje kroket', taart: 'Taart', milkshake: 'Milkshake' };
+var TY = { kroket: '🍞', taart: '🍰', milkshake: '🍨' }, NM = { kroket: 'Broodje kroket', taart: 'Taart', milkshake: 'Milkshake' };
 var ML = {};
 try { var mlr = JSON.parse(localStorage.getItem('koffierad_moods') || '{}'); if (mlr && typeof mlr === 'object') ML = mlr; } catch (e) { }
 var mlSave = function () { var ks = Object.keys(ML).sort(); while (ks.length > 90) delete ML[ks.shift()]; try { localStorage.setItem('koffierad_moods', JSON.stringify(ML)); } catch (e) { } };
-var MOODS = [['😡', 'Boos'], ['🙁', 'Chagrijnig'], ['😐', 'Neutraal'], ['🙂', 'Goed'], ['😄', 'Blij']];
+var MOODS = [['😡', 'Boos'], ['😞', 'Chagrijnig'], ['😐', 'Neutraal'], ['😊', 'Goed'], ['😄', 'Blij']];
 var room = { d: iso(new Date()), seats: {}, mood: {} }, sel = null, rd = null;
 try { var r = JSON.parse(localStorage.getItem('koffierad_room') || 'null'); if (r && r.d === iso(new Date()) && r.seats && r.mood) room = r; } catch (e) { }
 var roomSave = function () { try { localStorage.setItem('koffierad_room', JSON.stringify(room)); } catch (e) { } };
@@ -566,7 +566,7 @@ document.addEventListener('dragover', function (e) { if (rd === null) return; va
 document.addEventListener('drop', function (e) { if (rd === null) return; var z = e.target.closest('.seat,.tray'); document.querySelectorAll('.over').forEach(function (x) { return x.classList.remove('over'); }); if (!z) return; e.preventDefault(); var n = rd; rd = null; sel = null; place(n, z.classList.contains('seat') ? +z.dataset.s : null); });
 document.addEventListener('dragend', function () { rd = null; document.querySelectorAll('.over').forEach(function (x) { return x.classList.remove('over'); }); });
 /* Weer: momentopname (wordt vervangen door live data van open-meteo.com als de pagina die mag ophalen) */
-var WX = { at: '2026-11-20', t: 6, txt: 'Half bewolkt', cond: 'partly', days: [['2026-11-20', 7, 1, 10, '⛅'], ['2026-11-21', 9, 0, 15, '🌦️'], ['2026-11-22', 6, -1, 10, '⛅'], ['2026-11-23', 4, -4, 10, '⛅'], ['2026-11-24', 3, -4, 5, '☀️'], ['2026-11-25', 2, -1, 10, '☁️'], ['2026-11-26', 3, 1, 10, '☁️'], ['2026-11-27', 5, 2, 15, '🌦️']] };
+var WX = { at: '2026-11-20', t: 6, txt: 'Half bewolkt', cond: 'partly', days: [['2026-11-20', 7, 1, 10, '⛅'], ['2026-11-21', 9, 0, 15, '☔'], ['2026-11-22', 6, -1, 10, '⛅'], ['2026-11-23', 4, -4, 10, '⛅'], ['2026-11-24', 3, -4, 5, '☀️'], ['2026-11-25', 2, -1, 10, '☁️'], ['2026-11-26', 3, 1, 10, '☁️'], ['2026-11-27', 5, 2, 15, '☔']] };
 function box(x, y, z, w, d, h, c, rc, win) {
     var sh = 'box-shadow:inset 0 0 0 100px rgba(0,0,0,.2);', s = '<div class="vb" style="left:' + x + 'px;top:' + y + 'px;transform:translateZ(' + z + 'px)">';
     s += '<div style="left:0;top:' + (d - h) + 'px;width:' + w + 'px;height:' + h + 'px;background:' + c + ';transform-origin:50% 100%;transform:rotateX(-90deg)">' + (win ? '<i style="left:20%;top:35%"></i><i style="left:65%;top:35%"></i>' : '') + '</div>';
@@ -667,14 +667,14 @@ document.addEventListener('pointerdown', function () { audio(); }, { once: true 
 var LW = null;
 function wmo(c) {
     if (c === 0) return ['clear', '☀️', 'Zonnig'];
-    if (c === 1) return ['clear', '🌤️', 'Overwegend zonnig'];
+    if (c === 1) return ['clear', '⛅', 'Overwegend zonnig'];
     if (c === 2) return ['partly', '⛅', 'Half bewolkt'];
     if (c === 3) return ['cloudy', '☁️', 'Bewolkt'];
-    if (c === 45 || c === 48) return ['cloudy', '🌫️', 'Mist'];
-    if (c >= 51 && c <= 57) return ['rain', '🌦️', 'Motregen'];
-    if ((c >= 61 && c <= 67) || (c >= 80 && c <= 82)) return ['rain', '🌧️', 'Regen'];
+    if (c === 45 || c === 48) return ['cloudy', '🌁', 'Mist'];
+    if (c >= 51 && c <= 57) return ['rain', '☔', 'Motregen'];
+    if ((c >= 61 && c <= 67) || (c >= 80 && c <= 82)) return ['rain', '☔', 'Regen'];
     if ((c >= 71 && c <= 77) || c === 85 || c === 86) return ['snow', '❄️', 'Sneeuw'];
-    if (c >= 95) return ['rain', '⛈️', 'Onweer'];
+    if (c >= 95) return ['rain', '⚡', 'Onweer'];
     return ['partly', '⛅', 'Wisselend bewolkt'];
 }
 function advice(hi, pr, lab) {
@@ -720,11 +720,20 @@ function wx() {
 }
 function loadLive() {
     try {
-        var x = new XMLHttpRequest();
-        x.open('GET', 'https://api.open-meteo.com/v1/forecast?latitude=52.2333&longitude=6.1&current=temperature_2m,weather_code,is_day&hourly=temperature_2m,precipitation_probability,weather_code&forecast_days=2&timezone=Europe%2FAmsterdam');
-        x.timeout = 15000;
-        x.onload = function () { try { var d = JSON.parse(x.responseText); if (d && d.current && d.hourly) { LW = d; wx(); } } catch (e) { } };
-        x.send();
+        /* Eerst rechtstreeks open-meteo; lukt dat niet (oude browsers vertrouwen het certificaat niet),
+           dan weather.json dat GitHub elk uur ophaalt */
+        var urls = ['https://api.open-meteo.com/v1/forecast?latitude=52.2333&longitude=6.1&current=temperature_2m,weather_code,is_day&hourly=temperature_2m,precipitation_probability,weather_code&forecast_days=2&timezone=Europe%2FAmsterdam', 'weather.json?t=' + new Date().getTime()];
+        var tryUrl = function (i) {
+            if (i >= urls.length) return;
+            var x = new XMLHttpRequest(), done = false;
+            var fail = function () { if (!done) { done = true; tryUrl(i + 1); } };
+            x.open('GET', urls[i]);
+            x.timeout = 15000;
+            x.onload = function () { if (done) return; try { var d = JSON.parse(x.responseText); if (x.status === 200 && d && d.current && d.hourly) { done = true; LW = d; wx(); return; } } catch (e) { } fail(); };
+            x.onerror = fail; x.ontimeout = fail;
+            x.send();
+        };
+        tryUrl(0);
     } catch (e) { }
 }
 var mapPref = true, mapLoaded = false, mapPos = [52.2333, 6.1], mapSrc = 'esri', mapGeo = false;
@@ -732,7 +741,7 @@ try { mapPref = localStorage.getItem('koffierad_map') !== '0'; } catch (e) { }
 function mapApply() {
     var sc = document.getElementById('vscene');
     if (mapPref && mapLoaded) sc.classList.add('mapon'); else sc.classList.remove('mapon');
-    document.getElementById('vtog').textContent = mapPref ? '🏘️ 3D-dorp' : '🌍 Kaart';
+    document.getElementById('vtog').textContent = mapPref ? '🏠 3D-dorp' : '🌍 Kaart';
 }
 function tileXY(lat, lon, z) { var n = Math.pow(2, z), r = lat * Math.PI / 180; return [(lon + 180) / 360 * n, (1 - Math.log(Math.tan(r) + 1 / Math.cos(r)) / Math.PI) / 2 * n]; }
 function mapBuild(src) {
@@ -783,7 +792,7 @@ var rvol = 80, RA = null, rnow = '';
 function radioRender() {
     var st = people.filter(function (p) { return isIn(p) && seatOf(p.n) !== undefined && p.radio && p.radio.u; });
     if (rnow && !st.some(function (p) { return p.radio.u === rnow; })) { rnow = ''; try { RA.pause(); } catch (e) { } }
-    document.getElementById('rlist').innerHTML = st.length ? '<ul>' + st.map(function (p) { return '<li><span class="n"><b>' + esc(p.radio.n || 'Zender') + '</b> <small style="color:#8a6e5c">van ' + esc(p.n) + '</small></span><button data-r="' + people.indexOf(p) + '">' + (isWeb(p.radio.u) ? '↗ Open' : (rnow === p.radio.u ? '⏸ Stop' : '▶ Speel')) + '</button></li>'; }).join('') + '</ul><div style="margin-top:8px"><button data-r="rand">🎲 Verras me</button> <button data-r="stop">⏹ Stop radio</button></div>' : '<div class="hint2">Niemand in de kamer heeft een zender ingesteld. Voeg er hieronder een toe.</div>';
+    document.getElementById('rlist').innerHTML = st.length ? '<ul>' + st.map(function (p) { return '<li><span class="n"><b>' + esc(p.radio.n || 'Zender') + '</b> <small style="color:#8a6e5c">van ' + esc(p.n) + '</small></span><button data-r="' + people.indexOf(p) + '">' + (isWeb(p.radio.u) ? '↗ Open' : (rnow === p.radio.u ? '■ Stop' : '▶ Speel')) + '</button></li>'; }).join('') + '</ul><div style="margin-top:8px"><button data-r="rand">🎲 Verras me</button> <button data-r="stop">■ Stop radio</button></div>' : '<div class="hint2">Niemand in de kamer heeft een zender ingesteld. Voeg er hieronder een toe.</div>';
     var sel = document.getElementById('rp'), cur = sel.value;
     sel.innerHTML = people.map(function (p, i) { return '<option value="' + i + '">' + esc(p.n) + '</option>'; }).join('');
     if (cur) sel.value = cur;
@@ -822,7 +831,7 @@ function radioPanel() {
     if (!p.radio && /^kevin$/i.test(p.n)) { p.radio = { n: 'RADIONL', u: 'https://radionl.fm/' }; save(); }
     if (!p.radio || !p.radio.u) { el.innerHTML = '<div class="hint2">' + esc(p.n) + ' heeft nog geen zender. Vul hierboven een zender in.</div>'; return; }
     var web = isWeb(p.radio.u), on = rnow === p.radio.u, nm = esc(p.radio.n || 'zender');
-    el.innerHTML = '<div style="border:1px solid #e8d9c6;border-radius:12px;padding:10px"><b>📻 ' + nm + '</b> <small style="color:#8a6e5c">van ' + esc(p.n) + '</small><div style="display:flex;align-items:center;margin-top:8px"><button id="rplay" style="margin-right:12px">' + (web ? '↗ Open ' + nm : (on ? '⏸ Stop' : '▶ Play')) + '</button>' + (web ? '' : '<span style="margin-right:6px">🔈</span><input id="rvol" type="range" min="0" max="100" value="' + rvol + '" style="flex:1;min-width:80px"><span style="margin-left:6px">🔊</span>') + '</div>' + (web ? '<div class="hint2" style="margin-top:6px">Dit is een website en geen stream, dus het volume regel je op de zender zelf. Vul hierboven een stream-URL in voor een Play-knop en volumeschuif.</div>' : '') + '</div>';
+    el.innerHTML = '<div style="border:1px solid #e8d9c6;border-radius:12px;padding:10px"><b>📻 ' + nm + '</b> <small style="color:#8a6e5c">van ' + esc(p.n) + '</small><div style="display:flex;align-items:center;margin-top:8px"><button id="rplay" style="margin-right:12px">' + (web ? '↗ Open ' + nm : (on ? '■ Stop' : '▶ Play')) + '</button>' + (web ? '' : '<span style="margin-right:6px">🔈</span><input id="rvol" type="range" min="0" max="100" value="' + rvol + '" style="flex:1;min-width:80px"><span style="margin-left:6px">🔊</span>') + '</div>' + (web ? '<div class="hint2" style="margin-top:6px">Dit is een website en geen stream, dus het volume regel je op de zender zelf. Vul hierboven een stream-URL in voor een Play-knop en volumeschuif.</div>' : '') + '</div>';
 }
 document.getElementById('rp').onchange = radioPanel;
 document.getElementById('rpanel').onclick = function (e) { var b = e.target.closest('button'); if (!b || b.id !== 'rplay') return; var p = people[+document.getElementById('rp').value]; if (!p || !p.radio) return; if (isWeb(p.radio.u) || rnow !== p.radio.u) radioPlay(p.radio.u); else radioStop(); };
