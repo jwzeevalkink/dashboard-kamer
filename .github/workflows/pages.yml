@@ -23,7 +23,7 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+      url: ${{ steps.deployment.outputs.page_url || steps.deployment2.outputs.page_url }}
     steps:
       - uses: actions/checkout@v7
       - name: Site klaarzetten en weer ophalen
@@ -42,5 +42,15 @@ jobs:
       - uses: actions/upload-pages-artifact@v5
         with:
           path: _site
+      # GitHub ziet het net geüploade artifact soms pas na enkele seconden; even wachten en zo nodig opnieuw
+      - name: Even wachten op het Pages-artifact
+        run: sleep 15
       - id: deployment
+        continue-on-error: true
+        uses: actions/deploy-pages@v5
+      - name: Opnieuw proberen na 45 seconden
+        if: steps.deployment.outcome == 'failure'
+        run: sleep 45
+      - id: deployment2
+        if: steps.deployment.outcome == 'failure'
         uses: actions/deploy-pages@v5
