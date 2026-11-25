@@ -253,7 +253,7 @@ li[draggable]{cursor:grab}li.hint{color:var(--mut);font-size:.85rem;padding:10px
 </div>
 <div id="more"><div class="morehd"><b>Meer</b><button id="morex" type="button">✕ Sluiten</button></div>
 <div class="card"><h2>🍰 Traktatie-inzicht</h2><div class="add" style="flex-wrap:wrap;align-items:center"><input type="date" id="trd" style="flex:none"><label><input type="checkbox" id="trtr"> traktatie</label><select id="trty" style="font:inherit;padding:6px;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:var(--ink)"><option value="kroket">🍞 Broodje kroket</option><option value="taart">🍰 Taart</option><option value="milkshake">🍨 Milkshake</option></select><button id="trsave">Opslaan</button></div><div id="trk"></div></div>
-<div class="card"><h2>📻 Radio <small style="font-weight:400;color:var(--mut)">· zenders van wie in de kamer zit</small></h2><div id="rlist"></div><div class="add rsrch" style="margin-top:10px;align-items:center"><input id="rq" placeholder="Zoek een zender, bv. Qmusic of NPO Radio 2…" maxlength="60"><button id="rgo" type="button">🔎 Zoeken</button><a id="rweb" class="rbtn" href="https://www.internetradio.nl/" target="_blank" rel="noopener">Internetradio.nl ↗</a></div><div id="rres"></div><div class="hint2" id="rver" style="font-size:.7rem;opacity:.7">Dashboardversie 25-11-2026 · radio v3</div><div class="hint2" style="margin:2px 0 6px">Tik ▶ om te luisteren of ⭐ om de zender op te slaan bij de naam die hieronder is gekozen.</div><div class="add" style="margin-top:8px"><select id="rp" style="font:inherit;padding:6px;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:var(--ink)"></select><input id="rn" placeholder="Zendernaam" maxlength="30"><input id="ru" placeholder="Link van Internetradio.nl of stream (https://…)"><button id="rsave">⭐ Opslaan als voorkeur</button></div><div id="rpanel" style="margin-top:10px"></div><div id="rnow" class="hint2"></div></div>
+<div class="card"><h2>📻 Radio <small style="font-weight:400;color:var(--mut)">· zenders van wie in de kamer zit</small></h2><div id="rlist"></div><div class="add rsrch" style="margin-top:10px;align-items:center"><input id="rq" placeholder="Zoek een zender, bv. Qmusic of NPO Radio 2…" maxlength="60"><button id="rgo" type="button">🔎 Zoeken</button><a id="rweb" class="rbtn" href="https://www.internetradio.nl/" target="_blank" rel="noopener">Internetradio.nl ↗</a></div><div id="rres"></div><div class="hint2" id="rver" style="font-size:.7rem;opacity:.7">Dashboardversie 25-11-2026 · radio v4</div><div class="hint2" style="margin:2px 0 6px">Tik ▶ om te luisteren of ⭐ om de zender op te slaan bij de naam die hieronder is gekozen.</div><div class="add" style="margin-top:8px"><select id="rp" style="font:inherit;padding:6px;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:var(--ink)"></select><input id="rn" placeholder="Zendernaam" maxlength="30"><input id="ru" placeholder="Link van Internetradio.nl of stream (https://…)"><button id="rsave">⭐ Opslaan als voorkeur</button></div><div id="rpanel" style="margin-top:10px"></div><div id="rnow" class="hint2"></div></div>
 </div>
 <button id="themeb" type="button"></button><button id="moreb" type="button">⋯ Traktatie &amp; radio</button>
 </main>
@@ -897,7 +897,9 @@ if (mapPref) mapInit();
 mapApply();
 loadLive();
 setInterval(loadLive, 900000);
-var rvol = 80, RA = null, rnow = '', rKeep = false, rAlt = '';
+var rvol = 80, RA = null, rnow = '', rKeep = false, rAlt = '', rTimer = null;
+/* Geen geluid binnen 12 seconden: behandel als fout (volgende versie proberen of melding tonen) */
+function radioWatch() { clearTimeout(rTimer); rTimer = setTimeout(function () { if (rnow && RA && RA.paused === false && RA.readyState < 3) { try { RA.dispatchEvent(new Event('error')); } catch (e) { } } }, 12000); }
 function radioRender() {
     var st = people.filter(function (p) { return isIn(p) && seatOf(p.n) !== undefined && p.radio && p.radio.u; });
     if (rnow && !rKeep && !st.some(function (p) { return p.radio.u === rnow || p.radio.a === rnow; })) { rnow = ''; try { RA.pause(); } catch (e) { } }
@@ -921,21 +923,24 @@ function radioPlay(u, keep, alt, name) {
             RA = new Audio(); RA.volume = rvol / 100; RA.preload = 'none';
             RA.addEventListener('error', function () {
                 if (!rnow) return;
-                if (rAlt) { var a = rAlt; rAlt = ''; try { RA.src = a; rnow = a; var p2 = RA.play(); if (p2 && p2.catch) p2.catch(function () { }); } catch (x) { } return; }
+                if (rAlt) { var a = rAlt; rAlt = ''; try { RA.src = a.replace(/#stream$/, ''); rnow = a; radioWatch(); var p2 = RA.play(); if (p2 && p2.catch) p2.catch(function () { }); } catch (x) { } return; }
                 rnow = ''; rKeep = false; msg('Deze zender kan niet worden afgespeeld (de stream werkt niet in de browser). Probeer een andere versie van de zender.'); radioRender();
             });
-            RA.addEventListener('playing', function () { msg('▶ Speelt nu' + (RA.dataset.n ? ': ' + RA.dataset.n : '') + '.'); });
+            RA.addEventListener('playing', function () { clearTimeout(rTimer); msg('▶ Speelt nu' + (RA.dataset.n ? ': ' + RA.dataset.n : '') + '.'); });
         }
-        rKeep = !!keep; rAlt = alt && alt !== u ? alt : '';
+        rKeep = !!keep;
+        if (alt && location.protocol === 'https:') alt = alt.replace(/^http:\/\//i, 'https://');
+        rAlt = alt && alt !== u ? alt : '';
         RA.dataset.n = name || '';
-        RA.src = u; rnow = u;
+        RA.src = u.replace(/#stream$/, ''); rnow = u;
         msg('Verbinden…');
+        radioWatch();
         var pr = RA.play();
         if (pr && pr.catch) pr.catch(function (err) { if (err && err.name === 'NotAllowedError') msg('Tik nog een keer op ▶ om het geluid te starten.'); });
     } catch (e) { }
     radioRender();
 }
-function radioStop() { rnow = ''; rKeep = false; rAlt = ''; try { if (RA) { RA.pause(); RA.removeAttribute('src'); RA.load(); } } catch (e) { } document.getElementById('rnow').textContent = ''; radioRender(); }
+function radioStop() { clearTimeout(rTimer); rnow = ''; rKeep = false; rAlt = ''; try { if (RA) { RA.pause(); RA.removeAttribute('src'); RA.load(); } } catch (e) { } document.getElementById('rnow').textContent = ''; radioRender(); }
 document.getElementById('rlist').onclick = function (e) {
     var b = e.target.closest('button'); if (!b) return;
     var r = b.dataset.r;
@@ -1001,7 +1006,7 @@ document.getElementById('rsave').onclick = function () {
                 x.onload = function () {
                     try {
                         var d = JSON.parse(x.responseText), seen = {};
-                        RES = d.map(function (s) { var o = (s.url_resolved || s.url || ''), u = o.replace(/^http:\/\//i, 'https://'); return { name: (s.name || '').trim(), u: u, o: o, countrycode: s.countrycode, codec: s.codec, bitrate: s.bitrate }; })
+                        RES = d.map(function (s) { var u = (s.url_resolved || s.url || '').replace(/^http:\/\//i, 'https://'), o = (s.url || s.url_resolved || '').replace(/^http:\/\//i, 'https://'); return { name: (s.name || '').trim(), u: u, o: o, countrycode: s.countrycode, codec: s.codec, bitrate: s.bitrate }; })
                             .filter(function (s) { if (!s.u || !s.name || seen[s.name.toLowerCase()]) return false; seen[s.name.toLowerCase()] = 1; return true; });
                         render();
                     } catch (e) { tryNext(); }
