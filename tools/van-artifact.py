@@ -9,7 +9,8 @@ L = t.split('\n'); idx = [i for i, l in enumerate(L) if l.startswith("var RADSRC
 if idx:
     L[idx[0]] = "var RADSRC = 'spin-tune.m4a'; /* 'Party and Gameover loop' (happy theme) door gilzoide, CC0 - opengameart.org/content/party-and-gameover-loop */"
 t = '\n'.join(L)
-t = t.replace("/* Audio: draaimuziek = begin van de Rad van Fortuin-tune (mp3, ingesloten); synth-tune als terugval */", "/* Audio: draaimuziek = spin-tune.m4a (CC0); synth-tune als terugval */")
+import re
+t = re.sub(r"/\* Audio: draaimuziek = [^\n]*?\(mp3, ingesloten\); synth-tune als terugval \*/", "/* Audio: draaimuziek = spin-tune.m4a (CC0); synth-tune als terugval */", t)
 old = "    tuneStop(true);\n    try {\n        if (!RADSND)"
 if "if (!RADSRC) { synthStart(); return; }" not in t:
     t = t.replace(old, "    tuneStop(true);\n    if (!RADSRC) { synthStart(); return; }\n    try {\n        if (!RADSND)")

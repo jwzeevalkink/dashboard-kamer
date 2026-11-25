@@ -89,6 +89,7 @@ li[draggable]{cursor:grab}li.hint{color:var(--mut);font-size:.85rem;padding:10px
 .wall{display:flex;flex-direction:column}
 .c3{order:-1}
 #moreb,.morehd{display:none}
+.rdef{margin-bottom:8px;background:var(--bg);border-radius:10px;padding:2px 10px}
 #themeb{display:block;margin:10px auto;font-size:.85rem}
 .rbtn{display:inline-block;text-decoration:none;font-size:.9rem;padding:8px 12px;border-radius:10px;border:1px solid var(--line);background:#fff;color:var(--ink);white-space:nowrap}.rfav li button{padding:2px 8px}
 .addp{margin-top:10px}
@@ -126,7 +127,7 @@ li[draggable]{cursor:grab}li.hint{color:var(--mut);font-size:.85rem;padding:10px
  .k-pod #podium{flex:1 1 0%;min-height:0;display:flex;flex-direction:column;justify-content:flex-end}
  .b1{height:8vh}.b2{height:5.8vh}.b3{height:4vh}.names{min-height:0}
  /* kolom 2 */
- .col>.k-mood{flex:27 1 0%;flex-direction:row;flex-wrap:wrap;align-content:flex-start}
+ .col>.k-mood{flex:0 0 26vh;flex-direction:row;flex-wrap:wrap;align-content:flex-start}
  .k-mood h2{flex:1 1 100%}.k-mood h2 small{display:none}
  .k-mood #mtoday{flex:0 0 38%;min-width:0;overflow:hidden;padding-right:1vw}
  .k-mood #mweek{flex:1 1 0%;min-width:0}
@@ -135,7 +136,7 @@ li[draggable]{cursor:grab}li.hint{color:var(--mut);font-size:.85rem;padding:10px
  .k-mood .mwk{height:9vh}.k-mood .mwk .bar{max-height:6vh}
  .k-mood .mbig{font-size:2.2rem}
  .k-mood .mppl span{font-size:.75rem;padding:1px 7px}
- .col>.k-room{flex:73 1 0%}
+ .col>.k-room{flex:1 1 0%}
  .k-room h2 small,.k-aan h2 small{display:none}
  .k-room .add{margin-bottom:.8vh}.k-aan .addp{margin:1vh 0 .4vh}
  .k-room .tray{min-height:0;margin-bottom:.8vh}
@@ -143,23 +144,23 @@ li[draggable]{cursor:grab}li.hint{color:var(--mut);font-size:.85rem;padding:10px
  .k-room .seats{flex:1 1 0%;min-height:0;grid-template-rows:repeat(4,minmax(0,1fr));gap:.9vh}
  .k-room .seat{min-height:0;padding:.5vh .4vw}
  .k-room .free{margin-top:1vh}
- .k-room .moods{margin-top:.3vh}.k-room .moods button{min-width:3.2vh;min-height:3.2vh;font-size:2.1vh;padding:0 .2vw;line-height:1}.k-room .seat .chip{padding:.5vh .9vw;margin:.3vh}.k-room .sl{font-size:1.4vh}.k-room .seat.occ .sl{display:none}.k-room .seat.occ{display:flex;flex-direction:column;justify-content:center;align-items:center}
+ .k-room .moods{margin-top:.3vh}.k-room .moods{flex-wrap:nowrap}.k-room .moods button{min-width:3.2vh;min-height:3.2vh;font-size:2.1vh;padding:0 .1vw;margin:0;line-height:1}.k-room .seat .chip{padding:.5vh .9vw;margin:.3vh}.k-room .sl{font-size:1.4vh}.k-room .seat.occ .sl{display:none}.k-room .seat.occ{display:flex;flex-direction:column;justify-content:center;align-items:center}
  .k-room #sfeer{margin-top:.6vh!important}.k-room .lay{margin-top:.4vh;flex-wrap:nowrap}.k-room .lay button{white-space:nowrap;min-height:0;padding:.3vh .7vw;font-size:.75rem;margin:0 .3vw}.k-room #lmsg{min-height:0;font-size:.75rem}
  /* kolom 3 */
- .col>.k-clk{flex:11.5 1 0%;flex-direction:row;align-items:center;justify-content:space-between;margin-bottom:.9vh!important;text-align:left;padding-right:1vw}
+ .col>.k-clk{flex:0 0 11.8vh;flex-direction:row;align-items:center;justify-content:space-between;margin-bottom:.9vh!important;text-align:left;padding-right:1vw}
  .k-clk #time{font-size:6.6vh;margin-right:1vw;white-space:nowrap}
  .k-clk #date{margin:0 .6vw 0 0;font-size:1.6vh;flex:1 1 0%;min-width:0;overflow:hidden;line-height:1.25}
  .k-clk .kk{margin:0;flex-direction:column}
  .k-clk .kk>button{margin:.4vh 0 0;padding:.2vh .6vw;font-size:.75rem;min-height:0}
  .k-clk .kkh{transform:scale(.75);margin:-6px 0}
  .k-clk .fsb{position:fixed;top:auto;bottom:.4vh;right:auto;left:50%;margin-left:.4vw;z-index:40;padding:.2vh 1vw;font-size:.75rem;background:var(--bg)}
- .col>.k-wx{flex:14 1 0%;flex-direction:row;align-items:center}
+ .col>.k-wx{flex:0 0 13.3vh;flex-direction:row;align-items:center}
  .k-wx .vscene,.k-wx #wnote,.k-wx #short{display:none!important}
  .k-wx .wt{display:flex;align-items:center;min-width:0}
  .k-wx .deg{font-size:5vh;margin-right:.8vw}
  .k-wx #wtxt{max-width:9vw;font-size:.8rem;line-height:1.2;margin-right:.8vw}
  .k-wx .wt{flex:1 1 0%}.k-wx .fc{flex:1 1 0%;margin:0}.k-wx .fc div{font-size:.8rem;margin-right:.4vw;white-space:nowrap}
- .col>.k-aan{flex:73 1 0%;overflow-y:auto!important;-webkit-overflow-scrolling:touch}
+ .col>.k-aan{flex:1 1 0%;overflow-y:auto!important;-webkit-overflow-scrolling:touch}
  .k-aan .zone{flex:none}
  /* meer: traktatie en radio als paneel */
  #more{display:none}
@@ -178,7 +179,7 @@ li[draggable]{cursor:grab}li.hint{color:var(--mut);font-size:.85rem;padding:10px
 @media(pointer:coarse){
  button{min-height:44px;padding:10px 14px}
  li button{min-width:44px;min-height:44px;padding:6px 10px}
- .wd button{min-height:34px;min-width:38px;padding:4px 8px;font-size:.85rem}
+ .wd button{min-height:34px;min-width:0;width:2.7em;padding:4px 0;text-align:center;font-size:.85rem}
  li .ed{min-width:40px}
  .moods button{min-width:40px;min-height:40px;font-size:1.35rem}
  .chip{padding:10px 16px}
@@ -187,7 +188,7 @@ li[draggable]{cursor:grab}li.hint{color:var(--mut);font-size:.85rem;padding:10px
  li[draggable]{cursor:default}
  #list li,#listout li{flex-wrap:wrap;justify-content:flex-end}
  #list li .n,#listout li .n{flex:1 1 100%;margin:0 0 6px;display:flex;flex-wrap:wrap;align-items:center}
- #list li .n .wd,#listout li .n .wd{margin:0 0 0 10px;flex-wrap:nowrap}
+ #list li .n .wd,#listout li .n .wd{margin:0 0 0 auto;padding-left:10px;flex-wrap:nowrap}
  #list li .dot,#listout li .dot{display:none}
 }
 .fsb{position:absolute;right:8px;bottom:8px;padding:2px 8px;font-size:.75rem;color:var(--mut);opacity:.7;min-height:0!important}.clk{position:relative}
@@ -252,7 +253,7 @@ li[draggable]{cursor:grab}li.hint{color:var(--mut);font-size:.85rem;padding:10px
 </div>
 <div id="more"><div class="morehd"><b>Meer</b><button id="morex" type="button">✕ Sluiten</button></div>
 <div class="card"><h2>🍰 Traktatie-inzicht</h2><div class="add" style="flex-wrap:wrap;align-items:center"><input type="date" id="trd" style="flex:none"><label><input type="checkbox" id="trtr"> traktatie</label><select id="trty" style="font:inherit;padding:6px;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:var(--ink)"><option value="kroket">🍞 Broodje kroket</option><option value="taart">🍰 Taart</option><option value="milkshake">🍨 Milkshake</option></select><button id="trsave">Opslaan</button></div><div id="trk"></div></div>
-<div class="card"><h2>📻 Radio <small style="font-weight:400;color:var(--mut)">· zenders van wie in de kamer zit</small></h2><div id="rlist"></div><div class="add rsrch" style="margin-top:10px;align-items:center"><input id="rq" placeholder="Zoek een zender op Internetradio.nl…" maxlength="60"><a id="rgo" class="rbtn" href="https://www.internetradio.nl/" target="_blank" rel="noopener">🔎 Zoeken</a><a class="rbtn" href="https://www.internetradio.nl/" target="_blank" rel="noopener">Internetradio.nl ↗</a></div><div class="hint2" style="margin:-4px 0 6px">Gevonden? Kopieer de link van de zenderpagina en sla hem hieronder op bij jouw naam.</div><div class="add" style="margin-top:8px"><select id="rp" style="font:inherit;padding:6px;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:var(--ink)"></select><input id="rn" placeholder="Zendernaam" maxlength="30"><input id="ru" placeholder="Link van Internetradio.nl of stream (https://…)"><button id="rsave">⭐ Opslaan als voorkeur</button></div><div id="rpanel" style="margin-top:10px"></div><div id="rnow" class="hint2"></div></div>
+<div class="card"><h2>📻 Radio <small style="font-weight:400;color:var(--mut)">· zenders van wie in de kamer zit</small></h2><div id="rlist"></div><div class="add rsrch" style="margin-top:10px;align-items:center"><input id="rq" placeholder="Zoek een zender, bv. Qmusic of NPO Radio 2…" maxlength="60"><button id="rgo" type="button">🔎 Zoeken</button><a id="rweb" class="rbtn" href="https://www.internetradio.nl/" target="_blank" rel="noopener">Internetradio.nl ↗</a></div><div id="rres"></div><div class="hint2" id="rver" style="font-size:.7rem;opacity:.7">Dashboardversie 25-11-2026 · radio zoeken v2</div><div class="hint2" style="margin:2px 0 6px">Tik ▶ om te luisteren of ⭐ om de zender op te slaan bij de naam die hieronder is gekozen.</div><div class="add" style="margin-top:8px"><select id="rp" style="font:inherit;padding:6px;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:var(--ink)"></select><input id="rn" placeholder="Zendernaam" maxlength="30"><input id="ru" placeholder="Link van Internetradio.nl of stream (https://…)"><button id="rsave">⭐ Opslaan als voorkeur</button></div><div id="rpanel" style="margin-top:10px"></div><div id="rnow" class="hint2"></div></div>
 </div>
 <button id="themeb" type="button"></button><button id="moreb" type="button">⋯ Traktatie &amp; radio</button>
 </main>
@@ -348,7 +349,7 @@ function draw() {
     ctx.fillText('☕', 0, 3);
     ctx.restore();
 }
-/* Audio: draaimuziek = begin van 'Wheel of Deal' (Waderman) (mp3, ingesloten); synth-tune als terugval */
+/* Audio: draaimuziek = spin-tune.m4a (CC0); synth-tune als terugval */
 var AC = null, mute = false, tuneTimer = null, RADSND = null, radFade = null;
 var RADSRC = 'spin-tune.m4a'; /* 'Party and Gameover loop' (happy theme) door gilzoide, CC0 - opengameart.org/content/party-and-gameover-loop */
 function audio() { try { if (!AC) AC = new (window.AudioContext || window.webkitAudioContext)(); if (AC.state === 'suspended') AC.resume(); } catch (e) { } return AC; }
@@ -900,13 +901,14 @@ var rvol = 80, RA = null, rnow = '';
 function radioRender() {
     var st = people.filter(function (p) { return isIn(p) && seatOf(p.n) !== undefined && p.radio && p.radio.u; });
     if (rnow && !st.some(function (p) { return p.radio.u === rnow; })) { rnow = ''; try { RA.pause(); } catch (e) { } }
-    document.getElementById('rlist').innerHTML = st.length ? '<ul>' + st.map(function (p) { return '<li><span class="n"><b>' + esc(p.radio.n || 'Zender') + '</b> <small style="color:var(--mut)">van ' + esc(p.n) + '</small></span><button data-r="' + people.indexOf(p) + '">' + (isWeb(p.radio.u) ? '↗ Open' : (rnow === p.radio.u ? '■ Stop' : '▶ Speel')) + '</button></li>'; }).join('') + '</ul><div style="margin-top:8px"><button data-r="rand">🎲 Verras me</button> <button data-r="stop">■ Stop radio</button></div>' : '<div class="hint2">Niemand in de kamer heeft een zender ingesteld. Voeg er hieronder een toe.</div>';
+    var DEF = '<ul class="rdef"><li><span class="n"><b>📻 Nederland.FM</b> <small style="color:var(--mut)">standaard radio</small></span><a class="rbtn" style="padding:4px 10px" href="https://www.nederland.fm" target="_blank" rel="noopener">↗ Open</a></li></ul>';
+    document.getElementById('rlist').innerHTML = DEF + (st.length ? '<ul>' + st.map(function (p) { return '<li><span class="n"><b>' + esc(p.radio.n || 'Zender') + '</b> <small style="color:var(--mut)">van ' + esc(p.n) + '</small></span><button data-r="' + people.indexOf(p) + '">' + (isWeb(p.radio.u) ? '↗ Open' : (rnow === p.radio.u ? '■ Stop' : '▶ Speel')) + '</button></li>'; }).join('') + '</ul><div style="margin-top:8px"><button data-r="rand">🎲 Verras me</button> <button data-r="stop">■ Stop radio</button></div>' : '<div class="hint2">Niemand in de kamer heeft een zender ingesteld. Voeg er hieronder een toe.</div>');
     var sel = document.getElementById('rp'), cur = sel.value;
     sel.innerHTML = people.map(function (p, i) { return '<option value="' + i + '">' + esc(p.n) + '</option>'; }).join('');
     if (cur) sel.value = cur;
     radioPanel();
 }
-function isWeb(u) { return !/\.(mp3|aac|ogg|opus|m3u8?|pls)(\?|$)|stream|icecast|shoutcast|:\d{4}/i.test(u); }
+function isWeb(u) { if (/#stream$/.test(u)) return false; return !/\.(mp3|aac|ogg|opus|m3u8?|pls)(\?|$)|stream|icecast|shoutcast|:\d{4}/i.test(u); }
 function radioPlay(u) {
     if (isWeb(u)) {
         document.getElementById('rnow').textContent = 'Dit is een website: gebruik de link om de zender in een nieuw tabblad te openen.';
@@ -967,10 +969,55 @@ document.getElementById('rsave').onclick = function () {
     document.getElementById('rn').value = ''; document.getElementById('ru').value = ''; document.getElementById('rnow').textContent = '';
     radioRender();
 };
+/* Radio zoeken: ingebouwd via de open Radio Browser-database (directe streams), met Internetradio.nl als extra link */
 (function () {
-    var q = document.getElementById('rq'), a = document.getElementById('rgo');
-    var upd = function () { var v = q.value.trim(); a.href = v ? 'https://www.google.com/search?q=' + encodeURIComponent('site:internetradio.nl ' + v) : 'https://www.internetradio.nl/'; };
-    q.addEventListener('input', upd); q.addEventListener('keydown', function (e) { if (e.key === 'Enter') { upd(); a.click(); } }); upd();
+    var q = document.getElementById('rq'), go = document.getElementById('rgo'), web = document.getElementById('rweb'), box = document.getElementById('rres');
+    var SRV = ['https://de1.api.radio-browser.info', 'https://nl1.api.radio-browser.info', 'https://at1.api.radio-browser.info', 'https://de2.api.radio-browser.info'], RES = [];
+    var upd = function () { var v = q.value.trim(); web.href = v ? 'https://www.google.com/search?q=' + encodeURIComponent('site:internetradio.nl ' + v) : 'https://www.internetradio.nl/'; };
+    var show = function (html) { box.innerHTML = html; };
+    var render = function () {
+        if (!RES.length) { show('<div class="hint2" style="margin:6px 0">Geen zenders gevonden. Probeer een andere naam, of zoek via Internetradio.nl ↗.</div>'); return; }
+        show('<ul class="rfav" style="margin:6px 0">' + RES.map(function (s, k) { return '<li><span class="n"><b>' + esc(s.name) + '</b> <small style="color:var(--mut)">' + esc([s.countrycode, s.codec, s.bitrate ? s.bitrate + ' kbps' : ''].filter(Boolean).join(' · ')) + '</small></span><button data-sp="' + k + '" title="Luisteren">' + (rnow === s.u + '#stream' ? '⏸' : '▶') + '</button><button data-ss="' + k + '" title="Opslaan bij gekozen naam">⭐</button></li>'; }).join('') + '</ul>');
+    };
+    var search = function () {
+        var v = q.value.trim(); upd(); if (!v) { q.focus(); return; }
+        if (/claude|anthropic/i.test(location.hostname)) { show('<div class="hint2" style="margin:6px 0">In de Claude-weergave mag het dashboard geen verbinding met internet maken, dus zoeken kan hier niet. Open het dashboard via GitHub (jwzeevalkink.github.io) of zoek via <a href="' + web.href + '" target="_blank" rel="noopener">Internetradio.nl ↗</a>.</div>'); return; }
+        show('<div class="hint2" style="margin:6px 0">Zoeken…</div>');
+        var i = 0;
+        var tryNext = function () {
+            if (i >= SRV.length) { show('<div class="hint2" style="margin:6px 0">Zoeken lukt hier niet (geen verbinding met de zenderdatabase). In de versie op GitHub werkt het wel. Je kunt ook zoeken via <a href="' + web.href + '" target="_blank" rel="noopener">Internetradio.nl ↗</a>.</div>'); return; }
+            var x = new XMLHttpRequest(), url = SRV[i++] + '/json/stations/search?name=' + encodeURIComponent(v) + '&limit=12&hidebroken=true&order=clickcount&reverse=true';
+            try {
+                x.open('GET', url); x.timeout = 8000;
+                x.onload = function () {
+                    try {
+                        var d = JSON.parse(x.responseText), seen = {};
+                        RES = d.map(function (s) { var u = (s.url_resolved || s.url || '').replace(/^http:\/\//i, 'https://'); return { name: (s.name || '').trim(), u: u, countrycode: s.countrycode, codec: s.codec, bitrate: s.bitrate }; })
+                            .filter(function (s) { if (!s.u || !s.name || seen[s.name.toLowerCase()]) return false; seen[s.name.toLowerCase()] = 1; return true; });
+                        render();
+                    } catch (e) { tryNext(); }
+                };
+                x.onerror = x.ontimeout = tryNext;
+                x.send();
+            } catch (e) { tryNext(); }
+        };
+        tryNext();
+    };
+    go.onclick = search;
+    q.addEventListener('input', upd);
+    q.addEventListener('keydown', function (e) { if (e.key === 'Enter') { e.preventDefault(); search(); } });
+    box.onclick = function (e) {
+        var b = e.target.closest('button'); if (!b) return;
+        if (b.dataset.sp !== undefined) { var s = RES[+b.dataset.sp]; if (!s) return; var su = s.u + '#stream'; if (rnow === su) radioStop(); else radioPlay(su); render(); return; }
+        if (b.dataset.ss !== undefined) {
+            var t = RES[+b.dataset.ss], p = people[+document.getElementById('rp').value]; if (!t || !p) return;
+            var st = { n: t.name, u: t.u + '#stream' };
+            p.radios = (p.radios || []).filter(function (r) { return r.u !== st.u; }); p.radios.unshift(st); p.radio = st;
+            save(); radioRender();
+            document.getElementById('rnow').textContent = t.name + ' is opgeslagen als voorkeur van ' + p.n + '.';
+        }
+    };
+    upd();
 })();
 (function () {
     var b = document.getElementById('themeb');
