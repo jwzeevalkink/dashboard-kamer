@@ -337,7 +337,7 @@ html.th-kerst .k-pod:after{content:"";position:absolute;right:1vw;top:1vh;width:
 <div class="card"><h2>🍰 Traktatie-inzicht</h2><div class="add" style="flex-wrap:wrap;align-items:center"><input type="date" id="trd" style="flex:none"><label><input type="checkbox" id="trtr"> traktatie</label><select id="trty" style="font:inherit;padding:6px;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:var(--ink)"><option value="kroket">🍞 Broodje kroket</option><option value="taart">🍰 Taart</option><option value="milkshake">🍨 Milkshake</option></select><button id="trsave">Opslaan</button></div><div id="trk"></div></div>
 <div class="card"><h2>📻 Radio <small style="font-weight:400;color:var(--mut)">· zenders van wie in de kamer zit</small></h2><div id="rlist"></div><div class="add rsrch" style="margin-top:10px;align-items:center"><input id="rq" placeholder="Zoek een zender, bv. Qmusic of NPO Radio 2…" maxlength="60"><button id="rgo" type="button">🔎 Zoeken</button><a id="rweb" class="rbtn" href="https://www.internetradio.nl/" target="_blank" rel="noopener">Internetradio.nl ↗</a></div><div id="rres"></div><div class="hint2" style="margin:2px 0 6px">Tik ▶ om te luisteren of ⭐ om de zender op te slaan bij de naam die hieronder is gekozen.</div><div class="add" style="margin-top:8px"><select id="rp" style="font:inherit;padding:6px;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:var(--ink)"></select><input id="rn" placeholder="Zendernaam" maxlength="30"><input id="ru" placeholder="Link van Internetradio.nl of stream (https://…)"><button id="rsave">⭐ Opslaan als voorkeur</button></div><div id="rpanel" style="margin-top:10px"></div><div id="rnow" class="hint2"></div></div>
 </div>
-<button id="themeb" type="button"></button><div id="rver" class="ver">Dashboardversie 26-11-2026 · v14</div><button id="moreb" type="button">⋯ Traktatie &amp; radio</button>
+<button id="themeb" type="button"></button><div id="rver" class="ver">Dashboardversie 26-11-2026 · v15</div><button id="moreb" type="button">⋯ Traktatie &amp; radio</button>
 </main>
 <canvas id="conf" style="position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:50"></canvas>
 <script>
@@ -392,6 +392,8 @@ var THEMES = {
 var THEME_ORDER = ['koffie', 'adst', 'apple-licht', 'apple-donker', 'sinterklaas', 'kerst'];
 var THEME = 'adst';
 try { THEME = localStorage.getItem('koffierad_theme') || 'adst'; } catch (e) { }
+/* Noodknop: ...?thema=adst (of koffie, apple-licht, ...) in de adresbalk zet het thema terug */
+try { var qm = /[?&]thema=([a-z-]+)/.exec(location.search); if (qm) { THEME = qm[1]; localStorage.setItem('koffierad_theme', THEME); } } catch (e) { }
 if (!THEMES[THEME]) THEME = 'adst';
 var COLORS = THEMES[THEME].wheel;
 var TINK = function () { return THEMES[THEME].ink; };
@@ -1187,8 +1189,7 @@ document.getElementById('rsave').onclick = function () {
     b.onclick = function () {
         THEME = THEME_ORDER[(THEME_ORDER.indexOf(THEME) + 1) % THEME_ORDER.length];
         try { localStorage.setItem('koffierad_theme', THEME); } catch (e) { }
-        applyThemeClass();
-        COLORS = THEMES[THEME].wheel; lab(); render(); trk(); sizeWheel();
+        try { applyThemeClass(); COLORS = THEMES[THEME].wheel; lab(); render(); trk(); sizeWheel(); } catch (err) { THEME = 'adst'; try { localStorage.setItem('koffierad_theme', THEME); } catch (e) { } applyThemeClass(); }
     };
     lab();
 })();
