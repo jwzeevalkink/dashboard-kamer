@@ -89,6 +89,9 @@ li[draggable]{cursor:grab}li.hint{color:var(--mut);font-size:.85rem;padding:10px
 .wall{display:flex;flex-direction:column}
 .c3{order:-1}
 #moreb,.morehd{display:none}
+/* Traktatie en radio verwijderd uit beeld (op verzoek) */
+#more,#moreb,body.moreon #more{display:none!important}
+.ver{text-align:center;font-size:.7rem;color:var(--mut);opacity:.6;margin:4px 0 10px}
 .rdef{margin-bottom:8px;background:var(--bg);border-radius:10px;padding:2px 10px}
 #themeb{display:block;margin:10px auto;font-size:.85rem}
 .rbtn{display:inline-block;text-decoration:none;font-size:.9rem;padding:8px 12px;border-radius:10px;border:1px solid var(--line);background:#fff;color:var(--ink);white-space:nowrap}.rfav li button{padding:2px 8px}
@@ -154,7 +157,7 @@ li[draggable]{cursor:grab}li.hint{color:var(--mut);font-size:.85rem;padding:10px
  .k-clk .kk{margin:0;flex-direction:column}
  .k-clk .kk>button{margin:.4vh 0 0;padding:.2vh .6vw;font-size:.75rem;min-height:0}
  .k-clk .kkh{transform:scale(.75);margin:-6px 0}
- .k-clk .fsb{position:fixed;top:auto;bottom:.4vh;right:auto;left:50%;margin-left:.4vw;z-index:40;padding:.2vh 1vw;font-size:.75rem;background:var(--bg)}
+ .k-clk .fsb{position:fixed;top:auto;bottom:.4vh;right:auto;left:50%;margin-left:0;transform:translateX(-50%);z-index:40;padding:.2vh 1vw;font-size:.75rem;background:var(--bg)}
  .col>.k-wx{flex:0 0 13.3vh;flex-direction:row;align-items:center}
  .k-wx .vscene,.k-wx #wnote,.k-wx #short{display:none!important}
  .k-wx .wt{display:flex;align-items:center;min-width:0}
@@ -177,6 +180,7 @@ li[draggable]{cursor:grab}li.hint{color:var(--mut);font-size:.85rem;padding:10px
  .k-aan .zone{flex:none}
  /* meer: traktatie en radio als paneel */
  #more{display:none}
+ .ver{position:fixed;left:1.2vw;bottom:.6vh;margin:0;z-index:40}
  #themeb{position:fixed;bottom:.4vh;right:1.2vw;left:auto;margin:0;z-index:40;padding:.2vh 1vw;font-size:.75rem;min-height:0;opacity:.75;background:var(--bg)}
  #moreb{display:block;position:fixed;left:50%;bottom:.4vh;transform:translateX(-100%);margin-left:-.4vw;z-index:40;padding:.2vh 1vw;font-size:.75rem;min-height:0;opacity:.75;background:var(--bg)}
  body.moreon #more{display:block;position:fixed;left:18vw;right:18vw;top:6vh;bottom:6vh;z-index:60;overflow-y:auto;background:var(--bg);border:1px solid var(--line);border-radius:2vh;padding:2vh 2vw;box-shadow:0 20px 60px rgba(0,0,0,.25)}
@@ -331,9 +335,9 @@ html.th-kerst .k-pod:after{content:"";position:absolute;right:1vw;top:1vh;width:
 </div>
 <div id="more"><div class="morehd"><b>Meer</b><button id="morex" type="button">✕ Sluiten</button></div>
 <div class="card"><h2>🍰 Traktatie-inzicht</h2><div class="add" style="flex-wrap:wrap;align-items:center"><input type="date" id="trd" style="flex:none"><label><input type="checkbox" id="trtr"> traktatie</label><select id="trty" style="font:inherit;padding:6px;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:var(--ink)"><option value="kroket">🍞 Broodje kroket</option><option value="taart">🍰 Taart</option><option value="milkshake">🍨 Milkshake</option></select><button id="trsave">Opslaan</button></div><div id="trk"></div></div>
-<div class="card"><h2>📻 Radio <small style="font-weight:400;color:var(--mut)">· zenders van wie in de kamer zit</small></h2><div id="rlist"></div><div class="add rsrch" style="margin-top:10px;align-items:center"><input id="rq" placeholder="Zoek een zender, bv. Qmusic of NPO Radio 2…" maxlength="60"><button id="rgo" type="button">🔎 Zoeken</button><a id="rweb" class="rbtn" href="https://www.internetradio.nl/" target="_blank" rel="noopener">Internetradio.nl ↗</a></div><div id="rres"></div><div class="hint2" id="rver" style="font-size:.7rem;opacity:.7">Dashboardversie 26-11-2026 · v13 (Sint & Kerst)</div><div class="hint2" style="margin:2px 0 6px">Tik ▶ om te luisteren of ⭐ om de zender op te slaan bij de naam die hieronder is gekozen.</div><div class="add" style="margin-top:8px"><select id="rp" style="font:inherit;padding:6px;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:var(--ink)"></select><input id="rn" placeholder="Zendernaam" maxlength="30"><input id="ru" placeholder="Link van Internetradio.nl of stream (https://…)"><button id="rsave">⭐ Opslaan als voorkeur</button></div><div id="rpanel" style="margin-top:10px"></div><div id="rnow" class="hint2"></div></div>
+<div class="card"><h2>📻 Radio <small style="font-weight:400;color:var(--mut)">· zenders van wie in de kamer zit</small></h2><div id="rlist"></div><div class="add rsrch" style="margin-top:10px;align-items:center"><input id="rq" placeholder="Zoek een zender, bv. Qmusic of NPO Radio 2…" maxlength="60"><button id="rgo" type="button">🔎 Zoeken</button><a id="rweb" class="rbtn" href="https://www.internetradio.nl/" target="_blank" rel="noopener">Internetradio.nl ↗</a></div><div id="rres"></div><div class="hint2" style="margin:2px 0 6px">Tik ▶ om te luisteren of ⭐ om de zender op te slaan bij de naam die hieronder is gekozen.</div><div class="add" style="margin-top:8px"><select id="rp" style="font:inherit;padding:6px;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:var(--ink)"></select><input id="rn" placeholder="Zendernaam" maxlength="30"><input id="ru" placeholder="Link van Internetradio.nl of stream (https://…)"><button id="rsave">⭐ Opslaan als voorkeur</button></div><div id="rpanel" style="margin-top:10px"></div><div id="rnow" class="hint2"></div></div>
 </div>
-<button id="themeb" type="button"></button><button id="moreb" type="button">⋯ Traktatie &amp; radio</button>
+<button id="themeb" type="button"></button><div id="rver" class="ver">Dashboardversie 26-11-2026 · v14</div><button id="moreb" type="button">⋯ Traktatie &amp; radio</button>
 </main>
 <canvas id="conf" style="position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:50"></canvas>
 <script>
