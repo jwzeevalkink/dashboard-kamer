@@ -81,3 +81,8 @@ new=('@supports not (display:grid){.seats{display:flex;flex-wrap:wrap;justify-co
      '@media(min-width:960px) and (min-aspect-ratio:4/3){@supports not (display:grid){.k-room .seats{-webkit-align-content:space-between;align-content:space-between}.k-room .seats>.seat{height:calc(25% - .7vh);margin-bottom:0}}}')
 t=t.replace(old,new)
 open(p,'w',encoding='utf-8').write(t)
+
+# --- Ronde 5: JS-controles op de wandindeling volgen hetzelfde breekpunt (960px) ---
+t=open(p,encoding='utf-8').read()
+t=t.replace("matchMedia('(min-width:1100px) and (min-aspect-ratio:4/3)')","matchMedia('(min-width:960px) and (min-aspect-ratio:4/3)')")
+open(p,'w',encoding='utf-8').write(t)

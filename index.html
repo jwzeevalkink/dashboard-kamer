@@ -118,8 +118,8 @@ li[draggable]{cursor:grab}li.hint{color:var(--mut);font-size:.85rem;padding:10px
  h2{margin-bottom:.8vh}
  /* kolom 1 */
  .col>.k-rad{flex:66 1 0%;align-items:center}.k-pod{flex:27 1 0%}
- .k-rad .wheelwrap{flex:1 1 0%;min-height:0;width:100%;max-width:none;display:flex;justify-content:center}
- .k-rad canvas{width:auto;height:100%;max-width:100%}
+ .k-rad .wheelwrap{flex:1 1 0%;min-height:0;width:100%;max-width:none;display:block;text-align:center}
+ .k-rad canvas{display:inline-block;max-width:100%}
  .k-rad button.main{margin:1.2vh auto 0;padding:1vh 2.4vw}
  .k-rad #mute{margin:.6vh auto 0!important;padding:.3vh 1vw;min-height:0}
  .k-rad .result{min-height:1.4em;margin-top:.6vh;font-size:1.1rem}
@@ -253,7 +253,7 @@ li[draggable]{cursor:grab}li.hint{color:var(--mut);font-size:.85rem;padding:10px
 </div>
 <div id="more"><div class="morehd"><b>Meer</b><button id="morex" type="button">✕ Sluiten</button></div>
 <div class="card"><h2>🍰 Traktatie-inzicht</h2><div class="add" style="flex-wrap:wrap;align-items:center"><input type="date" id="trd" style="flex:none"><label><input type="checkbox" id="trtr"> traktatie</label><select id="trty" style="font:inherit;padding:6px;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:var(--ink)"><option value="kroket">🍞 Broodje kroket</option><option value="taart">🍰 Taart</option><option value="milkshake">🍨 Milkshake</option></select><button id="trsave">Opslaan</button></div><div id="trk"></div></div>
-<div class="card"><h2>📻 Radio <small style="font-weight:400;color:var(--mut)">· zenders van wie in de kamer zit</small></h2><div id="rlist"></div><div class="add rsrch" style="margin-top:10px;align-items:center"><input id="rq" placeholder="Zoek een zender, bv. Qmusic of NPO Radio 2…" maxlength="60"><button id="rgo" type="button">🔎 Zoeken</button><a id="rweb" class="rbtn" href="https://www.internetradio.nl/" target="_blank" rel="noopener">Internetradio.nl ↗</a></div><div id="rres"></div><div class="hint2" id="rver" style="font-size:.7rem;opacity:.7">Dashboardversie 25-11-2026 · radio v4</div><div class="hint2" style="margin:2px 0 6px">Tik ▶ om te luisteren of ⭐ om de zender op te slaan bij de naam die hieronder is gekozen.</div><div class="add" style="margin-top:8px"><select id="rp" style="font:inherit;padding:6px;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:var(--ink)"></select><input id="rn" placeholder="Zendernaam" maxlength="30"><input id="ru" placeholder="Link van Internetradio.nl of stream (https://…)"><button id="rsave">⭐ Opslaan als voorkeur</button></div><div id="rpanel" style="margin-top:10px"></div><div id="rnow" class="hint2"></div></div>
+<div class="card"><h2>📻 Radio <small style="font-weight:400;color:var(--mut)">· zenders van wie in de kamer zit</small></h2><div id="rlist"></div><div class="add rsrch" style="margin-top:10px;align-items:center"><input id="rq" placeholder="Zoek een zender, bv. Qmusic of NPO Radio 2…" maxlength="60"><button id="rgo" type="button">🔎 Zoeken</button><a id="rweb" class="rbtn" href="https://www.internetradio.nl/" target="_blank" rel="noopener">Internetradio.nl ↗</a></div><div id="rres"></div><div class="hint2" id="rver" style="font-size:.7rem;opacity:.7">Dashboardversie 26-11-2026 · v5 (rad rond)</div><div class="hint2" style="margin:2px 0 6px">Tik ▶ om te luisteren of ⭐ om de zender op te slaan bij de naam die hieronder is gekozen.</div><div class="add" style="margin-top:8px"><select id="rp" style="font:inherit;padding:6px;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:var(--ink)"></select><input id="rn" placeholder="Zendernaam" maxlength="30"><input id="ru" placeholder="Link van Internetradio.nl of stream (https://…)"><button id="rsave">⭐ Opslaan als voorkeur</button></div><div id="rpanel" style="margin-top:10px"></div><div id="rnow" class="hint2"></div></div>
 </div>
 <button id="themeb" type="button"></button><button id="moreb" type="button">⋯ Traktatie &amp; radio</button>
 </main>
@@ -893,7 +893,7 @@ function mapTile(box, src, z, x, y, l, t) {
 }
 function mapInit() { if (!document.getElementById('vmap').children.length) { mapBuild('esri'); mapLocate(); } }
 document.getElementById('vtog').onclick = function () { mapPref = !mapPref; try { localStorage.setItem('koffierad_map', mapPref ? '1' : '0'); } catch (e) { } if (mapPref) mapInit(); mapApply(); };
-if (mapPref) mapInit();
+/* kaart en locatie staan uit: het 3D-dorp/kaart wordt niet meer getoond (geen locatievraag meer) */
 mapApply();
 loadLive();
 setInterval(loadLive, 900000);
@@ -1045,7 +1045,19 @@ document.getElementById('rsave').onclick = function () {
     };
     lab();
 })();
+/* Rad altijd rond: grootte in pixels uitrekenen (oudere browsers rekken het canvas anders uit) */
+function sizeWheel() {
+    var w = document.querySelector('.k-rad .wheelwrap'); if (!w) return;
+    var card = w.parentNode, wall = window.matchMedia && matchMedia('(min-width:960px) and (min-aspect-ratio:4/3)').matches;
+    if (!wall) { cv.style.width = ''; cv.style.height = ''; w.style.height = ''; w.style.flex = ''; return; }
+    var cs = getComputedStyle(card), used = parseFloat(cs.paddingTop) + parseFloat(cs.paddingBottom);
+    for (var i = 0; i < card.children.length; i++) { var c = card.children[i]; if (c === w) continue; var s2 = getComputedStyle(c); used += c.offsetHeight + parseFloat(s2.marginTop || 0) + parseFloat(s2.marginBottom || 0); }
+    var s = Math.floor(Math.max(80, Math.min(card.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight), card.clientHeight - used - 4)));
+    w.style.height = s + 'px'; w.style.flex = 'none'; cv.style.width = s + 'px'; cv.style.height = s + 'px';
+}
+window.addEventListener('resize', sizeWheel);
 render();
+sizeWheel(); setTimeout(sizeWheel, 300); setTimeout(sizeWheel, 1500);
 trk(); trLabel();
 /* Kamerindeling opslaan, terugzetten en leegmaken */
 (function () {
