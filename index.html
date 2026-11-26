@@ -164,7 +164,7 @@ li[draggable]{cursor:grab}li.hint{color:var(--mut);font-size:.85rem;padding:10px
  .col>.k-aan{flex:1 1 0%}
  .k-aan .aanlist{flex:1 1 0%;min-height:0;overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain}
  .k-aan .aanfoot{flex:none;border-top:1px solid var(--line);padding-top:.8vh;margin-top:.4vh}
- .k-aan .aanfoot .addp{margin:0 0 .6vh;flex-wrap:nowrap}.k-aan .aanfoot .addp>*{margin-bottom:0}
+ .k-aan .aanfoot .addp{margin:0 0 .6vh}.k-aan .aanfoot .addp>*{margin-bottom:0}
  .k-aan .aanfoot input{min-height:4.2vh!important;padding:0 .6vw;font-size:.9rem!important}
  .k-aan .aanfoot button{min-height:4.2vh!important;padding:0 .9vw}
  .k-aan .aanbtn{display:flex}.k-aan .aanbtn button{flex:1 1 0%;margin:0 .3vw 0 0;min-height:3.4vh!important;padding:0;font-size:.75rem}
@@ -173,7 +173,6 @@ li[draggable]{cursor:grab}li.hint{color:var(--mut);font-size:.85rem;padding:10px
  .k-aan li button{min-height:4vh!important;min-width:4vh!important;padding:0 .3vw!important}
  .k-aan .wd button{min-height:3.6vh!important;width:2.7em;min-width:0!important;padding:0!important}
  .k-aan h2{margin-bottom:.4vh}
- html{overflow:hidden}
  .wall,.col{overflow:hidden}.col{min-width:0;width:0}
  .k-aan .zone{flex:none}
  /* meer: traktatie en radio als paneel */
@@ -267,7 +266,7 @@ li[draggable]{cursor:grab}li.hint{color:var(--mut);font-size:.85rem;padding:10px
 </div>
 <div id="more"><div class="morehd"><b>Meer</b><button id="morex" type="button">✕ Sluiten</button></div>
 <div class="card"><h2>🍰 Traktatie-inzicht</h2><div class="add" style="flex-wrap:wrap;align-items:center"><input type="date" id="trd" style="flex:none"><label><input type="checkbox" id="trtr"> traktatie</label><select id="trty" style="font:inherit;padding:6px;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:var(--ink)"><option value="kroket">🍞 Broodje kroket</option><option value="taart">🍰 Taart</option><option value="milkshake">🍨 Milkshake</option></select><button id="trsave">Opslaan</button></div><div id="trk"></div></div>
-<div class="card"><h2>📻 Radio <small style="font-weight:400;color:var(--mut)">· zenders van wie in de kamer zit</small></h2><div id="rlist"></div><div class="add rsrch" style="margin-top:10px;align-items:center"><input id="rq" placeholder="Zoek een zender, bv. Qmusic of NPO Radio 2…" maxlength="60"><button id="rgo" type="button">🔎 Zoeken</button><a id="rweb" class="rbtn" href="https://www.internetradio.nl/" target="_blank" rel="noopener">Internetradio.nl ↗</a></div><div id="rres"></div><div class="hint2" id="rver" style="font-size:.7rem;opacity:.7">Dashboardversie 26-11-2026 · v9</div><div class="hint2" style="margin:2px 0 6px">Tik ▶ om te luisteren of ⭐ om de zender op te slaan bij de naam die hieronder is gekozen.</div><div class="add" style="margin-top:8px"><select id="rp" style="font:inherit;padding:6px;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:var(--ink)"></select><input id="rn" placeholder="Zendernaam" maxlength="30"><input id="ru" placeholder="Link van Internetradio.nl of stream (https://…)"><button id="rsave">⭐ Opslaan als voorkeur</button></div><div id="rpanel" style="margin-top:10px"></div><div id="rnow" class="hint2"></div></div>
+<div class="card"><h2>📻 Radio <small style="font-weight:400;color:var(--mut)">· zenders van wie in de kamer zit</small></h2><div id="rlist"></div><div class="add rsrch" style="margin-top:10px;align-items:center"><input id="rq" placeholder="Zoek een zender, bv. Qmusic of NPO Radio 2…" maxlength="60"><button id="rgo" type="button">🔎 Zoeken</button><a id="rweb" class="rbtn" href="https://www.internetradio.nl/" target="_blank" rel="noopener">Internetradio.nl ↗</a></div><div id="rres"></div><div class="hint2" id="rver" style="font-size:.7rem;opacity:.7">Dashboardversie 26-11-2026 · v11</div><div class="hint2" style="margin:2px 0 6px">Tik ▶ om te luisteren of ⭐ om de zender op te slaan bij de naam die hieronder is gekozen.</div><div class="add" style="margin-top:8px"><select id="rp" style="font:inherit;padding:6px;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:var(--ink)"></select><input id="rn" placeholder="Zendernaam" maxlength="30"><input id="ru" placeholder="Link van Internetradio.nl of stream (https://…)"><button id="rsave">⭐ Opslaan als voorkeur</button></div><div id="rpanel" style="margin-top:10px"></div><div id="rnow" class="hint2"></div></div>
 </div>
 <button id="themeb" type="button"></button><button id="moreb" type="button">⋯ Traktatie &amp; radio</button>
 </main>
@@ -836,6 +835,8 @@ function kkCheck(n) {
     if (key === kkLast) return;
     kkLast = key;
     if (!kkOn) return;
+    /* Maar één keer slaan, ook als het dashboard in meerdere tabbladen/vensters op dit apparaat openstaat */
+    try { if (localStorage.getItem('koffierad_kk_last') === key) return; localStorage.setItem('koffierad_kk_last', key); } catch (e) { }
     kkStrike(mm === 30 ? 1 : (hh % 12 || 12));
 }
 kkBtn();
@@ -1123,7 +1124,6 @@ function sizeWheel() {
     w.style.height = s + 'px'; w.style.flex = 'none'; cv.style.width = s + 'px'; cv.style.height = s + 'px';
 }
 window.addEventListener('resize', sizeWheel);
-window.addEventListener('scroll', function () { if (window.matchMedia && matchMedia('(min-width:960px) and (min-aspect-ratio:4/3)').matches && (window.pageYOffset || window.pageXOffset || document.documentElement.scrollTop || document.documentElement.scrollLeft)) window.scrollTo(0, 0); });
 
 render();
 sizeWheel(); setTimeout(sizeWheel, 300); setTimeout(sizeWheel, 1500);
