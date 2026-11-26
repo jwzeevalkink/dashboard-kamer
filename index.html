@@ -44,7 +44,7 @@ li .dot{width:12px;height:12px;border-radius:50%;flex:none}.wd{display:flex;flex
 .block small{font-size:.7rem;font-weight:600;opacity:.9}
 .b1{height:110px;background:var(--gold)}.b2{height:80px;background:#8d939a}.b3{height:56px;background:var(--bronze)}
 .side{flex:1;max-width:150px;text-align:center;background:var(--bg);border:1px dashed var(--line);border-radius:12px;padding:8px;margin-left:8px;align-self:center}
-.side b{display:block;font-size:.75rem;color:var(--mut);margin-bottom:4px}.side span{display:block;font-weight:600;font-size:.85rem}
+.side b{display:block;font-size:.75rem;color:var(--mut);margin-bottom:4px}.side span{display:inline;font-weight:600;font-size:.85rem}.side span:after{content:', '}.side span:last-child:after{content:''}
 .empty{color:var(--mut);text-align:center;padding:16px 0}
 .reset{margin-top:10px;font-size:.85rem;color:var(--mut)}
 .zone{min-height:44px;border:2px dashed transparent;border-radius:10px;padding:2px}.zone.over{border-color:var(--pri);background:var(--bg)}
@@ -174,6 +174,7 @@ li[draggable]{cursor:grab}li.hint{color:var(--mut);font-size:.85rem;padding:10px
  .k-aan .wd button{min-height:3.6vh!important;width:2.7em;min-width:0!important;padding:0!important}
  .k-aan h2{margin-bottom:.4vh}
  html{overflow:hidden}
+ .wall,.col{overflow:hidden}.col{min-width:0;width:0}
  .k-aan .zone{flex:none}
  /* meer: traktatie en radio als paneel */
  #more{display:none}
@@ -266,7 +267,7 @@ li[draggable]{cursor:grab}li.hint{color:var(--mut);font-size:.85rem;padding:10px
 </div>
 <div id="more"><div class="morehd"><b>Meer</b><button id="morex" type="button">✕ Sluiten</button></div>
 <div class="card"><h2>🍰 Traktatie-inzicht</h2><div class="add" style="flex-wrap:wrap;align-items:center"><input type="date" id="trd" style="flex:none"><label><input type="checkbox" id="trtr"> traktatie</label><select id="trty" style="font:inherit;padding:6px;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:var(--ink)"><option value="kroket">🍞 Broodje kroket</option><option value="taart">🍰 Taart</option><option value="milkshake">🍨 Milkshake</option></select><button id="trsave">Opslaan</button></div><div id="trk"></div></div>
-<div class="card"><h2>📻 Radio <small style="font-weight:400;color:var(--mut)">· zenders van wie in de kamer zit</small></h2><div id="rlist"></div><div class="add rsrch" style="margin-top:10px;align-items:center"><input id="rq" placeholder="Zoek een zender, bv. Qmusic of NPO Radio 2…" maxlength="60"><button id="rgo" type="button">🔎 Zoeken</button><a id="rweb" class="rbtn" href="https://www.internetradio.nl/" target="_blank" rel="noopener">Internetradio.nl ↗</a></div><div id="rres"></div><div class="hint2" id="rver" style="font-size:.7rem;opacity:.7">Dashboardversie 26-11-2026 · v7 (namenlijst)</div><div class="hint2" style="margin:2px 0 6px">Tik ▶ om te luisteren of ⭐ om de zender op te slaan bij de naam die hieronder is gekozen.</div><div class="add" style="margin-top:8px"><select id="rp" style="font:inherit;padding:6px;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:var(--ink)"></select><input id="rn" placeholder="Zendernaam" maxlength="30"><input id="ru" placeholder="Link van Internetradio.nl of stream (https://…)"><button id="rsave">⭐ Opslaan als voorkeur</button></div><div id="rpanel" style="margin-top:10px"></div><div id="rnow" class="hint2"></div></div>
+<div class="card"><h2>📻 Radio <small style="font-weight:400;color:var(--mut)">· zenders van wie in de kamer zit</small></h2><div id="rlist"></div><div class="add rsrch" style="margin-top:10px;align-items:center"><input id="rq" placeholder="Zoek een zender, bv. Qmusic of NPO Radio 2…" maxlength="60"><button id="rgo" type="button">🔎 Zoeken</button><a id="rweb" class="rbtn" href="https://www.internetradio.nl/" target="_blank" rel="noopener">Internetradio.nl ↗</a></div><div id="rres"></div><div class="hint2" id="rver" style="font-size:.7rem;opacity:.7">Dashboardversie 26-11-2026 · v8 (schaal)</div><div class="hint2" style="margin:2px 0 6px">Tik ▶ om te luisteren of ⭐ om de zender op te slaan bij de naam die hieronder is gekozen.</div><div class="add" style="margin-top:8px"><select id="rp" style="font:inherit;padding:6px;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:var(--ink)"></select><input id="rn" placeholder="Zendernaam" maxlength="30"><input id="ru" placeholder="Link van Internetradio.nl of stream (https://…)"><button id="rsave">⭐ Opslaan als voorkeur</button></div><div id="rpanel" style="margin-top:10px"></div><div id="rnow" class="hint2"></div></div>
 </div>
 <button id="themeb" type="button"></button><button id="moreb" type="button">⋯ Traktatie &amp; radio</button>
 </main>
@@ -472,7 +473,7 @@ function podium() {
     var grp = function (c) { return people.filter(function (p) { return p.c === c; }).map(function (p) { return p.n; }); };
     var places = counts.slice(0, 3);
     var min = counts[counts.length - 1];
-    var step = function (k, cls, lab) { return places[k] === undefined ? '' : '<div class="step"><div class="names">' + grp(places[k]).map(esc).join('<br>') + '</div><div class="block ' + cls + '" >' + lab + '<small>' + places[k] + '×</small></div></div>'; };
+    var step = function (k, cls, lab) { return places[k] === undefined ? '' : '<div class="step"><div class="names">' + grp(places[k]).map(esc).join(', ') + '</div><div class="block ' + cls + '" >' + lab + '<small>' + places[k] + '×</small></div></div>'; };
     var html = '<div class="podium">' + step(1, 'b2', '2') + step(0, 'b1', '1') + step(2, 'b3', '3');
     if (counts.length > 1) html += '<div class="side"><b>🍀 Minst gehaald (' + min + '×)</b>' + grp(min).map(function (n) { return '<span>' + esc(n) + '</span>'; }).join('') + '</div>';
     html += '</div>';
@@ -566,6 +567,7 @@ function render() {
     document.getElementById('list').innerHTML = lin || '<li class="hint">Sleep iemand hierheen</li>';
     document.getElementById('listout').innerHTML = lout || '<li class="hint">Sleep iemand hierheen om af te melden</li>';
     podium(); tops(); roomRender(); radioRender();
+    if (typeof fitWall === 'function') { clearTimeout(render.ft); render.ft = setTimeout(function () { sizeWheel(); fitWall(); }, 0); }
 }
 function tops() {
     var now = new Date(), el = document.getElementById('tops');
@@ -1122,9 +1124,25 @@ function sizeWheel() {
     w.style.height = s + 'px'; w.style.flex = 'none'; cv.style.width = s + 'px'; cv.style.height = s + 'px';
 }
 window.addEventListener('resize', sizeWheel);
-window.addEventListener('scroll', function () { if (window.matchMedia && matchMedia('(min-width:960px) and (min-aspect-ratio:4/3)').matches && (window.pageYOffset || document.documentElement.scrollTop)) window.scrollTo(0, 0); });
+window.addEventListener('scroll', function () { if (window.matchMedia && matchMedia('(min-width:960px) and (min-aspect-ratio:4/3)').matches && (window.pageYOffset || window.pageXOffset || document.documentElement.scrollTop || document.documentElement.scrollLeft)) window.scrollTo(0, 0); });
+/* Wandscherm: past de inhoud niet in het scherm (oudere browser, extra namen), verklein dan alles net zoveel dat het past */
+function fitWall() {
+    var m = document.querySelector('main'); if (!m) return;
+    var wall = window.matchMedia && matchMedia('(min-width:960px) and (min-aspect-ratio:4/3)').matches;
+    m.style.zoom = ''; if (!wall) return;
+    var z = 1;
+    for (var i = 0; i < 4; i++) {
+        var de = document.documentElement, cards = document.querySelectorAll('.col>.card'), over = 0;
+        for (var k = 0; k < cards.length; k++) { var r = cards[k].getBoundingClientRect(); over = Math.max(over, r.right / window.innerWidth, r.bottom / window.innerHeight); }
+        over = Math.max(over, de.scrollWidth / window.innerWidth, de.scrollHeight / window.innerHeight);
+        if (over <= 1.005) break;
+        z = z / over * .995; m.style.zoom = z;
+    }
+    window.scrollTo(0, 0);
+}
+window.addEventListener('resize', function () { fitWall(); sizeWheel(); });
 render();
-sizeWheel(); setTimeout(sizeWheel, 300); setTimeout(sizeWheel, 1500);
+sizeWheel(); fitWall(); setTimeout(function () { sizeWheel(); fitWall(); }, 300); setTimeout(function () { sizeWheel(); fitWall(); }, 1500);
 trk(); trLabel();
 /* Kamerindeling opslaan, terugzetten en leegmaken */
 (function () {
