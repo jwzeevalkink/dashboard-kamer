@@ -14,5 +14,12 @@ t = re.sub(r"/\* Audio: draaimuziek = [^\n]*?\(mp3, ingesloten\); synth-tune als
 old = "    tuneStop(true);\n    try {\n        if (!RADSND)"
 if "if (!RADSRC) { synthStart(); return; }" not in t:
     t = t.replace(old, "    tuneStop(true);\n    if (!RADSRC) { synthStart(); return; }\n    try {\n        if (!RADSND)")
+
+# Web Audio-draaimuziek: RADSRC is hier een los bestand (spin-tune.m4a), geen data:-URL; dan ophalen via XHR
+WOLD = "    try { var r = a.decodeAudioData(b64buf(src), function (b) { done(b); }, function () { done(null); }); if (r && r.then) r.then(function (b) { done(b); }, function () { done(null); }); } catch (e) { done(null); }"
+WNEW = """    var dec = function (buf) { try { var r = a.decodeAudioData(buf, function (b) { done(b); }, function () { done(null); }); if (r && r.then) r.then(function (b) { done(b); }, function () { done(null); }); } catch (e) { done(null); } };
+    if (/^data:/.test(src)) { try { dec(b64buf(src)); } catch (e) { done(null); } }
+    else { try { var x = new XMLHttpRequest(); x.open('GET', src); x.responseType = 'arraybuffer'; x.onload = function () { if ((x.status === 200 || x.status === 0) && x.response) dec(x.response); else done(null); }; x.onerror = function () { done(null); }; x.send(); } catch (e) { done(null); } }"""
+if WOLD in t: t = t.replace(WOLD, WNEW)
 open(dst, 'w', encoding='utf-8').write(t)
 exec(compile(open(os.path.join(os.path.dirname(__file__), 'android5.py'), encoding='utf-8').read().replace("p=sys.argv[1]", "p=dst"), 'android5.py', 'exec'))

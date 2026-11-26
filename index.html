@@ -121,6 +121,7 @@ li[draggable]{cursor:grab}li.hint{color:var(--mut);font-size:.85rem;padding:10px
  .k-rad .wheelwrap{flex:1 1 0%;min-height:0;width:100%;max-width:none;display:block;text-align:center}
  .k-rad canvas{display:inline-block;max-width:100%}
  .k-rad button.main{margin:1.2vh auto 0;padding:1vh 2.4vw}
+ .k-rad #sndtest{padding:.3vh 1vw;min-height:0!important;margin:0 4px!important}
  .k-rad #mute{margin:.6vh auto 0!important;padding:.3vh 1vw;min-height:0}
  .k-rad .result{min-height:1.4em;margin-top:.6vh;font-size:1.1rem}
  .k-pod .k-tops,.k-pod #tops{display:none}
@@ -160,7 +161,19 @@ li[draggable]{cursor:grab}li.hint{color:var(--mut);font-size:.85rem;padding:10px
  .k-wx .deg{font-size:5vh;margin-right:.8vw}
  .k-wx #wtxt{max-width:9vw;font-size:.8rem;line-height:1.2;margin-right:.8vw}
  .k-wx .wt{flex:1 1 0%}.k-wx .fc{flex:1 1 0%;margin:0}.k-wx .fc div{font-size:.8rem;margin-right:.4vw;white-space:nowrap}
- .col>.k-aan{flex:1 1 0%;overflow-y:auto!important;-webkit-overflow-scrolling:touch}
+ .col>.k-aan{flex:1 1 0%}
+ .k-aan .aanlist{flex:1 1 0%;min-height:0;overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain}
+ .k-aan .aanfoot{flex:none;border-top:1px solid var(--line);padding-top:.8vh;margin-top:.4vh}
+ .k-aan .aanfoot .addp{margin:0 0 .6vh;flex-wrap:nowrap}.k-aan .aanfoot .addp>*{margin-bottom:0}
+ .k-aan .aanfoot input{min-height:4.2vh!important;padding:0 .6vw;font-size:.9rem!important}
+ .k-aan .aanfoot button{min-height:4.2vh!important;padding:0 .9vw}
+ .k-aan .aanbtn{display:flex}.k-aan .aanbtn button{flex:1 1 0%;margin:0 .3vw 0 0;min-height:3.4vh!important;padding:0;font-size:.75rem}
+ .k-aan li{padding:.25vh 0}
+ .k-aan li .n{margin-bottom:.3vh!important}
+ .k-aan li button{min-height:4vh!important;min-width:4vh!important;padding:0 .3vw!important}
+ .k-aan .wd button{min-height:3.6vh!important;width:2.7em;min-width:0!important;padding:0!important}
+ .k-aan h2{margin-bottom:.4vh}
+ html{overflow:hidden}
  .k-aan .zone{flex:none}
  /* meer: traktatie en radio als paneel */
  #more{display:none}
@@ -228,7 +241,7 @@ li[draggable]{cursor:grab}li.hint{color:var(--mut);font-size:.85rem;padding:10px
 <div class="card k-rad">
     <div class="wheelwrap"><div class="pointer"></div><canvas id="wheel" width="800" height="800"></canvas></div>
     <button class="main" id="spin">Draai het rad!</button>
-    <button id="mute" class="reset" style="display:block;margin:8px auto 0">🔊 Geluid aan</button>
+    <div style="text-align:center;margin-top:8px"><button id="mute" class="reset" style="margin:0 4px">🔊 Geluid aan</button><button id="sndtest" class="reset" style="margin:0 4px">🔈 Test geluid</button></div>
     <div class="result" id="result"></div>
   </div>
 <div class="card k-pod">
@@ -245,15 +258,15 @@ li[draggable]{cursor:grab}li.hint{color:var(--mut);font-size:.85rem;padding:10px
 <div class="card wx k-wx"><div class="vscene" id="vscene"><div class="vworld" id="vworld"></div><div id="vmap" class="vmap"></div><div class="sky" id="sky"></div><button id="vtog" class="vtog" type="button"></button><a class="vtog" style="left:auto;right:8px;text-decoration:none;background:#fff;color:#1a73e8;border-radius:8px;font-weight:600" href="https://www.google.com/maps/search/?api=1&query=52.2333%2C6.1" target="_blank" rel="noopener">📍 Google Maps</a></div>
 <div class="wt"><div class="deg" id="deg">–</div><div id="wtxt"></div><small id="wnote" style="color:var(--mut)"></small><div class="fc" id="fc"></div><div id="short" style="display:flex;align-items:center;margin-top:10px"></div></div></div>
 <div class="card k-aan">
-      <h2>Aanwezig in kamer 0.26 <small style="font-weight:400;color:var(--mut)">· staan op het rad voor de koffie (⇄ = in- of uitchecken)</small></h2>
-      <div class="zone" id="zin"><ul id="list"></ul></div><h2 style="margin-top:12px">Nog niet ingecheckt <small style="font-weight:400;color:var(--mut)">· staan niet op het rad</small></h2><div class="zone" id="zout"><ul id="listout"></ul></div><div class="add addp"><input id="name" placeholder="Nieuwe collega aan de kamer toevoegen…" maxlength="24"><button id="addbtn">Toevoegen</button></div>
-      <button class="reset" id="reset">Tellers terugzetten</button> <button class="reset" id="full">Opnieuw beginnen</button>
+      <div class="aanlist"><h2>Aanwezig in kamer 0.26 <small style="font-weight:400;color:var(--mut)">· staan op het rad voor de koffie (⇄ = in- of uitchecken)</small></h2>
+      <div class="zone" id="zin"><ul id="list"></ul></div><h2 style="margin-top:12px">Nog niet ingecheckt <small style="font-weight:400;color:var(--mut)">· staan niet op het rad</small></h2><div class="zone" id="zout"><ul id="listout"></ul></div></div><div class="aanfoot"><div class="add addp"><input id="name" placeholder="Nieuwe collega aan de kamer toevoegen…" maxlength="24"><button id="addbtn">Toevoegen</button></div>
+      <div class="aanbtn"><button class="reset" id="reset">Tellers terugzetten</button> <button class="reset" id="full">Opnieuw beginnen</button></div></div>
     </div>
 </div>
 </div>
 <div id="more"><div class="morehd"><b>Meer</b><button id="morex" type="button">✕ Sluiten</button></div>
 <div class="card"><h2>🍰 Traktatie-inzicht</h2><div class="add" style="flex-wrap:wrap;align-items:center"><input type="date" id="trd" style="flex:none"><label><input type="checkbox" id="trtr"> traktatie</label><select id="trty" style="font:inherit;padding:6px;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:var(--ink)"><option value="kroket">🍞 Broodje kroket</option><option value="taart">🍰 Taart</option><option value="milkshake">🍨 Milkshake</option></select><button id="trsave">Opslaan</button></div><div id="trk"></div></div>
-<div class="card"><h2>📻 Radio <small style="font-weight:400;color:var(--mut)">· zenders van wie in de kamer zit</small></h2><div id="rlist"></div><div class="add rsrch" style="margin-top:10px;align-items:center"><input id="rq" placeholder="Zoek een zender, bv. Qmusic of NPO Radio 2…" maxlength="60"><button id="rgo" type="button">🔎 Zoeken</button><a id="rweb" class="rbtn" href="https://www.internetradio.nl/" target="_blank" rel="noopener">Internetradio.nl ↗</a></div><div id="rres"></div><div class="hint2" id="rver" style="font-size:.7rem;opacity:.7">Dashboardversie 26-11-2026 · v5 (rad rond)</div><div class="hint2" style="margin:2px 0 6px">Tik ▶ om te luisteren of ⭐ om de zender op te slaan bij de naam die hieronder is gekozen.</div><div class="add" style="margin-top:8px"><select id="rp" style="font:inherit;padding:6px;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:var(--ink)"></select><input id="rn" placeholder="Zendernaam" maxlength="30"><input id="ru" placeholder="Link van Internetradio.nl of stream (https://…)"><button id="rsave">⭐ Opslaan als voorkeur</button></div><div id="rpanel" style="margin-top:10px"></div><div id="rnow" class="hint2"></div></div>
+<div class="card"><h2>📻 Radio <small style="font-weight:400;color:var(--mut)">· zenders van wie in de kamer zit</small></h2><div id="rlist"></div><div class="add rsrch" style="margin-top:10px;align-items:center"><input id="rq" placeholder="Zoek een zender, bv. Qmusic of NPO Radio 2…" maxlength="60"><button id="rgo" type="button">🔎 Zoeken</button><a id="rweb" class="rbtn" href="https://www.internetradio.nl/" target="_blank" rel="noopener">Internetradio.nl ↗</a></div><div id="rres"></div><div class="hint2" id="rver" style="font-size:.7rem;opacity:.7">Dashboardversie 26-11-2026 · v7 (namenlijst)</div><div class="hint2" style="margin:2px 0 6px">Tik ▶ om te luisteren of ⭐ om de zender op te slaan bij de naam die hieronder is gekozen.</div><div class="add" style="margin-top:8px"><select id="rp" style="font:inherit;padding:6px;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:var(--ink)"></select><input id="rn" placeholder="Zendernaam" maxlength="30"><input id="ru" placeholder="Link van Internetradio.nl of stream (https://…)"><button id="rsave">⭐ Opslaan als voorkeur</button></div><div id="rpanel" style="margin-top:10px"></div><div id="rnow" class="hint2"></div></div>
 </div>
 <button id="themeb" type="button"></button><button id="moreb" type="button">⋯ Traktatie &amp; radio</button>
 </main>
@@ -358,9 +371,28 @@ function synthStart() {
     var notes = [392, 440, 523, 440, 392, 330, 392, 523], k = 0;
     tuneTimer = setInterval(function () { blip(notes[k++ % notes.length], .22, 'triangle', .12); }, 260);
 }
-function tuneStart() {
-    tuneStop(true);
-    if (!RADSRC) { synthStart(); return; }
+/* Geluid via Web Audio (werkt ook op oudere schermbrowsers die ingesloten mp3's niet via <audio> afspelen) */
+var WB = {}, WBQ = {}, radNode = null, kkNode = null;
+function b64buf(src) { var b = atob(src.slice(src.indexOf(',') + 1)), n = b.length, u = new Uint8Array(n); for (var i = 0; i < n; i++) u[i] = b.charCodeAt(i); return u.buffer; }
+function wbGet(key, src, cb) {
+    if (WB[key]) { cb(WB[key]); return; }
+    var a = audio(); if (!a || !a.decodeAudioData) { cb(null); return; }
+    if (WBQ[key]) { WBQ[key].push(cb); return; }
+    WBQ[key] = [cb];
+    var fired = false, done = function (b) { if (fired) return; fired = true; if (b) WB[key] = b; var l = WBQ[key]; WBQ[key] = null; l.forEach(function (f) { f(b || null); }); };
+    var dec = function (buf) { try { var r = a.decodeAudioData(buf, function (b) { done(b); }, function () { done(null); }); if (r && r.then) r.then(function (b) { done(b); }, function () { done(null); }); } catch (e) { done(null); } };
+    if (/^data:/.test(src)) { try { dec(b64buf(src)); } catch (e) { done(null); } }
+    else { try { var x = new XMLHttpRequest(); x.open('GET', src); x.responseType = 'arraybuffer'; x.onload = function () { if ((x.status === 200 || x.status === 0) && x.response) dec(x.response); else done(null); }; x.onerror = function () { done(null); }; x.send(); } catch (e) { done(null); } }
+}
+function wbPlay(buf, dur, vol) {
+    var a = audio(), s = a.createBufferSource(), g = a.createGain(), t = a.currentTime + .03;
+    s.buffer = buf; g.gain.setValueAtTime(vol, t); s.connect(g); g.connect(a.destination);
+    if (dur) s.start(t, 0, dur); else s.start(t);
+    return { s: s, g: g, t: t, stop: function (fade) { try { var n = a.currentTime; if (fade) { g.gain.cancelScheduledValues(n); g.gain.setValueAtTime(g.gain.value, n); g.gain.linearRampToValueAtTime(.0001, n + fade); s.stop(n + fade + .05); } else s.stop(); } catch (e) { } } };
+}
+function wbUnlock() { var a = audio(); if (!a) return; try { var b = a.createBuffer(1, 1, 22050), s = a.createBufferSource(); s.buffer = b; s.connect(a.destination); s.start(0); } catch (e) { } wbGet('rad', RADSRC, function () { }); if (typeof KKSRC !== 'undefined') wbGet('kk', KKSRC, function () { }); }
+['touchstart', 'mousedown', 'pointerdown', 'keydown', 'click'].forEach(function (ev) { document.addEventListener(ev, wbUnlock, true); });
+function htmlTune() {
     try {
         if (!RADSND) { RADSND = new Audio(RADSRC); RADSND.preload = 'auto'; }
         RADSND.volume = .8; RADSND.currentTime = 0;
@@ -368,7 +400,16 @@ function tuneStart() {
         if (pr && pr.catch) pr.catch(function () { if (spinning && !mute) synthStart(); });
     } catch (e) { synthStart(); }
 }
+function tuneStart() {
+    tuneStop(true);
+    wbGet('rad', RADSRC, function (b) {
+        if (!spinning || mute) return;
+        if (b) { try { radNode = wbPlay(b, 0, .8); return; } catch (e) { } }
+        htmlTune();
+    });
+}
 function tuneStop(now) {
+    if (radNode) { radNode.stop(now ? 0 : .35); radNode = null; }
     if (tuneTimer) { clearInterval(tuneTimer); tuneTimer = null; }
     if (radFade) { clearInterval(radFade); radFade = null; }
     if (!RADSND) return;
@@ -379,6 +420,16 @@ function tuneStop(now) {
     }, 40);
 }
 function fanfare() { if (mute) return;[523, 659, 784, 1047].forEach(function (f, i) { return blip(f, .25, 'triangle', .2, i * .12); }); blip(1047, .7, 'triangle', .2, .5); }
+document.getElementById('sndtest').onclick = function () {
+    var rs = document.getElementById('result'), a = audio();
+    if (!a) { rs.textContent = 'Deze browser ondersteunt geen geluid (geen Web Audio).'; return; }
+    blip(880, .25, 'sine', .3); blip(660, .3, 'sine', .3, .3);
+    rs.textContent = 'Test: je hoort 2 piepjes en daarna 3 seconden radmuziek… (audio: ' + a.state + ')';
+    wbGet('rad', RADSRC, function (b) {
+        if (b) { var n = wbPlay(b, 3, .8); setTimeout(function () { rs.textContent = 'Geen geluid gehoord? Controleer het volume van het scherm (afstandsbediening) en of de browser niet gedempt is. (audio: ' + a.state + ', muziek: ok)'; }, 3400); }
+        else rs.textContent = 'Piepjes gehoord maar geen muziek? De browser kan het muziekbestand niet openen. (audio: ' + a.state + ', muziek: fout)';
+    });
+};
 document.getElementById('mute').onclick = function () { mute = !mute; this.textContent = mute ? '🔇 Geluid uit' : '🔊 Geluid aan'; if (mute) tuneStop(true); };
 function rnd(n) { var a = new Uint32Array(1); crypto.getRandomValues(a); return a[0] / 4294967296 * n; }
 function spin() {
@@ -744,6 +795,21 @@ function kkSynth(k) { var i = 0; var one = function () { kkBird(0); kkCall(0); i
 function kkStrike(k) {
     k = Math.max(1, Math.min(12, k));
     kkClear();
+    if (kkNode) { kkNode.stop(0); kkNode = null; }
+    wbGet('kk', KKSRC, function (b) {
+        if (b) {
+            try {
+                var stopAt = KT[k - 1] + .45, nd = wbPlay(b, stopAt, 1);
+                nd.g.gain.setValueAtTime(1, nd.t + stopAt - .1); nd.g.gain.linearRampToValueAtTime(.0001, nd.t + stopAt);
+                kkNode = nd;
+                for (var i = 0; i < k; i++) kkBird(KT[i] * 1000 + 30);
+                return;
+            } catch (e) { }
+        }
+        kkHtml(k);
+    });
+}
+function kkHtml(k) {
     try {
         if (!KKA) { KKA = new Audio(KKSRC); KKA.preload = 'auto'; }
         KKA.pause(); KKA.currentTime = 0; KKA.volume = 1;
@@ -1056,6 +1122,7 @@ function sizeWheel() {
     w.style.height = s + 'px'; w.style.flex = 'none'; cv.style.width = s + 'px'; cv.style.height = s + 'px';
 }
 window.addEventListener('resize', sizeWheel);
+window.addEventListener('scroll', function () { if (window.matchMedia && matchMedia('(min-width:960px) and (min-aspect-ratio:4/3)').matches && (window.pageYOffset || document.documentElement.scrollTop)) window.scrollTo(0, 0); });
 render();
 sizeWheel(); setTimeout(sizeWheel, 300); setTimeout(sizeWheel, 1500);
 trk(); trLabel();
