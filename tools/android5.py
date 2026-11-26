@@ -43,13 +43,15 @@ POLY="""</style>
     var st = document.getElementsByTagName('style')[0]; if (!st) return;
     var src = st.textContent, D = document.documentElement;
     var grab = function (sel) { var m = src.match(new RegExp(sel + '\\\\{([^}]*)\\\\}')), o = {}; if (m) m[1].replace(/--([\\w-]+):([^;]+)/g, function (a, k, v) { o[k] = v; }); return o; };
-    var base = grab(':root'), adst = grab('html\\\\.th-adst'), V = base;
+    var base = grab(':root'), V = base, TH = [];
+    /* alle thema's met eigen variabelen (html.th-adst, html.th-al, ...), in volgorde van de stylesheet */
+    src.replace(/html\\.(th-[\\w-]+)\\{(--[^}]*)\\}/g, function (all, cls) { TH.push([cls, grab('html\\\\.' + cls)]); });
     var sub = function (s) { return s.replace(/var\\(--([\\w-]+)\\)/g, function (a, k) { return V[k] || a; }); };
     var fixEl = function (el) { if (el.nodeType !== 1) return; var s = el.getAttribute('data-vs') || el.getAttribute('style'); if (s && s.indexOf('var(--') >= 0) { el.setAttribute('data-vs', s); el.setAttribute('style', sub(s)); } };
     var fixTree = function (n) { if (n.nodeType !== 1) return; fixEl(n); var a = n.querySelectorAll('[style*="var(--"],[data-vs]'); for (var i = 0; i < a.length; i++) fixEl(a[i]); };
     var apply = function () {
         var k = {}, x; for (x in base) k[x] = base[x];
-        if (/(^|\\s)th-adst(\\s|$)/.test(D.className)) for (x in adst) k[x] = adst[x];
+        for (var i = 0; i < TH.length; i++) if (new RegExp('(^|\\\\s)' + TH[i][0] + '(\\\\s|$)').test(D.className)) for (x in TH[i][1]) k[x] = TH[i][1][x];
         V = k; st.textContent = sub(src); if (document.body) fixTree(document.body);
     };
     apply();

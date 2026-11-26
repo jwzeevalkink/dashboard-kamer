@@ -205,6 +205,27 @@ li[draggable]{cursor:grab}li.hint{color:var(--mut);font-size:.85rem;padding:10px
  #list li .dot,#listout li .dot{display:none}
 }
 .fsb{position:absolute;right:8px;bottom:8px;padding:2px 8px;font-size:.75rem;color:var(--mut);opacity:.7;min-height:0!important}.clk{position:relative}
+
+/* Thema's in Apple-stijl (licht en donker); layout ongewijzigd */
+html.th-apple body{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Helvetica Neue",Inter,Arial,sans-serif;-webkit-font-smoothing:antialiased;letter-spacing:-.01em}
+html.th-apple .card{border:none;border-radius:22px}html.th-apple .col>.card{border-top:none;border-radius:22px}
+html.th-apple h2{font-weight:600;letter-spacing:-.02em}html.th-apple h2>small{display:none}
+html.th-apple button{border-radius:980px}html.th-apple button.main{border-radius:980px;font-weight:500;padding-left:2.4vw;padding-right:2.4vw}
+html.th-apple .chip{border-radius:980px;font-weight:500}html.th-apple .seat{border-radius:16px;border-width:1px}html.th-apple .seat.occ{border-style:solid}
+html.th-apple .wd button{border-radius:8px}html.th-apple .door{border-radius:12px;background:none}html.th-apple input{border-radius:12px!important}
+html.th-apple .brand{font-weight:600;letter-spacing:-.01em}html.th-apple #time{font-weight:600;letter-spacing:-.03em}
+html.th-apple .block{border-radius:12px 12px 0 0}html.th-apple .mwk .bar{border-radius:8px 8px 0 0}
+html.th-al{--bg:#f5f5f7;--ink:#1d1d1f;--mut:#6e6e73;--line:#e5e5ea;--pri:#0071e3;--sec:#5e9ff2;--off:#aeaeb2;--soft:#f5f5f7;--door1:#1d1d1f;--door2:#1d1d1f;--gold:#0071e3;--bronze:#aeaeb2}
+html.th-al .card{background:#fff;box-shadow:0 4px 24px rgba(0,0,0,.06)}html.th-al .door{background:#1d1d1f}
+html.th-al button{background:#fff;border:1px solid #d2d2d7;color:#1d1d1f}html.th-al button.main{background:#0071e3;color:#fff;border:none}
+html.th-al .seat{background:#fbfbfd;border-color:#e5e5ea}html.th-al .wd button.on{background:#0071e3;color:#fff;border:none}html.th-al .wd button{background:#f2f2f7;color:#8e8e93;border:none}
+html.th-al .brand{color:#6e6e73}
+html.th-ad{--bg:#000000;--ink:#f5f5f7;--mut:#a1a1a6;--line:#2c2c2e;--pri:#2997ff;--sec:#0a84ff;--off:#48484a;--soft:#1c1c1e;--door1:#2c2c2e;--door2:#1c1c1e;--gold:#2997ff;--bronze:#636366}
+html.th-ad .card{background:#1c1c1e}html.th-ad .door{background:#2c2c2e}
+html.th-ad button{background:#2c2c2e;border:none;color:#f5f5f7}html.th-ad button.main{background:#2997ff;color:#fff}
+html.th-ad .seat{background:#161617;border-color:#2c2c2e}html.th-ad .wd button.on{background:#2997ff;color:#fff}html.th-ad .wd button{background:#2c2c2e;color:#8e8e93}
+html.th-ad input{background:#2c2c2e!important;color:#f5f5f7!important;border:none!important}html.th-ad .moods button{background:transparent}html.th-ad .brand{color:#a1a1a6}
+html.th-ad .chip{color:#fff}
 </style>
 <script>
 /* Terugval voor browsers zonder CSS-variabelen (o.a. het wandscherm, Chrome 39):
@@ -215,13 +236,15 @@ li[draggable]{cursor:grab}li.hint{color:var(--mut);font-size:.85rem;padding:10px
     var st = document.getElementsByTagName('style')[0]; if (!st) return;
     var src = st.textContent, D = document.documentElement;
     var grab = function (sel) { var m = src.match(new RegExp(sel + '\\{([^}]*)\\}')), o = {}; if (m) m[1].replace(/--([\w-]+):([^;]+)/g, function (a, k, v) { o[k] = v; }); return o; };
-    var base = grab(':root'), adst = grab('html\\.th-adst'), V = base;
+    var base = grab(':root'), V = base, TH = [];
+    /* alle thema's met eigen variabelen (html.th-adst, html.th-al, ...), in volgorde van de stylesheet */
+    src.replace(/html\.(th-[\w-]+)\{(--[^}]*)\}/g, function (all, cls) { TH.push([cls, grab('html\\.' + cls)]); });
     var sub = function (s) { return s.replace(/var\(--([\w-]+)\)/g, function (a, k) { return V[k] || a; }); };
     var fixEl = function (el) { if (el.nodeType !== 1) return; var s = el.getAttribute('data-vs') || el.getAttribute('style'); if (s && s.indexOf('var(--') >= 0) { el.setAttribute('data-vs', s); el.setAttribute('style', sub(s)); } };
     var fixTree = function (n) { if (n.nodeType !== 1) return; fixEl(n); var a = n.querySelectorAll('[style*="var(--"],[data-vs]'); for (var i = 0; i < a.length; i++) fixEl(a[i]); };
     var apply = function () {
         var k = {}, x; for (x in base) k[x] = base[x];
-        if (/(^|\s)th-adst(\s|$)/.test(D.className)) for (x in adst) k[x] = adst[x];
+        for (var i = 0; i < TH.length; i++) if (new RegExp('(^|\\s)' + TH[i][0] + '(\\s|$)').test(D.className)) for (x in TH[i][1]) k[x] = TH[i][1][x];
         V = k; st.textContent = sub(src); if (document.body) fixTree(document.body);
     };
     apply();
@@ -266,7 +289,7 @@ li[draggable]{cursor:grab}li.hint{color:var(--mut);font-size:.85rem;padding:10px
 </div>
 <div id="more"><div class="morehd"><b>Meer</b><button id="morex" type="button">✕ Sluiten</button></div>
 <div class="card"><h2>🍰 Traktatie-inzicht</h2><div class="add" style="flex-wrap:wrap;align-items:center"><input type="date" id="trd" style="flex:none"><label><input type="checkbox" id="trtr"> traktatie</label><select id="trty" style="font:inherit;padding:6px;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:var(--ink)"><option value="kroket">🍞 Broodje kroket</option><option value="taart">🍰 Taart</option><option value="milkshake">🍨 Milkshake</option></select><button id="trsave">Opslaan</button></div><div id="trk"></div></div>
-<div class="card"><h2>📻 Radio <small style="font-weight:400;color:var(--mut)">· zenders van wie in de kamer zit</small></h2><div id="rlist"></div><div class="add rsrch" style="margin-top:10px;align-items:center"><input id="rq" placeholder="Zoek een zender, bv. Qmusic of NPO Radio 2…" maxlength="60"><button id="rgo" type="button">🔎 Zoeken</button><a id="rweb" class="rbtn" href="https://www.internetradio.nl/" target="_blank" rel="noopener">Internetradio.nl ↗</a></div><div id="rres"></div><div class="hint2" id="rver" style="font-size:.7rem;opacity:.7">Dashboardversie 26-11-2026 · v11</div><div class="hint2" style="margin:2px 0 6px">Tik ▶ om te luisteren of ⭐ om de zender op te slaan bij de naam die hieronder is gekozen.</div><div class="add" style="margin-top:8px"><select id="rp" style="font:inherit;padding:6px;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:var(--ink)"></select><input id="rn" placeholder="Zendernaam" maxlength="30"><input id="ru" placeholder="Link van Internetradio.nl of stream (https://…)"><button id="rsave">⭐ Opslaan als voorkeur</button></div><div id="rpanel" style="margin-top:10px"></div><div id="rnow" class="hint2"></div></div>
+<div class="card"><h2>📻 Radio <small style="font-weight:400;color:var(--mut)">· zenders van wie in de kamer zit</small></h2><div id="rlist"></div><div class="add rsrch" style="margin-top:10px;align-items:center"><input id="rq" placeholder="Zoek een zender, bv. Qmusic of NPO Radio 2…" maxlength="60"><button id="rgo" type="button">🔎 Zoeken</button><a id="rweb" class="rbtn" href="https://www.internetradio.nl/" target="_blank" rel="noopener">Internetradio.nl ↗</a></div><div id="rres"></div><div class="hint2" id="rver" style="font-size:.7rem;opacity:.7">Dashboardversie 26-11-2026 · v12 (Apple-thema's)</div><div class="hint2" style="margin:2px 0 6px">Tik ▶ om te luisteren of ⭐ om de zender op te slaan bij de naam die hieronder is gekozen.</div><div class="add" style="margin-top:8px"><select id="rp" style="font:inherit;padding:6px;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:var(--ink)"></select><input id="rn" placeholder="Zendernaam" maxlength="30"><input id="ru" placeholder="Link van Internetradio.nl of stream (https://…)"><button id="rsave">⭐ Opslaan als voorkeur</button></div><div id="rpanel" style="margin-top:10px"></div><div id="rnow" class="hint2"></div></div>
 </div>
 <button id="themeb" type="button"></button><button id="moreb" type="button">⋯ Traktatie &amp; radio</button>
 </main>
@@ -312,12 +335,21 @@ li[draggable]{cursor:grab}li.hint{color:var(--mut);font-size:.85rem;padding:10px
 "use strict";
 var COLORS_K = ['#8b4a2b', '#d9a066', '#5c3a21', '#c8773a', '#a0522d', '#e6b980', '#6f4e37', '#b5651d'];
 var COLORS_A = ['#1f4e79', '#7fa7cf', '#163a5c', '#2f6ea5', '#3d7fbf', '#a9c6e3', '#25466b', '#5a92c7'];
+var THEMES = {
+    koffie: { lab: 'Koffie', cls: '', wheel: COLORS_K, ink: '#3b2417', bg: '#fbf5ec', conf: ['#c8773a', '#e6b980', '#b5541c', '#f5c542', '#6f4e37', '#ffffff', '#e85d75', '#4fb3a5'] },
+    adst: { lab: 'ADST', cls: 'th-adst', wheel: COLORS_A, ink: '#14263d', bg: '#f3f5f8', conf: ['#1f4e79', '#7fa7cf', '#f2a900', '#2f6ea5', '#ffffff', '#a9c6e3', '#14263d', '#f2a900'] },
+    'apple-licht': { lab: 'Apple licht', cls: 'th-adst th-apple th-al', wheel: ['#0071e3', '#e8f1fd', '#1d1d1f', '#5e9ff2', '#d2d2d7', '#004f9e', '#86868b', '#b3d4f9'], ink: '#1d1d1f', bg: '#ffffff', conf: ['#0071e3', '#5e9ff2', '#1d1d1f', '#86868b', '#ffffff', '#b3d4f9', '#004f9e', '#d2d2d7'] },
+    'apple-donker': { lab: 'Apple donker', cls: 'th-adst th-apple th-ad', wheel: ['#2997ff', '#3a3a3c', '#0a84ff', '#636366', '#64d2ff', '#1c1c1e', '#5e5ce6', '#8e8e93'], ink: '#000000', bg: '#1c1c1e', conf: ['#2997ff', '#64d2ff', '#ffffff', '#5e5ce6', '#0a84ff', '#8e8e93', '#ffd60a', '#30d158'] }
+};
+var THEME_ORDER = ['koffie', 'adst', 'apple-licht', 'apple-donker'];
 var THEME = 'adst';
 try { THEME = localStorage.getItem('koffierad_theme') || 'adst'; } catch (e) { }
-var COLORS = THEME === 'adst' ? COLORS_A : COLORS_K;
-var TINK = function () { return THEME === 'adst' ? '#14263d' : '#3b2417'; };
-var TBG = function () { return THEME === 'adst' ? '#f3f5f8' : '#fbf5ec'; };
-if (THEME === 'adst') document.documentElement.className += ' th-adst';
+if (!THEMES[THEME]) THEME = 'adst';
+var COLORS = THEMES[THEME].wheel;
+var TINK = function () { return THEMES[THEME].ink; };
+var TBG = function () { return THEMES[THEME].bg; };
+function applyThemeClass() { var c = document.documentElement.className.replace(/\s*th-[a-z]+/g, ''); document.documentElement.className = (c + ' ' + THEMES[THEME].cls).replace(/^\s+|\s+$/g, ''); }
+applyThemeClass();
 var people = [{ n: 'Stephan', c: 0 }, { n: 'Jan Willem', c: 0 }, { n: 'Amel', c: 0 }, { n: 'Richard', c: 0 }, { n: 'Kevin', c: 0 }];
 try { var s = JSON.parse(localStorage.getItem('koffierad') || 'null'); if (Array.isArray(s) && s.length) people = s; } catch (e) { }
 var MAXP = 8, WD = ['ma', 'di', 'wo', 'do', 'vr'], editI = null;
@@ -579,7 +611,7 @@ function confetti() {
     if (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     var c = document.getElementById('conf'), x = c.getContext('2d');
     c.width = innerWidth; c.height = innerHeight;
-    var cols = THEME === 'adst' ? ['#1f4e79', '#7fa7cf', '#f2a900', '#2f6ea5', '#ffffff', '#a9c6e3', '#14263d', '#f2a900'] : ['#c8773a', '#e6b980', '#b5541c', '#f5c542', '#6f4e37', '#ffffff', '#e85d75', '#4fb3a5'], ps = [];
+    var cols = THEMES[THEME].conf, ps = [];
     var bursts = [[c.width / 2, c.height * .45, 0], [0, c.height * .7, 1], [c.width, c.height * .7, -1]];
     for (var i = 0; i < 420; i++) {
         var B = bursts[i % 3], side = B[2];
@@ -1103,13 +1135,12 @@ document.getElementById('rsave').onclick = function () {
 })();
 (function () {
     var b = document.getElementById('themeb');
-    var lab = function () { b.textContent = THEME === 'adst' ? '🎨 Thema: ADST' : '🎨 Thema: Koffie'; };
+    var lab = function () { b.textContent = '🎨 Thema: ' + THEMES[THEME].lab; };
     b.onclick = function () {
-        THEME = THEME === 'adst' ? 'koffie' : 'adst';
+        THEME = THEME_ORDER[(THEME_ORDER.indexOf(THEME) + 1) % THEME_ORDER.length];
         try { localStorage.setItem('koffierad_theme', THEME); } catch (e) { }
-        var c = document.documentElement.className.replace(/\s*th-adst/g, '');
-        document.documentElement.className = THEME === 'adst' ? c + ' th-adst' : c;
-        COLORS = THEME === 'adst' ? COLORS_A : COLORS_K; lab(); render(); trk();
+        applyThemeClass();
+        COLORS = THEMES[THEME].wheel; lab(); render(); trk(); sizeWheel();
     };
     lab();
 })();
